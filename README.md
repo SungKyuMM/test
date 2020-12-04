@@ -6,3 +6,5 @@
 ##### npm i -g nodemon
 ##### npm i request
 ##### npm i cheerio
+##### npm i urlencode
+##### npm i xml-js
