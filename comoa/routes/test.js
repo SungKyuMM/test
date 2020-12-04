@@ -28,10 +28,10 @@ router.get('/info', function(req, res, next) {
         
         var listData = new Array();
 
-        var data = convert.xml2json(body);
-        data = JSON.parse(data);
+        var jsonBody = convert.xml2json(body);
+        jsonBody = JSON.parse(jsonBody);
 
-        var list = data.elements[0].elements[1].elements[0].elements;    
+        var list = jsonBody.elements[0].elements[1].elements[0].elements;    
         
         list.forEach(item => {
             // console.log('ID: ' + item.elements[4].elements[0].text);
@@ -53,10 +53,11 @@ router.get('/info', function(req, res, next) {
 
         var jsonData = JSON.stringify(listData);
         jsonData = JSON.parse(jsonData);
-        console.log(jsonData);
-    });
 
-    res.render('coronaInfo');
+        console.log(jsonData);
+        res.render('coronaInfo', {data: jsonData});
+    });
+    
 });
 
 module.exports = router;

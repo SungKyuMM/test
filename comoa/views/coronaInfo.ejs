@@ -6,9 +6,36 @@
     <title>코로나 API 테스트 페이지</title>
 </head>
 <body>
-    
-    <h1>카카오 지도</h1>
-    <div id="map" style="width:500px;height:400px;"></div>
+    <div style="display: flex; padding: 20px 20px 20px 20px;">
+        <div>
+            <h1>카카오 지도</h1>
+            <div id="map" style="width:500px;height:400px;"></div>
+        </div>
+
+        <div style="padding: 100px 0px 0px 100px;">
+            <table>
+                <thead>
+                    <tr>
+                        <td>ID</td>
+                        <td>국가</td>
+                        <td>제목</td>
+                        <td>날짜</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% data.forEach(item => { %>
+                        <tr>
+                            <td><%=item.id %></td>
+                            <td><%=item.country %></td>
+                            <td><%=item.title %></td>
+                            <td><%=item.date %></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=appkey"></script>
     <script>
