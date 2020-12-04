@@ -4,3 +4,5 @@
 ##### npm i
 ##### npm i ejs
 ##### npm i -g nodemon
+##### npm i request
+##### npm i cheerio

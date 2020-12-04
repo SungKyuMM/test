@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>코로나 API 테스트 페이지</title>
+</head>
+<body>
+    
+    <h1>카카오 지도</h1>
+    <div id="map" style="width:500px;height:400px;"></div>
+
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=appkey"></script>
+    <script>
+		var container = document.getElementById('map');
+		var options = {
+			center: new kakao.maps.LatLng(37.542056, 127.108212),
+			level: 10
+		};
+
+		var map = new kakao.maps.Map(container, options);
+	</script>
+</body>
+</html>
