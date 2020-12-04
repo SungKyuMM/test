@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
 router.get('/info', function(req, res, next) {
 
     var url = 'http://apis.data.go.kr/1262000/SafetyNewsList/getCountrySafetyNewsList';
-    var queryParams = '?' + encodeURIComponent('ServiceKey') + '=service Key'; /* Service Key*/
+    var queryParams = '?' + encodeURIComponent('ServiceKey') + '=service key'; /* Service Key*/
     queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10'); /* */
     queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /* */
     queryParams += '&' + encodeURIComponent('title1') + '=' + encodeURIComponent('입국'); /* */
@@ -21,26 +21,39 @@ router.get('/info', function(req, res, next) {
     queryParams += '&' + encodeURIComponent('title4') + '=' + encodeURIComponent('항공권'); /* */
     queryParams += '&' + encodeURIComponent('title5') + '=' + encodeURIComponent('격리'); /* */
 
-    // queryParams =  urlencode.encode(queryParams);
-
     request({
         url: url + queryParams,
         method: 'GET'
     }, (error, response, body) => {
         
+        var listData = new Array();
+
         var data = convert.xml2json(body);
         data = JSON.parse(data);
 
         var list = data.elements[0].elements[1].elements[0].elements;    
         
         list.forEach(item => {
-            console.log('ID: ' + item.elements[4].elements[0].text);
-            console.log('COUNTRY: ' + item.elements[2].elements[0].text + '(' + item.elements[1].elements[0].text + ')');
-            console.log('TITLE: ' + item.elements[5].elements[0].text);
-            console.log('CONTENT: ' + item.elements[0].elements[0].text);
-            console.log('DATE: ' + item.elements[6].elements[0].text);
-            console.log('\n');
+            // console.log('ID: ' + item.elements[4].elements[0].text);
+            // console.log('COUNTRY: ' + item.elements[2].elements[0].text + '(' + item.elements[1].elements[0].text + ')');
+            // console.log('TITLE: ' + item.elements[5].elements[0].text);
+            // console.log('CONTENT: ' + item.elements[0].elements[0].text);
+            // console.log('DATE: ' + item.elements[6].elements[0].text);
+            // console.log('\n');
+
+            let data = new Object();
+            data.id = item.elements[4].elements[0].text.trim();
+            data.country = item.elements[2].elements[0].text + '(' + item.elements[1].elements[0].text + ')';
+            data.title = item.elements[5].elements[0].text;
+            data.content = item.elements[0].elements[0].text;
+            data.date = item.elements[6].elements[0].text;
+
+            listData.push(data);
         });
+
+        var jsonData = JSON.stringify(listData);
+        jsonData = JSON.parse(jsonData);
+        console.log(jsonData);
     });
 
     res.render('coronaInfo');
