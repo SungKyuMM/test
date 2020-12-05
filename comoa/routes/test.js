@@ -11,8 +11,10 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/info', async(req, res, next) => {
-    let safetyData = await coronaService.safetyNews();
-    res.render('coronaInfo', {data: safetyData});
+    let safetyData = await coronaService.safetyNews();    
+    let infectionData = await coronaService.infectionStatus();
+
+    res.render('coronaInfo', {safetyData: safetyData, infectionData: infectionData});    
 });
 
 module.exports = router;
