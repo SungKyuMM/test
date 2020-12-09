@@ -5,10 +5,16 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 // 선언 추가
-var mongodb = require('./service/mongo');
+const coronaKey = 'api_key';
+const cron = '* * * * *';   // 스케줄러 반복 시간 CRON (현제 1분마다 실행)
+var mongodb = require('./mongoDB/mongo');
+var schedule = require('./service/scheduleService');
+var coronaInit = require('./service/coronaInitService');
 
 // 실행 추가
-// mongodb();
+mongodb();
+schedule(coronaKey, cron);
+coronaInit(coronaKey);
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
