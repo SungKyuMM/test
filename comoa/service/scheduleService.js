@@ -169,7 +169,7 @@ module.exports = (key, cron) => {
     });
 
 
-    schedule.scheduleJob(cron, async () => {    
+    schedule.scheduleJob(cron, async () => {            
         let city = await cityStatus.findOne(data);
     
         if(city == null) {
@@ -217,6 +217,7 @@ module.exports = (key, cron) => {
                     jsonData = JSON.parse(jsonData);
         
                     cityStatus.insertMany(jsonData); 
+                    console.log('테스트');
                 }
             });
         }

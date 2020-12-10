@@ -139,18 +139,17 @@ svg.append("defs")
 
 //end slider part----------------------------------------------------------------------------------- 
 //var data = d3.tsv.parse(myData);
-var temp = JSON.parse('<%-JSON.stringify(infectionData)%>');
+var temp =  JSON.parse('<%-JSON.stringify(infectionData)%>');  
       //var asd = temp[0].seq;
     var myData = "date	확진자 수	사망자 수	검사 수	검사 진행 수	검사완료 수	결과 음성 수	치료 중 환자 수	격리 해제 수\n";
 temp.forEach(item =>{
-    var asd = item.create_dt;
-    asd = asd.split(' ')[0].replaceAll('-','');
-    myData = myData + `${asd}	${item.decide_cnt}	${item.death_cnt}	${item.acc_exam_cnt}	${item.exam_cnt}	${item.acc_exam_comp_cnt}	${item.result_neg_cnt}	${item.care_cnt}	${item.clear_cnt}\n`;    
+  var asd = item.create_dt;
+  asd = asd.split('T')[0].replaceAll('-','');
+    myData = myData + `${asd}	${item.decide_cnt}	${item.death_cnt}	${item.acc_exam_cnt}	${item.exam_cnt}	${item.acc_exam_comp_cnt}	${item.result_neg_cnt}	${item.care_cnt}	${item.clear_cnt}\n`;
 })
 
 
  var data = d3.tsv.parse(myData);
- console.log(data);
 // d3.tsv.parse(myData, function(error, data) { 
   color.domain(d3.keys(data[0]).filter(function(key) { // Set the domain of the color ordinal scale to be all the csv headers except "date", matching a color to an issue
     return key !== "date"; 
