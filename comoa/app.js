@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 // 선언 추가
-const coronaKey = 'apikey';
+const coronaKey = 'gS9%2Fg7TGU2ycNJmvCRBkL%2F%2FGW%2BO%2B2qLz64HxeAkRsfDkc7tddS8J7LufAm7qFTrlZl0D3cIPjHv2q7IASZHI3Q%3D%3D';
 const cron = '* * * * *';   // 스케줄러 반복 시간 CRON (현제 1분마다 실행)
 var mongodb = require('./mongoDB/mongo');
 var schedule = require('./service/scheduleService');
@@ -15,10 +15,6 @@ var coronaInit = require('./service/coronaInitService');
 mongodb();
 schedule(coronaKey, cron);
 coronaInit(coronaKey);
-
-// 가상 경로
-app.use('/css', express.static('public/stylesheets'));
-app.use('/js', express.static('public/javascripts'));
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -39,6 +35,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/test', testRouter);
+
+// 가상 경로
+app.use('/css', express.static('public/stylesheets'));
+app.use('/js', express.static('public/javascripts'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

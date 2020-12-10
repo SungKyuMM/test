@@ -2,7 +2,7 @@ var express = require('express');
 var coronaService = require('../service/coronaService');
 var router = express.Router();
 
-const InfectionStatus = require('../mongoDB/schema/infectionStatus');
+const infectionMongo = require('../mongoDB/infectionStatusMongo');
 
 // 테이스용 페이지 (나중에 폭발)
 router.get('/', (req, res, next) => {
@@ -31,6 +31,14 @@ router.get('/test', (req, res) => {
         }
     }); 
     res.end('test');
+});
+
+router.get('/t2', async (req, res) => {
+    let data = {create_dt: {$gte: new Date("2020-11-01")}};
+    let infectionData = await infectionMongo.find(data);
+    // console.log(infectionData);
+    // let infectionData = await coronaService.infectionStatus();
+    res.render('t2', {infectionData: infectionData});
 });
 
 module.exports = router;

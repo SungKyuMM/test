@@ -22,4 +22,15 @@ mongo.findOne = async (data) => {
     });
 };
 
+mongo.find = async (data) => {
+    return new Promise (resolve => {
+        InfectionStatus.find(data, (err, result) => {
+            if(err) console.log(`InfectionStatus MongoDB Error: ${err}`);
+            else {
+               resolve(result);
+            }
+        });
+    });
+};
+
 module.exports = mongo;
