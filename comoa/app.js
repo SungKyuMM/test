@@ -6,7 +6,7 @@ var logger = require('morgan');
 
 // 선언 추가
 const coronaKey = 'gS9%2Fg7TGU2ycNJmvCRBkL%2F%2FGW%2BO%2B2qLz64HxeAkRsfDkc7tddS8J7LufAm7qFTrlZl0D3cIPjHv2q7IASZHI3Q%3D%3D';
-const cron = '* * * * *';   // 스케줄러 반복 시간 CRON (현제 1분마다 실행)
+const cron = '* * * * *';   // 스케줄러 반복 시간 CRON (현재 1분마다 실행)
 var mongodb = require('./mongoDB/mongo');
 var schedule = require('./service/scheduleService');
 var coronaInit = require('./service/coronaInitService');
