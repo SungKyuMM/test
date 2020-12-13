@@ -1,4 +1,4 @@
-const CityStatus = require('../mongoDB/schema/cityStatus');
+const CityStatus = require('./schema/cityStatus');
 
 var mongo = {};
 

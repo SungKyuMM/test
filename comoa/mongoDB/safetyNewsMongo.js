@@ -1,4 +1,4 @@
-const SafetyNews = require('../mongoDB/schema/safetyNews');
+const SafetyNews = require('./schema/safetyNews');
 
 var mongo = {};
 

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <% if(loginUser) { %> 
+        <form action="/users/logout", method="POST">
+            <h1>환영합니다.</h1>
+            <input type="submit" value="로그아웃">
+            <a href="/users/mypage">마이페이지</a>
+        </form>
+    <% } else { %>
+        <% if(message) { %>
+            <h5 style="color: red;"><%=message %></h5>
+        <% } %>
+        <form action="/users/login", method="POST">
+            이메일: <input type="email" name="email" value=<%=userEmail %>><br>
+            PW: <input type="password" name="password"><br>
+            기억하기: <input type="checkbox" name="rememberEmail" <% if(userEmail) { %> checked <% } %>><br>
+            <input type="submit" value="가입">
+        </form>
+    <% } %>
+</body>
+</html>

@@ -217,7 +217,6 @@ module.exports = (key, cron) => {
                     jsonData = JSON.parse(jsonData);
         
                     cityStatus.insertMany(jsonData); 
-                    console.log('테스트');
                 }
             });
         }
