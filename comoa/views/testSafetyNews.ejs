@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <td>번호</td>
+                <td>나라</td>
+                <td>제목</td>
+                <td>날짜</td>
+            </tr>
+        </thead>
+        <tbody>
+            <% post.forEach(item => { %>
+                <tr>
+                    <td>1</td>
+                    <td><%=item.country %></td>
+                    <td><%=item.title %></td>
+                    <td><%=item.create_dt.toISOString().substring(0, 10) %></td>
+                </tr>
+            <% }); %>            
+        </tbody>
+    </table>
+   
+    <div id="paging_btn">
+        <% if(start) { %>
+            <a href='/test/safePaging?startPage=<%=parseInt(nowPage) - 1 %>' >
+                <i class="fa fa-angle-left"></i>이전
+            </a>
+        <% } %>
+            &nbsp;
+        <% if(end) { %>
+            <a href='/test/safePaging?startPage=<%=parseInt(nowPage) + 1 %>' >
+                다음<i class="fa fa-angle-right"></i>
+            </a>
+        <% } %>
+    </div>
+
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script> 
+</body>
+</html>

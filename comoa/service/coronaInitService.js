@@ -45,9 +45,7 @@ module.exports = async (key) => {
             method: 'GET'
         }, (err, response, body) => {
             if(err) throw err;
-            
-            var listData = new Array();
-    
+                
             var jsonBody = convert.xml2json(body);
             jsonBody = JSON.parse(jsonBody);
     
@@ -62,15 +60,14 @@ module.exports = async (key) => {
                     data.title = item.elements[5].elements[0].text;
                     data.content = item.elements[0].elements[0].text;
                     data.create_dt = item.elements[6].elements[0].text;
-    
-                    listData.push(data);
+                        
+                    var jsonData = JSON.stringify(data);
+                    jsonData = JSON.parse(jsonData);    
+
+                    safetyNews.updateMany(jsonData);
                 });
             
-                var jsonData = JSON.stringify(listData);
-                jsonData = JSON.parse(jsonData);    
-
-                let msg = 'SafetyNews MongoDB Success!';
-                safetyNews.insertMany(jsonData, msg);
+                console.log('SafetyNews MongoDB Success!');
             }
         });
     }    
