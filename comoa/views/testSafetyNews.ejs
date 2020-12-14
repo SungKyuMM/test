@@ -10,7 +10,6 @@
     <table>
         <thead>
             <tr>
-                <td>번호</td>
                 <td>나라</td>
                 <td>제목</td>
                 <td>날짜</td>
@@ -19,9 +18,8 @@
         <tbody>
             <% post.forEach(item => { %>
                 <tr>
-                    <td>1</td>
                     <td><%=item.country %></td>
-                    <td><%=item.title %></td>
+                    <td><a href="/test/safeContent?title=<%=item.title %>"><%=item.title %></a></td>
                     <td><%=item.create_dt.toISOString().substring(0, 10) %></td>
                 </tr>
             <% }); %>            

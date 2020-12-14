@@ -51,4 +51,12 @@ router.get('/safePaging', async (req, res) => {
     res.render('testSafetyNews', {post: post, nowPage: nowPage, start: start, end: end});
 });
 
+router.get('/safeContent', async (req, res) => {
+
+    let data = {title: req.query.title};
+    let safeContent = await safetyNewsMongo.findOne(data);
+
+    res.render('testSafetyNewsContent', {safeContent: safeContent});
+});
+
 module.exports = router;
