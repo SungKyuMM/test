@@ -4,12 +4,12 @@ module.exports = {
   user: (req, res, next) => {
     if (req.isAuthenticated())
       return next();
-    res.redirect('/users/login');
+    res.redirect('/login');
   }, 
 
   admin: (req, res, next) => {
     if (req.isAuthenticated() && req.user.authority == 'ADMIN')
       return next();
-    res.redirect('/users/login');
+    res.redirect('/login');
   }
 };

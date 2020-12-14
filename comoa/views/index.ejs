@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title><%=title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <h1><%=title %></h1>
+    <% if(loginUser) { %>
+      <p>Welcome to <%=loginUser.name %></p>
+      <form action="/logout" method="post">
+        <input type="submit" value="로그아웃">
+        <a href="/users/mypage">마이페이지</a>
+      </form>
+    <% } else { %>        
+      <p>Welcome to <%=title %></p>
+      <a href="/login">로그인</a>
+    <% } %>
   </body>
 </html>
