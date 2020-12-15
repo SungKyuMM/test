@@ -21,7 +21,7 @@ router.get('/info', async(req, res, next) => {
     res.render('coronaInfo', {safetyData: safetyData, infectionData: infectionData, ageGenderData: ageGenderData, cityData: cityData, overseaData: overseaData});    
 });
 
-router.get('/t2', infectionController.infextionGraph);
+router.get('/t2', infectionController.infectionGraph);
 
 router.get('/safePaging', safetyNewsController.safePaging);
 
