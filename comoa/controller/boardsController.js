@@ -6,7 +6,9 @@ const mongoose = require("mongoose");
 
 module.exports = {
     showList: async (req, res, next) => {
-        let count = 0;
+        let type = req.params.type;
+
+        let count = await boardMongo.countBoard(type);
         let start = false;
         let end = false;
         let nowPage = req.query.startPage;
@@ -19,7 +21,7 @@ module.exports = {
         if(lastPageNum == nowPage) end = false;
 
         let data = {
-            type: req.params.type,
+            type: type,
             sort: -1,
             maxPage: 10,
             startPage: (nowPage-1) * 10
@@ -27,7 +29,7 @@ module.exports = {
 
         let boardList = await boardMongo.typePaging(data);
 
-        res.render('testboards', {type: data.type, list: boardList});
+        res.render('testboards', {type: data.type, list: boardList, nowPage: nowPage, start: start, end: end});
     }, 
 
     showBoard: async (req, res, next) => {

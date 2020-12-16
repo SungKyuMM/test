@@ -40,6 +40,19 @@
         </tbody>
     </table>
 
+    <div id="paging_btn">
+        <% if(start) { %>
+            <a href='/boards/<%=type %>?startPage=<%=parseInt(nowPage) - 1 %>' >
+                <i class="fa fa-angle-left"></i>이전
+            </a>
+        <% } %>
+            &nbsp;
+        <% if(end) { %>
+            <a href='/boards/<%=type %>?startPage=<%=parseInt(nowPage) + 1 %>' >
+                다음<i class="fa fa-angle-right"></i>
+            </a>
+        <% } %>
+    </div>
 
 </body>
 </html>

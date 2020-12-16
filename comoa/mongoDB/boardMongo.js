@@ -12,6 +12,17 @@ module.exports = {
         });
     },
 
+    countBoard: async (type) => {
+        return new Promise (resolve => {
+            Board.countDocuments({type: type}, (err, result) => {
+                if(err) console.log(`Board MongoDB Error: ${err}`);
+                else {                    
+                    resolve(result);
+                }
+            });
+        });
+    },
+
     findBoard: async (data) => {
         return new Promise (resolve => {
             Board.findById(data, (err, result) => {
