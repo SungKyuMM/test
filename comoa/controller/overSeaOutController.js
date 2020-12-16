@@ -13,12 +13,24 @@ module.exports = {
             day = '0' + day;
         }
         
-        let now = year + '-' + month + '-' + day;
-        let data = {create_dt: {$gte: new Date(now)}};
+        let now = new Date(year + '-' + month + '-' + day);        
+        let data = {create_dt: {$gte: now}};
 
         let world = await overSeaOutMongo.find(data);
-        let worldData = await codeService(world);
+        
+        // 최신 날짜 데이터가 API에 없는 경우 전날 데이터 불러오기
+        if(Object.keys(world).length == 0) {
+            let yesterDate = now.getTime() - (1 * 24 * 60 * 60 * 1000);
+            now.setTime(yesterDate);
+            
+            data = {create_dt: {$gte: now}};
+            world = await overSeaOutMongo.find(data);
+        }        
 
-        res.render('testWorld', {worldData: worldData});
+        let codeData = await codeService(world);
+        let worldData = codeData['world'];
+        let covidData = codeData['covid'];
+
+        res.render('testWorld', {worldData: worldData, covidData: covidData});
     }
 }

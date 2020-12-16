@@ -6,7 +6,7 @@ var logger = require('morgan');
 
 // 선언 추가
 const coronaKey = 'gS9%2Fg7TGU2ycNJmvCRBkL%2F%2FGW%2BO%2B2qLz64HxeAkRsfDkc7tddS8J7LufAm7qFTrlZl0D3cIPjHv2q7IASZHI3Q%3D%3D';
-const cron = '* * * * *';   // 스케줄러 반복 시간 CRON (현재 1분마다 실행)
+const cron = '*/10 * * * *';   // 스케줄러 반복 시간 CRON (현재 10분마다 실행)
 var mongodb = require('./mongoDB/mongo');
 var schedule = require('./service/scheduleService');
 var coronaInit = require('./service/coronaInitService');
@@ -14,10 +14,11 @@ var passport = require('passport');
 var passportConfig = require('./service/passport');
 var session = require('express-session');
 var flash = require('connect-flash');
-
+var methodOverride = require('method-override');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var boardsRouter = require('./routes/boards');
 var testRouter = require('./routes/test');
 
 var app = express();
@@ -55,6 +56,7 @@ app.use(passport.session());
 passportConfig();
 schedule(coronaKey, cron);
 coronaInit(coronaKey);
+app.use(methodOverride('_method'))
 
 // 로그인 정보 - 페이지 전환 시 마다 passport로 인증한 값을 locals에 저장하여 같이 데이터 전송
 app.use((req, res, next) => {
@@ -65,6 +67,7 @@ app.use((req, res, next) => {
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/boards', boardsRouter);
 app.use('/test', testRouter);
 
 // catch 404 and forward to error handler

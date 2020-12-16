@@ -15,6 +15,7 @@ module.exports = () => {
     mongo.connection.on('disconnected', connect);
     
     require('./schema/user');
+    require('./schema/board');
     require('./schema/safetyNews');
     require('./schema/infectionStatus');
     require('./schema/ageGenderStatus');

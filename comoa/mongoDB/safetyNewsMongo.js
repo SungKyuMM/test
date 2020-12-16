@@ -16,11 +16,22 @@ module.exports = {
         });
     },
 
+    safeContent: async (data) => {
+        return new Promise (resolve => {
+            SafetyNews.findById(data, (err, result) => {
+               if(err) console.log(`SafetyNews MongoDB Error: ${err}`);
+               else {                
+                   resolve(result);
+               }
+            });
+        });
+    },
+
     findOne: async (data) => {
         return new Promise (resolve => {
             SafetyNews.findOne(data, (err, result) => {
                if(err) console.log(`SafetyNews MongoDB Error: ${err}`);
-               else {
+               else {                
                    resolve(result);
                }
             });
@@ -38,7 +49,7 @@ module.exports = {
         return new Promise (resolve => {
             SafetyNews.countDocuments({}, (err, result) => {
                 if(err) console.log(`SafetyNews MongoDB Error: ${err}`);
-                else {
+                else {                    
                     resolve(result);
                 }
             });

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1><%=board.type %> ModifyBoards</h1>
+    <hr>
+
+    <br>
+
+    <div style="padding: 20px 50px 0px 50px;">
+        <form action="./<%-board._id %>?_method=PUT" method="POST">
+            <input type="hidden" name="type" value="<%-board.type %>">
+            <input type="hidden" name="id" value="<%-board._id %>">
+            <div>제목: 
+                <input type="text" name="title" value="<%-board.title %>">
+            </div>
+            <div style="text-align: right;">            
+                날짜: <%-board.reg_date.toISOString().substring(0, 10) %> | 
+                작성자: <%-board.writer.name %>
+            </div>
+            <hr>
+            <div style="padding: 10px 20px 0px 20px;">
+                내용:<br><br>
+                <textarea id="summernote" name="content" cols="100" rows="10">
+                    <%-board.content %>
+                </textarea>                
+            </div>
+            <hr>
+            <br>
+            <input type="submit" value="수정">
+        </form>
+    </div>
+
+</body>
+</html>

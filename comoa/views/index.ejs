@@ -6,6 +6,8 @@
   </head>
   <body>
     <h1><%=title %></h1>
+    <a href="/boards/free?startPage=1">자유게시판</a>
+    <a href="/boards/covid?startPage=1">코로나게시판</a>
     <% if(loginUser) { %>
       <p>Welcome to <%=loginUser.name %></p>
       <form action="/logout" method="post">

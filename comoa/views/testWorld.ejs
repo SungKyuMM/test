@@ -29,9 +29,9 @@
             },
             series: {
                 regions: [{
-                    scale: ['#C8EEFF', '#0071A4'],
+                    scale: ['#FFC6C6', '#930000'],
                     normalizeFunction: 'polynomial',
-                    values: data
+                    values: JSON.parse('<%-JSON.stringify(covidData)%>')
                 }]
             },  
             onRegionTipShow: (e, el, code) => {

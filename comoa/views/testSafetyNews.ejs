@@ -19,7 +19,7 @@
             <% post.forEach(item => { %>
                 <tr>
                     <td><%=item.country %></td>
-                    <td><a href="/test/safeContent?title=<%=item.title %>"><%=item.title %></a></td>
+                    <td><a href="/test/safeContent?id=<%=item._id %>"><%=item.title %></a></td>
                     <td><%=item.create_dt.toISOString().substring(0, 10) %></td>
                 </tr>
             <% }); %>            

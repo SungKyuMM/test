@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1><%=type %> ShowBoards</h1>
+    <hr>
+
+    <br>
+
+    <div style="padding: 20px 50px 0px 50px;">
+        <div>제목: <%-board.title %></div>
+        <div style="text-align: right;">            
+            날짜: <%-board.reg_date.toISOString().substring(0, 10) %> | 
+            작성자: <%-board.writer.name %>
+        </div>
+        <hr>
+        <div style="padding: 10px 20px 0px 20px;">
+            내용:<br><br>
+            <%-board.content %>
+        </div>
+        <hr>
+        <br>
+        <% if(loginUser) { %>
+            <% if(board.writer.email == loginUser.email) { %>
+                <a href="../modify/<%-board._id %>">수정하기</a>
+                
+                <form action="../delete/<%-board.type %>?_method=DELETE" method="POST">
+                    <input type="hidden" name="id" value="<%-board._id %>">
+                    <input type="submit" value="삭제하기">
+                </form>
+            <% } %>
+        <% } %>
+    </div>
+
+</body>
+</html>

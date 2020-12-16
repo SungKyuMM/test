@@ -25,9 +25,9 @@ module.exports = {
     },
     
     safeContent: async (req, res, next) => {
-        let data = {title: req.query.title};
-        let safeContent = await safetyNewsMongo.findOne(data);
-
+        let data = req.query.id;        
+        let safeContent = await safetyNewsMongo.safeContent(data);
+        
         res.render('testSafetyNewsContent', {safeContent: safeContent});
     }
 }

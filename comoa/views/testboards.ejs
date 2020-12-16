@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1><%=type %> Boards</h1>
+    <hr>
+
+    <a href="./register/<%=type %>">글작성</a>
+    <br><br>
+
+    <table>
+        <thead>
+            <tr>
+                <td>번호</td>
+                <td>제목</td>
+                <td>작성자</td>
+                <td>작성날짜</td>
+            </tr>
+        </thead>
+        <tbody>
+            <% if(Object.keys(list).length == 0) { %>
+                <tr>
+                    <td colspan="4">게시글이 없습니다.</td>
+                </tr>
+            <% } else { %>
+                <% list.forEach(item => { %>
+                <tr>
+                    <td>번호</td>
+                    <td><a href="./<%=type %>/<%=item._id %>"><%-item.title %></a></td>
+                    <td><%-item.writer.name %></td>
+                    <td><%-item.reg_date.toISOString().substring(0, 10) %></td>
+                </tr>
+                <% }); %>
+            <% } %>
+        </tbody>
+    </table>
+
+
+</body>
+</html>
