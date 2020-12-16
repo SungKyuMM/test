@@ -4,19 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <!-- include summernote css/js -->
+    <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script> -->
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 </head>
 <body>
-
+    
     <h1><%=type %> Boards register</h1>
     <hr>
-
+    
     <form action="./<%=type %>" method="POST">
         <input type="hidden" name="type" value="<%=type %>">
         <input type="text" name="title" placeholder="제목입력"><br><br>
-        <textarea id="summernote" name="content" cols="100" rows="10"></textarea>
+        <textarea id="summernote" name="content"></textarea>
         <br><br>
         <input type="submit" value="글등록">
     </form>
-
+        
+    <!-- summernote js -->
+    <script src="/js/summernote.js"></script>       
 </body>
 </html>

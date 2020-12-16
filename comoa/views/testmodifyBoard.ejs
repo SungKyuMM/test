@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <!-- include summernote css/js -->
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 </head>
 <body>
 
@@ -26,7 +31,7 @@
             <hr>
             <div style="padding: 10px 20px 0px 20px;">
                 내용:<br><br>
-                <textarea id="summernote" name="content" cols="100" rows="10"><%-board.content%></textarea>                
+                <textarea id="summernote" name="content"><%-board.content%></textarea>                
             </div>
             <hr>
             <br>
@@ -34,5 +39,7 @@
         </form>
     </div>
 
+    <!-- summernote js -->
+    <script src="/js/summernote.js"></script> 
 </body>
 </html>
