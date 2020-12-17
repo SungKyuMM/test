@@ -27,42 +27,40 @@
 
                 <!-- Form -->
                 <div>
-                    <form>
-                        <div class="form-row">
-                            <div class="form-group col-12 col-md-12">
-                                <label for="title">글제목</label>
-                                <input class="form-control" id="title" type="text" name="title" aria-describedby="titleHelp" placeholder="제목입력" value="<%-board.title %>" readonly="readonly">
-                            </div>
+                    <div class="form-row">
+                        <div class="form-group col-12 col-md-12">
+                            <label for="title">글제목</label>
+                            <input class="form-control" id="title" type="text" name="title" aria-describedby="titleHelp" placeholder="제목입력" value="<%-board.title %>" readonly="readonly">
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-12 col-md-12">
-                                <label for="title">작성일 : <%-board.reg_date.toISOString().substring(0, 10) %></label> /
-                                <label for="title">작성자 : <%-board.writer.name %></label>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-12 col-md-12">
+                            <label for="title">작성일 : <%-board.reg_date.toISOString().substring(0, 10) %></label> /
+                            <label for="title">작성자 : <%-board.writer.name %></label>
 
-                            </div>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-12 col-md-12">
-                                <label for="summernote">내용</label>
-                                <%-board.content %>
-                            </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-12 col-md-12">
+                            <label for="summernote">내용</label>
+                            <%-board.content %>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-12 col-md-12">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-12 col-md-12">
 
-                                <% if(loginUser) { %>
-                                    <% if(board.writer.email == loginUser.email) { %>
+                            <% if(loginUser) { %>
+                                <% if(board.writer.email == loginUser.email) { %>
 
-                                        <form action="../delete/<%-board.type %>?_method=DELETE" method="POST">
-                                            <input type="hidden" name="id" value="<%-board._id %>">
-                                            <input type="submit" class="btn btn-soft-danger float-right " value="삭제하기">
-                                        </form>
-                                        <button onclick="location.replace('../modify/<%-board._id %>')" class="btn btn-soft-primary mr-3 float-right">수정하기</button>
+                                    <form action="../delete/<%-board.type %>?_method=DELETE" method="POST">
+                                        <input type="hidden" name="id" value="<%-board._id %>">
+                                        <input type="submit" class="btn btn-soft-danger float-right " value="삭제하기">
+                                    </form>
+                                    <button onclick="location.replace('../modify/<%-board._id %>')" class="btn btn-soft-primary mr-3 float-right">수정하기</button>
+                                    <% } %>
                                         <% } %>
-                                            <% } %>
-                            </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
                 <!-- End Form -->
             </div>
