@@ -67,10 +67,10 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get('/', indexRouter);
-app.get('/users', usersRouter);
-app.get('/boards', boardsRouter);
-app.get('/test', testRouter);
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+app.use('/boards', boardsRouter);
+app.use('/test', testRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
