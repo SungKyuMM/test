@@ -1,17 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
-    <h1><%=type %> ShowBoards</h1>
-    <hr>
+<div class="content">
+    <div class="py-4 px-3 px-md-4">
+        <div class="card mb-3 mb-md-4">
 
-    <br>
+            <div class="card-body">
+                <!-- Breadcrumb -->
+                <nav class="d-none d-md-block" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="#">
+                                <%=type %> 게시판</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            <%=type %> ShowBoards</li>
+                    </ol>
+                </nav>
+                <!-- End Breadcrumb -->
 
+<<<<<<< HEAD
     <div style="padding: 20px 50px 0px 50px;">
         <div>제목: <%-board.title %></div>
         <div style="text-align: right;">            
@@ -42,3 +51,50 @@
     </div>       
 </body>
 </html>
+=======
+                <div class="mb-3 mb-md-4 d-flex justify-content-between">
+                    <div class="h3 mb-0">
+                        <%=type %> ShowBoards</div>
+                </div>
+
+                <!-- Form -->
+                <div>
+                    <div class="form-row">
+                        <div class="form-group col-12 col-md-12">
+                            <label for="title">글제목</label>
+                            <input class="form-control" id="title" type="text" name="title" aria-describedby="titleHelp" placeholder="제목입력" value="<%-board.title %>" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-12 col-md-12">
+                            <label for="title">작성일 : <%-board.reg_date.toISOString().substring(0, 10) %></label> /
+                            <label for="title">작성자 : <%-board.writer.name %></label>
+
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-12 col-md-12">
+                            <label for="summernote">내용</label>
+                            <%-board.content %>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-12 col-md-12">
+
+                            <% if(loginUser) { %>
+                                <% if(board.writer.email == loginUser.email) { %>
+
+                                    <form action="../delete/<%-board.type %>?_method=DELETE" method="POST">
+                                        <input type="hidden" name="id" value="<%-board._id %>">
+                                        <input type="submit" class="btn btn-soft-danger float-right " value="삭제하기">
+                                    </form>
+                                    <button onclick="location.replace('../modify/<%-board._id %>')" class="btn btn-soft-primary mr-3 float-right">수정하기</button>
+                                    <% } %>
+                                        <% } %>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Form -->
+            </div>
+        </div>
+>>>>>>> 4282f22a1137da09dab963376c1c15173faf6676
