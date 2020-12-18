@@ -1,10 +1,12 @@
 var express = require('express');
 var passport = require('passport');
 var router = express.Router();
+const infectionController = require('../controller/infectionStatusController2');
 
-router.get('/', (req, res, next) => {
-    res.render('index');
-});
+
+
+
+router.get('/', infectionController.infectionGraph);
 
 router.get('/aa', (req, res, next) => {
     res.render('sample', { title: '11' });

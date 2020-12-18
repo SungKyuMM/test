@@ -15,33 +15,15 @@
                     <div class="card-body p-0">
                         <div class="media align-items-center px-3 px-md-4 mb-3 mb-md-4">
                             <div class="media-body">
-                                <h4 class="h3 lh-1 mb-2">총 44,364 명</h4>
+                                <h4 class="h3 lh-1 mb-2">총 <%= infectionData[0].decide_cnt %> 명</h4>
                                 <p class="small text-muted mb-0">
-                                    Today <span class="text-danger mx-1">880</span> 명
+                                    Today <span class="text-danger mx-1"><%= today.Kodecide_cnt %></span> 명
                                 </p>
                             </div>
                         </div>
 
                         <div class="js-area-chart chart--points-invisible chart--labels-hidden position-relative" data-series='[
-                             [
-                               {"meta":"Items","value":"700"},
-                               {"meta":"Items","value":"520"},
-                               {"meta":"Items","value":"470"},
-                               {"meta":"Items","value":"580"},
-                               {"meta":"Items","value":"380"},
-                               {"meta":"Items","value":"600"},
-                               {"meta":"Items","value":"707"},
-                               {"meta":"Items","value":"400"},
-                               {"meta":"Items","value":"301"},
-                               {"meta":"2020-12-08","value":"530"},
-                               {"meta":"2020-12-09","value":"600"},
-                               {"meta":"2020-12-10","value":"403"},
-                               {"meta":"2020-12-11","value":"550"},
-                               {"meta":"2020-12-12","value":"400"},
-                               {"meta":"2020-12-13","value":"300"},
-                               {"meta":"2020-12-14","value":"700"},
-                               {"meta":"2020-12-15","value":"830"}
-                             ]
+                            <%- JSON.stringify(KoList) %>
                            ]' data-height="115" data-high="1000" data-chart-padding='{"top": 5}' data-is-hide-area="true" data-line-colors='["#8069f2"]' data-line-dasharrays='[0,0]' data-line-width='["2px","2px"]' data-is-line-smooth='[false]' data-fill-opacity="1"
                             data-fill-colors='["#8069f2"]' data-stroke-dash-array-axis-y="4" data-is-show-tooltips="true" data-tooltip-custom-class="chart-tooltip chart-tooltip--sections-blocked chart-tooltip__meta--text-muted small text-white text-nowrap p-2"
                             data-tooltip-currency="total " data-is-show-points="true" data-point-custom-class='chart__point--donut chart__point--border-xs border-primary rounded-circle' data-point-dimensions='{"width":15,"height":15}'></div>
@@ -260,63 +242,35 @@
                             <div class="row text-center">
                                 <div class="col-6 col-md-4 mb-3 mb-md-0">
                                     <div class="h3 mb-0">
-                                        <span class="text-danger">+</span>828
+                                        <span class="text-danger">+</span> <%= today.Kodecide_cnt %>
                                     </div>
                                     <small class="text-muted">확진환자</small>
                                 </div>
 
                                 <div class="col-6 col-md-4 mb-3 mb-md-0 border-left">
                                     <div class="h3 mb-0">
-                                        <span class="text-success">+</span>105
+                                        <span class="text-success">+</span> <%= today.KoEXAM_CNT %>
                                     </div>
                                     <small class="text-muted">검사중</small>
                                 </div>
 
                                 <div class="col-12 col-md-4 border-left">
                                     <div class="h3 mb-0">
-                                        <span class="text-danger">-</span>333
+                                        <span class="text-danger">-</span> <%= today.KoCLEAR_CNT %>
                                     </div>
                                     <small class="text-muted">격리해제</small>
                                 </div>
                             </div>
 
-                            <div class="js-area-chart chart chart--axis-x--nowrap chart--points-invisible position-relative mh-15_6 safari-overflow-hidden pt-4 pt-md-5 pb-1" data-series='[
-                           [
-                             {"meta":"6/01/2019 9:00 PM","value":"900"},
-                             {"meta":"6/02/2019 9:00 PM","value":"800"},
-                             {"meta":"6/03/2019 9:00 PM","value":"1000"},
-                             {"meta":"6/04/2019 9:00 PM","value":"1100"},
-                             {"meta":"6/05/2019 9:00 PM","value":"1200"},
-                             {"meta":"6/06/2019 9:00 PM","value":"1250"},
-                             {"meta":"6/07/2019 9:00 PM","value":"1300"},
-                             {"meta":"6/08/2019 9:00 PM","value":"1350"},
-                             {"meta":"6/09/2019 9:00 PM","value":"1200"},
-                             {"meta":"6/10/2019 9:00 PM","value":"1100"},
-                             {"meta":"6/11/2019 9:00 PM","value":"1050"},
-                             {"meta":"6/12/2019 9:00 PM","value":"1150"},
-                             {"meta":"6/13/2019 9:00 PM","value":"1300"},
-                             {"meta":"6/14/2019 9:00 PM","value":"1400"},
-                             {"meta":"6/15/2019 9:00 PM","value":"1300"},
-                             {"meta":"6/16/2019 9:00 PM","value":"1200"},
-                             {"meta":"6/17/2019 9:00 PM","value":"1600"},
-                             {"meta":"6/18/2019 9:00 PM","value":"1300"},
-                             {"meta":"6/19/2019 9:00 PM","value":"1200"},
-                             {"meta":"6/20/2019 9:00 PM","value":"1400"},
-                             {"meta":"6/21/2019 9:00 PM","value":"1500"},
-                             {"meta":"6/22/2019 9:00 PM","value":"1550"},
-                             {"meta":"6/23/2019 9:00 PM","value":"1600"},
-                             {"meta":"6/24/2019 9:00 PM","value":"1650"},
-                             {"meta":"6/25/2019 9:00 PM","value":"1850"},
-                             {"meta":"6/26/2019 9:00 PM","value":"1700"},
-                             {"meta":"6/27/2019 9:00 PM","value":"1950"},
-                             {"meta":"6/28/2019 9:00 PM","value":"1800"},
-                             {"meta":"6/29/2019 9:00 PM","value":"1900"},
-                             {"meta":"6/30/2019 9:00 PM","value":"1950"}
-                           ]
-                         ]' data-labels='["June 01","June 02","June 03","June 04","June 05","June 06","June 07","June 08","June 09","June 10","June 11","June 12","June 13","June 14","June 15","June 16","June 17","June 18","June 19","June 20","June 21","June 22","June 23","June 24","June 25","June 26","June 27","June 28","June 29","June 30"]'
-                                data-labels-qty="6" data-labels-start-from="1" data-prefix="$" data-height="250" data-mobile-height="75" data-high="3000" data-low="500" data-offset-x="30" data-offset-y="60" data-is-line-smooth='[false]' data-line-width='["1px"]'
+                            <div class="js-area-chart chart chart--axis-x--nowrap chart--points-invisible position-relative mh-15_6 safari-overflow-hidden pt-4 pt-md-5 pb-1" data-series= 
+                            '[
+                            <%- JSON.stringify(KoList) %>
+                         ]'
+
+                          data-labels='<%- JSON.stringify(dateList) %>'
+                                data-labels-qty="6" data-labels-start-from="1"  data-height="250" data-mobile-height="75" data-high="1500" data-low="0" data-offset-x="30" data-offset-y="60" data-is-line-smooth='[false]' data-line-width='["1px"]'
                                 data-line-colors='["#8069f2"]' data-fill-opacity="1" data-fill-colors='["#ecebfa"]' data-text-size-x="14px" data-text-color-x="#4a4e69" data-text-offset-top-x="10" data-text-align-axis-x="center" data-text-size-y="14px" data-text-color-y="#868e96"
-                                data-is-show-tooltips="true" data-is-tooltip-divided="true" data-tooltip-custom-class="chart-tooltip--divided chart-tooltip__value--bg-black chart-tooltip__meta--bg-primary small text-white" data-tooltip-currency="USD " data-is-show-points="true"
+                                data-is-show-tooltips="true" data-is-tooltip-divided="true" data-tooltip-custom-class="chart-tooltip--divided chart-tooltip__value--bg-black chart-tooltip__meta--bg-primary small text-white" data-tooltip-currency="일일확진자 " data-is-show-points="true"
                                 data-point-custom-class='chart__point--donut chart__point--has-line-helper chart__point--border-xxs border-primary rounded-circle' data-point-dimensions='{"width":8,"height":8}'></div>
                         </div>
                         <!-- 세계현황 View-->
