@@ -32,10 +32,10 @@
             <tbody>
                 <% for (var i = 0; i < 9; i++) { %>
                     <tr>
-                        <td>1<%=ageGender[i].gubun %></td>
-                        <td>1<%=ageGender[i].conf_case%>명(<%=ageGender[i].conf_case_rate %>%)</td>
-                        <td>1<%=ageGender[i].death%>명(<%=ageGender[i].death_rate %>%)</td>
-                        <td>1<%=ageGender[i].critical%>%</td>
+                        <td><%=ageGender[i].gubun %></td>
+                        <td><%=ageGender[i].conf_case%>명(<%=ageGender[i].conf_case_rate %>%)</td>
+                        <td><%=ageGender[i].death%>명(<%=ageGender[i].death_rate %>%)</td>
+                        <td><%=ageGender[i].critical_rate%>%</td>
                     </tr>
                 <% } %>
             </tbody>

@@ -3,6 +3,7 @@ const { get } = require("../routes");
 const boardMongo = require('../mongoDB/boardMongo');
 const board = require("../mongoDB/schema/board");
 const mongoose = require("mongoose");
+const replyMongo = require("../mongoDB/replyMongo");
 
 module.exports = {
     showList: async (req, res, next) => {
@@ -34,11 +35,13 @@ module.exports = {
 
     showBoard: async (req, res, next) => {
         let type = req.params.type;
-        let _id = req.params._id
+        let _id = req.params._id       
+        let data = {board_id: mongoose.Types.ObjectId(_id)};
 
-        let board = await boardMongo.findBoard(_id);
+        let board = await boardMongo.findBoard(_id);       
+        let reply = await replyMongo.replyList(data);        
         
-        res.render('testShowBoard', {type: type, board: board});
+        res.render('testShowBoard', {type: type, board: board, reply: reply});
     },
 
     registerBoard: (req, res, next) => {
@@ -60,7 +63,7 @@ module.exports = {
             };
 
             boardMongo.registerBoard(data);
-            res.redirect(`/boards/${type}`);
+            res.render(`/boards/${type}`);
         }
     },
 

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <textarea id="content" name="content" style="width:100%;" rows="5"></textarea>
+    <div style="text-align: right;">
+        <button id="enter">댓글달기</button>
+        <button id="cancel">취소</button>
+    </div>
+
+    <hr>
+
+    <div id='replyList'>    
+        <% if(Object.keys(reply).length > 0) { %>  
+            <% reply.forEach(item => { %>  
+                <div style="border: 1px slategrey solid; padding: 10px 10px 10px 10px;">
+                    <div style="display: flex;">
+                        <div>profile</div>|
+                        <div><%-item.content %></div>
+                    </div>
+                    <% if(loginUser) { %>
+                        <% if(item.writer.email == loginUser.email) { %>
+                            <hr>                    
+                            <div style="text-align: right;">
+                                <button id="enter">수정</button>
+                                <button id="cancel">삭제</button>
+                            </div>
+                        <% } %>
+                    <% } %>
+                </div>  
+                <br>   
+            <% }); %>   
+        <% } else { %>
+            <div style="text-align: center;">
+                <h3>댓글이 없습니다.</h3>
+            </div>
+        <% } %>
+    </div>
+
+    <script type="text/javascript" src="/node_modules/jquery/dist/jquery.js"></script>
+    <script>
+
+        $('#enter').on('click', ()=> {
+            if($('#content').val() == '') {
+                alert('댓글을 입력해 주세요.');
+            } else {
+                if('<%-JSON.stringify(loginUser)%>' != ''){
+                    let user = JSON.parse('<%-JSON.stringify(loginUser)%>');
+                    let board_id = '<%-board._id%>';
+                    
+                    var paramData = {
+                        content: $('#content').val(),
+                        id: board_id,
+                        email: user.email,
+                        name: user.name
+                    }
+
+                    $.ajax({						// 작성 중지 계정 확인
+                        type : "POST",
+                        url : "/reply/insertReply",
+                        dataType : "json",
+                        data : paramData,
+                                                
+                        success : function (result) {                            
+                            if(result != undefined) {                                
+                                var htmls = '';
+                                result.replies.forEach(e => {
+                                    htmls += '<div style="border: 1px slategrey solid; padding: 10px 10px 10px 10px;">';
+                                    htmls += '<div style="display: flex;">';
+                                    htmls += '<div>profile</div>|';
+                                    htmls += '<div>' + e.content + '</div>';
+                                    htmls += '</div>';
+                                    
+                                    if(user.email == e.writer.email) {
+                                        htmls += '<hr>';
+                                        htmls += '<div style="text-align: right;">';
+                                        htmls += '<button id="enter">수정</button>&nbsp;';
+                                        htmls += '<button id="cancel">삭제</button>';
+                                        htmls += '</div>';
+                                    }
+
+                                    htmls += '</div>';
+                                    htmls += '<br>';
+                                });
+
+                                $('#replyList').html(htmls);
+                            }
+                        },
+                        
+                        error : function() {
+                            console.log("실패")
+                        }
+                    });
+                    $('#content').val('');
+                } else {
+                    alert('로그인 후 댓글 작성이 가능합니다.');
+                }
+            }
+        });
+
+    </script>
+
+</body>
+</html>

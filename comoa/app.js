@@ -19,6 +19,7 @@ var methodOverride = require('method-override');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var boardsRouter = require('./routes/boards');
+var replyRouter = require('./routes/replys');
 var testRouter = require('./routes/test');
 
 var app = express();
@@ -36,6 +37,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // 가상 경로
 app.use('/css', express.static('public/stylesheets'));
 app.use('/js', express.static('public/javascripts'));
+app.use('/node_modules', express.static(path.join(__dirname, '/node_modules')));
 
 // 실행 추가
 mongodb();
@@ -68,6 +70,7 @@ app.use((req, res, next) => {
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/boards', boardsRouter);
+app.use('/reply', replyRouter);
 app.use('/test', testRouter);
 
 // catch 404 and forward to error handler

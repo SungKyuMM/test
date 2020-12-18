@@ -22,7 +22,6 @@ module.exports = {
         }
         let female = ageGender[9];
         let male = ageGender[10];
-        console.log(age);
 
         res.render('testAgeGender', {ageGender: ageGender});
     }
