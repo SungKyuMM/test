@@ -1,22 +1,747 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%=title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%=title %></h1>
-    <a href="/boards/free?startPage=1">자유게시판</a>
-    <a href="/boards/covid?startPage=1">코로나게시판</a>
-    <% if(loginUser) { %>
-      <p>Welcome to <%=loginUser.name %></p>
-      <form action="/logout" method="post">
-        <input type="submit" value="로그아웃">
-        <a href="/users/mypage">마이페이지</a>
-      </form>
-    <% } else { %>        
-      <p>Welcome to <%=title %></p>
-      <a href="/login">로그인</a>
-    <% } %>
-  </body>
-</html>
+<div class="content">
+    <div class="py-4 px-3 px-md-4">
+
+        <div class="mb-3 mb-md-4 d-flex justify-content-between">
+            <div class="h3 mb-0">대시보드</div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-xl-4 mb-3 mb-md-4">
+                <!-- Card -->
+                <div class="card h-100">
+                    <div class="card-header d-flex">
+                        <h5 class="h6 font-weight-semi-bold text-uppercase mb-0">국내 일별 확진자 수</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="media align-items-center px-3 px-md-4 mb-3 mb-md-4">
+                            <div class="media-body">
+                                <h4 class="h3 lh-1 mb-2">총 44,364 명</h4>
+                                <p class="small text-muted mb-0">
+                                    Today <span class="text-danger mx-1">880</span> 명
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="js-area-chart chart--points-invisible chart--labels-hidden position-relative" data-series='[
+                             [
+                               {"meta":"Items","value":"700"},
+                               {"meta":"Items","value":"520"},
+                               {"meta":"Items","value":"470"},
+                               {"meta":"Items","value":"580"},
+                               {"meta":"Items","value":"380"},
+                               {"meta":"Items","value":"600"},
+                               {"meta":"Items","value":"707"},
+                               {"meta":"Items","value":"400"},
+                               {"meta":"Items","value":"301"},
+                               {"meta":"2020-12-08","value":"530"},
+                               {"meta":"2020-12-09","value":"600"},
+                               {"meta":"2020-12-10","value":"403"},
+                               {"meta":"2020-12-11","value":"550"},
+                               {"meta":"2020-12-12","value":"400"},
+                               {"meta":"2020-12-13","value":"300"},
+                               {"meta":"2020-12-14","value":"700"},
+                               {"meta":"2020-12-15","value":"830"}
+                             ]
+                           ]' data-height="115" data-high="1000" data-chart-padding='{"top": 5}' data-is-hide-area="true" data-line-colors='["#8069f2"]' data-line-dasharrays='[0,0]' data-line-width='["2px","2px"]' data-is-line-smooth='[false]' data-fill-opacity="1"
+                            data-fill-colors='["#8069f2"]' data-stroke-dash-array-axis-y="4" data-is-show-tooltips="true" data-tooltip-custom-class="chart-tooltip chart-tooltip--sections-blocked chart-tooltip__meta--text-muted small text-white text-nowrap p-2"
+                            data-tooltip-currency="total " data-is-show-points="true" data-point-custom-class='chart__point--donut chart__point--border-xs border-primary rounded-circle' data-point-dimensions='{"width":15,"height":15}'></div>
+                    </div>
+                </div>
+                <!-- End Card -->
+            </div>
+            <div class="col-md-6 col-xl-4 mb-3 mb-md-4">
+                <!-- Card -->
+                <div class="card h-100">
+                    <div class="card-header d-flex">
+                        <h5 class="h6 font-weight-semi-bold text-uppercase mb-0">세계 일별 확진자 수</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="media align-items-center px-3 px-md-4 mb-3 mb-md-4">
+                            <div class="media-body">
+                                <h4 class="h3 lh-1 mb-2">총 72,849,639 명</h4>
+                                <p class="small text-muted mb-0">
+                                    Today <span class="text-danger mx-1">8,792</span> 명
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="js-area-chart chart chart--axis-x chart--points-invisible position-relative chart--labels-hidden" data-series='[
+                             [
+                               {"meta":"Orders","value":"40"},
+                               {"meta":"Orders","value":"42"},
+                               {"meta":"Orders","value":"45"},
+                               {"meta":"Orders","value":"80"},
+                               {"meta":"Orders","value":"70"},
+                               {"meta":"Orders","value":"70"},
+                               {"meta":"Orders","value":"40"},
+                               {"meta":"Orders","value":"20"},
+                               {"meta":"Orders","value":"20"},
+                               {"meta":"Orders","value":"35"},
+                               {"meta":"Orders","value":"35"},
+                               {"meta":"Orders","value":"32"},
+                               {"meta":"Orders","value":"32"},
+                               {"meta":"Orders","value":"35"},
+                               {"meta":"Orders","value":"40"},
+                               {"meta":"Orders","value":"50"},
+                               {"meta":"Orders","value":"50"},
+                               {"meta":"Orders","value":"80"},
+                               {"meta":"Orders","value":"80"},
+                               {"meta":"Orders","value":"90"},
+                               {"meta":"Orders","value":"90"},
+                               {"meta":"Orders","value":"100"},
+                               {"meta":"Orders","value":"100"},
+                               {"meta":"Orders","value":"80"},
+                               {"meta":"Orders","value":"80"}
+                             ]
+                           ]' data-height="115" data-high="115" data-is-line-smooth='[false]' data-line-width='["1px"]' data-line-colors='["#8069f2"]' data-fill-opacity=".3" data-is-fill-colors-gradient="true" data-fill-colors='[
+                             ["rgba(128,105,242,.7)","rgba(255,255,255,.6)"]
+                           ]' data-is-show-tooltips="true" data-is-tooltips-append-to-body="true" data-tooltip-custom-class="chart-tooltip chart-tooltip--sections-blocked chart-tooltip__meta--text-muted small text-white p-2" data-tooltip-currency="Qty "
+                            data-is-show-points="true" data-point-custom-class='chart__point--donut chart__point--border-xxs border-primary rounded-circle' data-point-dimensions='{"width":8,"height":8}'></div>
+
+                    </div>
+                </div>
+                <!-- End Card -->
+            </div>
+            <div class="col-md-6 col-xl-4 mb-3 mb-md-4">
+                <!-- Card -->
+                <div class="card h-100">
+                    <div class="card-header d-flex">
+                        <h5 class="h6 font-weight-semi-bold text-uppercase mb-0">국내치료상황</h5>
+                    </div>
+                    <div class="card-body pt-0">
+                        <h4 class="h2 lh-1 mb-2">현재 70% 완치</h4>
+
+                        <p class="mb-3 mb-md-4">Total Income</p>
+
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <strong class="d-block mb-3">Conversion Rate</strong>
+
+                                <div class="d-flex align-items-center text-muted mb-2">
+                                    <span class="indicator indicator-lg indicator-primary rounded-circle mr-2"></span>
+                                    <small>완치</small>
+                                </div>
+
+                                <div class="d-flex align-items-center text-muted">
+                                    <span class="indicator indicator-lg bg-semi-lighter rounded-circle mr-2"></span>
+                                    <small>확진자</small>
+                                </div>
+                            </div>
+
+                            <div class="js-donut-chart position-relative d-flex ml-auto" style="width: 120px; height: 120px;" data-series='[
+                               {"meta":"AdWords - ","value":78},
+                               {"meta":"Facebook - ","value":22}
+                             ]' data-border-width="8" data-start-angle="0" data-fill-colors='["#8069f2","#eeeef1"]' data-is-show-tooltips="true" data-tooltip-currency="%" data-is-tooltip-currency-reverse="true" data-tooltip-custom-class="chart-tooltip chart-tooltip--none-triangle chart-tooltip--centered chart-tooltip--black small text-white text-nowrap px-2 py-1"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Card -->
+            </div>
+
+
+
+            <div class="col-md-6 col-xl-4 mb-3 mb-xl-4">
+                <!-- Widget -->
+                <div class="card flex-row align-items-center p-3 p-md-4">
+                    <div class="icon icon-lg bg-soft-primary rounded-circle mr-3">
+                        <i class="gd-bar-chart icon-text d-inline-block text-primary"></i>
+                    </div>
+                    <div>
+                        <h4 class="lh-1 mb-1">75%</h4>
+                        <h6 class="mb-0">코로나 완치 확률</h6>
+                    </div>
+                    <i class="gd-arrow-up icon-text d-flex text-success ml-auto"></i>
+                </div>
+                <!-- End Widget -->
+            </div>
+
+            <div class="col-md-6 col-xl-4 mb-3 mb-xl-4">
+                <!-- Widget -->
+                <div class="card flex-row align-items-center p-3 p-md-4">
+                    <div class="icon icon-lg bg-soft-secondary rounded-circle mr-3">
+                        <i class="gd-wallet icon-text d-inline-block text-secondary"></i>
+                    </div>
+                    <div>
+                        <h4 class="lh-1 mb-1">180,000 원</h4>
+                        <h6 class="mb-0">코로나 검사 비용</h6>
+                    </div>
+                    <i class="gd-arrow-down icon-text d-flex text-danger ml-auto"></i>
+                </div>
+                <!-- End Widget -->
+            </div>
+
+            <div class="col-md-6 col-xl-4 mb-3 mb-xl-4">
+                <!-- Widget -->
+                <div class="card flex-row align-items-center p-3 p-md-4">
+                    <div class="icon icon-lg bg-soft-warning rounded-circle mr-3">
+                        <i class="gd-money icon-text d-inline-block text-warning"></i>
+                    </div>
+                    <div>
+                        <h4 class="lh-1 mb-1">Step 2.5</h4>
+                        <h6 class="mb-0">사회적거리두기</h6>
+                    </div>
+                    <i class="gd-arrow-up icon-text d-flex text-success ml-auto"></i>
+                </div>
+                <!-- End Widget -->
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <!-- Card -->
+                <div class="card mb-3 mb-md-4">
+                    <div class="card-header border-bottom p-0">
+                        <ul id="wallets" class="nav nav-v2 nav-primary nav-justified d-block d-xl-flex w-100" role="tablist">
+                            <li class="nav-item border-bottom border-xl-bottom-0">
+                                <a class="nav-link d-flex align-items-center py-2 px-3 p-xl-4 active" href="#bitcoin" role="tab" aria-selected="true" data-toggle="tab">
+                                    <span>개요</span>
+                                    <small class="text-muted ml-auto">summary</small>
+                                </a>
+                            </li>
+                            <li class="nav-item border-bottom border-xl-bottom-0 border-xl-left">
+                                <a class="nav-link d-flex align-items-center py-2 px-3 p-xl-4" href="#bitcoinCash" role="tab" aria-selected="false" data-toggle="tab">
+                                    <span>국내현황</span>
+                                    <small class="text-muted ml-auto">Domestic status</small>
+                                </a>
+                            </li>
+                            <li class="nav-item border-bottom border-xl-bottom-0 border-xl-left">
+                                <a class="nav-link d-flex align-items-center py-2 px-3 p-xl-4" href="#etherium" role="tab" aria-selected="false" data-toggle="tab">
+                                    <span>세계현황</span>
+                                    <small class="text-muted ml-auto">World Status</small>
+                                </a>
+                            </li>
+                            <li class="nav-item border-xl-left">
+                                <a class="nav-link d-flex align-items-center py-2 px-3 p-xl-4" href="#litecoin" role="tab" aria-selected="false" data-toggle="tab">
+                                    <span>예방수칙</span>
+                                    <small class="text-muted ml-auto">Precautions</small>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- 개요 View-->
+                    <div id="walletsContent" class="card-body tab-content">
+                        <div class="tab-pane fade show active" id="bitcoin" role="tabpanel">
+                            <dt class="term">정의</dt>
+                            <dd class="desc">
+                                <div class="_ellipsis" style="overflow:hidden;max-height:70px">
+                                    <p><span class="text _text">2019년 12월 중국 우한에서 처음 발생한 뒤 전 세계로 확산된, 새로운 유형의 코로나바이러스에 의한 호흡기 감염질환. </span> <a onclick='return goOtherCR(this,&quot;a=nco_xxe*1&r=1&i=&quot;+urlencode(&quot;80202lh0_000000D39981&quot;)+&quot;&u=&quot;+urlencode(this.href));'
+                                            href="https://terms.naver.com/entry.nhn?docId=5912275&cid=43667&categoryId=43667" class="link_more _tail" target="_blank">더보기</a></p>
+                                </div>
+                            </dd> <dt class="term">증상</dt>
+                            <dd class="desc"><span class="text">발열, 권태감, 기침, 호흡곤란 및 폐렴 등 경증에서 중증까지 다양한 호흡기감염증이 나타남. 그 외 가래, 인후통, 두통, 객혈과 오심, 설사 등도 나타남.</span></dd> <dt class="term">검사</dt>
+                            <dd class="desc">
+                                <div class="_ellipsis" style="overflow:hidden;max-height:70px">
+                                    <p><span class="text _text">필수검체는 상기도 검체이며, 하기도 검체는 가래가 있는 환자에서 채취. 검체는 의사, 간호사, 임상병리사가 지정된 장소(선별진료소 등)에서 채취함.</span> <a onclick='return goOtherCR(this,&quot;a=nco_xxe*1&r=1&i=&quot;+urlencode(&quot;80202lh0_000000D39981&quot;)+&quot;&u=&quot;+urlencode(this.href));'
+                                            href="https://terms.naver.com/entry.nhn?docId=5916219&cid=66630&categoryId=66630#TABLE_OF_CONTENT3" class="link_more _tail" target="_blank">더보기</a></p>
+                                </div>
+                            </dd> <dt class="term">치료</dt>
+                            <dd class="desc">
+                                <div class="_ellipsis" style="overflow:hidden;max-height:70px">
+                                    <p><span class="text _text">대증 치료로 증상을 완화시킬 수 있지만, 아직까지 질병을 예방하거나 치료하는 것으로 확실하게 밝혀진 특이 치료제는 없음.</span> <a onclick='return goOtherCR(this,&quot;a=nco_xxe*1&r=1&i=&quot;+urlencode(&quot;80202lh0_000000D39981&quot;)+&quot;&u=&quot;+urlencode(this.href));'
+                                            href="https://terms.naver.com/entry.nhn?docId=5916219&cid=66630&categoryId=66630#TABLE_OF_CONTENT4" class="link_more _tail" target="_blank">더보기</a></p>
+                                </div>
+                            </dd> <dt class="term">긴급연락처</dt>
+                            <dd class="desc"><span class="text">가까운 <a onclick='return goOtherCR(this,&quot;a=nco_xxe*1&r=1&i=&quot;+urlencode(&quot;80202lh0_000000D39981&quot;)+&quot;&u=&quot;+urlencode(this.href));' href="https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&query=%EC%BD%94%EB%A1%9C%EB%82%9819%20%EC%84%A0%EB%B3%84%EC%A7%84%EB%A3%8C%EC%86%8C" class="link_more">선별 진료소</a>, <a onclick='return goOtherCR(this,&quot;a=nco_xxe*1&r=1&i=&quot;+urlencode(&quot;80202lh0_000000D39981&quot;)+&quot;&u=&quot;+urlencode(this.href));' href="https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&query=%EB%B3%B4%EA%B1%B4%EC%86%8C" target="_blank" class="link_more">관할 보건소</a>, 지역콜센터120, 콜센터 1339</span></dd>
+                            <dt class="term">관련정보</dt>
+                            <dd class="desc"><span class="text"><a onclick='return goOtherCR(this,&quot;a=nco_xxe*1&r=1&i=&quot;+urlencode(&quot;80202lh0_000000D39981&quot;)+&quot;&u=&quot;+urlencode(this.href));' href="http://ncov.mohw.go.kr/tcmBoardList.do?brdId=&brdGubun=&dataGubun=&ncvContSeq=&contSeq=&board_id=&gubun=" target="_blank" class="link_more">보도자료</a>, <a onclick='return goOtherCR(this,&quot;a=nco_xxe*1&r=1&i=&quot;+urlencode(&quot;80202lh0_000000D39981&quot;)+&quot;&u=&quot;+urlencode(this.href));' href="http://news.naver.com/main/hotissue/sectionList.nhn?mid=hot&sid1=102&gid=1086319" target="_blank" class="link_more">최신뉴스</a>, <a onclick='return goOtherCR(this,&quot;a=nco_xxe*1&r=1&i=&quot;+urlencode(&quot;80202lh0_000000D39981&quot;)+&quot;&u=&quot;+urlencode(this.href));' href="https://news.naver.com/main/factcheck/main.nhn?section=%C4%DA%B7%CE%B3%AA+%B9%D9%C0%CC%B7%AF%BD%BA" target="_blank" class="link_more">SNU 팩트체크</a>, <a onclick='return goOtherCR(this,&quot;a=nco_xxe*1&r=1&i=&quot;+urlencode(&quot;80202lh0_000000D39981&quot;)+&quot;&u=&quot;+urlencode(this.href));' href="http://ncov.mohw.go.kr/duBoardList.do?brdId=2&brdGubun=21&dataGubun=&ncvContSeq=&contSeq=&board_id=&gubun=" target="_blank" class="link_more">대응수칙</a>, <a onclick='return goOtherCR(this,&quot;a=nco_xxe*1&r=1&i=&quot;+urlencode(&quot;80202lh0_000000D39981&quot;)+&quot;&u=&quot;+urlencode(this.href));' href="https://blog.naver.com/mohw2016/221995921830" target="_blank" class="link_more">전자출입명부 안내</a>, <a onclick='return goOtherCR(this,&quot;a=nco_xxe*1&r=1&i=&quot;+urlencode(&quot;80202lh0_000000D39981&quot;)+&quot;&u=&quot;+urlencode(this.href));' href="https://blog.naver.com/naver_diary/221995124479" target="_blank" class="link_more">네이버 QR체크인 안내</a></span></dd>
+                            </dl>
+                            <div class="button_area">
+                                <div class="button_list type2"> <a onclick='return goOtherCR(this,&quot;a=nco_xxe*1&r=1&i=&quot;+urlencode(&quot;80202lh0_000000D39981&quot;)+&quot;&u=&quot;+urlencode(this.href));' href="https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&query=%EC%BD%94%EB%A1%9C%EB%82%9819%20%EC%84%A0%EB%B3%84%EC%A7%84%EB%A3%8C%EC%86%8C"
+                                        class="button_more" target="_blank">선별 진료소</a> <a onclick='return goOtherCR(this,&quot;a=nco_xxe*1&r=1&i=&quot;+urlencode(&quot;80202lh0_000000D39981&quot;)+&quot;&u=&quot;+urlencode(this.href));' href="https://www.gov.kr/portal/coronaPolicy/list/svc/indvdl"
+                                        class="button_more" target="_blank">정부지원 모음</a> <a onclick='return goOtherCR(this,&quot;a=nco_xxe*1&r=1&i=&quot;+urlencode(&quot;80202lh0_000000D39981&quot;)+&quot;&u=&quot;+urlencode(this.href));' href="https://terms.naver.com/entry.nhn?docId=5928099&cid=43667&categoryId=43667"
+                                        class="button_more" target="_blank">사회적 거리두기</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 국내현황 View-->
+                        <div class="tab-pane fade" id="bitcoinCash" role="tabpanel">
+                            <div class="row text-center">
+                                <div class="col-6 col-md-4 mb-3 mb-md-0">
+                                    <div class="h3 mb-0">
+                                        <span class="text-danger">+</span>828
+                                    </div>
+                                    <small class="text-muted">확진환자</small>
+                                </div>
+
+                                <div class="col-6 col-md-4 mb-3 mb-md-0 border-left">
+                                    <div class="h3 mb-0">
+                                        <span class="text-success">+</span>105
+                                    </div>
+                                    <small class="text-muted">검사중</small>
+                                </div>
+
+                                <div class="col-12 col-md-4 border-left">
+                                    <div class="h3 mb-0">
+                                        <span class="text-danger">-</span>333
+                                    </div>
+                                    <small class="text-muted">격리해제</small>
+                                </div>
+                            </div>
+
+                            <div class="js-area-chart chart chart--axis-x--nowrap chart--points-invisible position-relative mh-15_6 safari-overflow-hidden pt-4 pt-md-5 pb-1" data-series='[
+                           [
+                             {"meta":"6/01/2019 9:00 PM","value":"900"},
+                             {"meta":"6/02/2019 9:00 PM","value":"800"},
+                             {"meta":"6/03/2019 9:00 PM","value":"1000"},
+                             {"meta":"6/04/2019 9:00 PM","value":"1100"},
+                             {"meta":"6/05/2019 9:00 PM","value":"1200"},
+                             {"meta":"6/06/2019 9:00 PM","value":"1250"},
+                             {"meta":"6/07/2019 9:00 PM","value":"1300"},
+                             {"meta":"6/08/2019 9:00 PM","value":"1350"},
+                             {"meta":"6/09/2019 9:00 PM","value":"1200"},
+                             {"meta":"6/10/2019 9:00 PM","value":"1100"},
+                             {"meta":"6/11/2019 9:00 PM","value":"1050"},
+                             {"meta":"6/12/2019 9:00 PM","value":"1150"},
+                             {"meta":"6/13/2019 9:00 PM","value":"1300"},
+                             {"meta":"6/14/2019 9:00 PM","value":"1400"},
+                             {"meta":"6/15/2019 9:00 PM","value":"1300"},
+                             {"meta":"6/16/2019 9:00 PM","value":"1200"},
+                             {"meta":"6/17/2019 9:00 PM","value":"1600"},
+                             {"meta":"6/18/2019 9:00 PM","value":"1300"},
+                             {"meta":"6/19/2019 9:00 PM","value":"1200"},
+                             {"meta":"6/20/2019 9:00 PM","value":"1400"},
+                             {"meta":"6/21/2019 9:00 PM","value":"1500"},
+                             {"meta":"6/22/2019 9:00 PM","value":"1550"},
+                             {"meta":"6/23/2019 9:00 PM","value":"1600"},
+                             {"meta":"6/24/2019 9:00 PM","value":"1650"},
+                             {"meta":"6/25/2019 9:00 PM","value":"1850"},
+                             {"meta":"6/26/2019 9:00 PM","value":"1700"},
+                             {"meta":"6/27/2019 9:00 PM","value":"1950"},
+                             {"meta":"6/28/2019 9:00 PM","value":"1800"},
+                             {"meta":"6/29/2019 9:00 PM","value":"1900"},
+                             {"meta":"6/30/2019 9:00 PM","value":"1950"}
+                           ]
+                         ]' data-labels='["June 01","June 02","June 03","June 04","June 05","June 06","June 07","June 08","June 09","June 10","June 11","June 12","June 13","June 14","June 15","June 16","June 17","June 18","June 19","June 20","June 21","June 22","June 23","June 24","June 25","June 26","June 27","June 28","June 29","June 30"]'
+                                data-labels-qty="6" data-labels-start-from="1" data-prefix="$" data-height="250" data-mobile-height="75" data-high="3000" data-low="500" data-offset-x="30" data-offset-y="60" data-is-line-smooth='[false]' data-line-width='["1px"]'
+                                data-line-colors='["#8069f2"]' data-fill-opacity="1" data-fill-colors='["#ecebfa"]' data-text-size-x="14px" data-text-color-x="#4a4e69" data-text-offset-top-x="10" data-text-align-axis-x="center" data-text-size-y="14px" data-text-color-y="#868e96"
+                                data-is-show-tooltips="true" data-is-tooltip-divided="true" data-tooltip-custom-class="chart-tooltip--divided chart-tooltip__value--bg-black chart-tooltip__meta--bg-primary small text-white" data-tooltip-currency="USD " data-is-show-points="true"
+                                data-point-custom-class='chart__point--donut chart__point--has-line-helper chart__point--border-xxs border-primary rounded-circle' data-point-dimensions='{"width":8,"height":8}'></div>
+                        </div>
+                        <!-- 세계현황 View-->
+                        <div class="tab-pane fade" id="etherium" role="tabpanel">
+                            <div class="row text-center">
+                                <div class="col-6 col-md-4 mb-3 mb-md-0">
+                                    <div class="h3 mb-0">
+                                        $19,234<sup class="h5">.23</sup>
+                                    </div>
+                                    <small class="text-muted">Total Sales</small>
+                                </div>
+
+                                <div class="col-6 col-md-4 mb-3 mb-md-0 border-left">
+                                    <div class="h3 mb-0">
+                                        <span class="text-success">+</span>$2,732<sup class="h5">.24</sup>
+                                    </div>
+                                    <small class="text-muted">Today Sales (USD)</small>
+                                </div>
+
+                                <div class="col-12 col-md-4 border-left">
+                                    <div class="h3 mb-0">
+                                        <span class="text-success">+</span>15.78<sup class="h5">%</sup>
+                                    </div>
+                                    <small class="text-muted">Net Profit (%)</small>
+                                </div>
+                            </div>
+
+                            <div class="js-area-chart chart chart--axis-x--nowrap chart--points-invisible position-relative mh-15_6 safari-overflow-hidden pt-4 pt-md-5 pb-1" data-series='[
+                           [
+                             {"meta":"6/01/2019 9:00 PM","value":"1400"},
+                             {"meta":"6/02/2019 9:00 PM","value":"1500"},
+                             {"meta":"6/03/2019 9:00 PM","value":"1600"},
+                             {"meta":"6/04/2019 9:00 PM","value":"1650"},
+                             {"meta":"6/05/2019 9:00 PM","value":"1550"},
+                             {"meta":"6/06/2019 9:00 PM","value":"1400"},
+                             {"meta":"6/07/2019 9:00 PM","value":"1450"},
+                             {"meta":"6/08/2019 9:00 PM","value":"1650"},
+                             {"meta":"6/09/2019 9:00 PM","value":"1700"},
+                             {"meta":"6/10/2019 9:00 PM","value":"1750"},
+                             {"meta":"6/11/2019 9:00 PM","value":"2300"},
+                             {"meta":"6/12/2019 9:00 PM","value":"2350"},
+                             {"meta":"6/13/2019 9:00 PM","value":"2400"},
+                             {"meta":"6/14/2019 9:00 PM","value":"2450"},
+                             {"meta":"6/15/2019 9:00 PM","value":"2250"},
+                             {"meta":"6/16/2019 9:00 PM","value":"2200"},
+                             {"meta":"6/17/2019 9:00 PM","value":"2100"},
+                             {"meta":"6/18/2019 9:00 PM","value":"2150"},
+                             {"meta":"6/19/2019 9:00 PM","value":"2250"},
+                             {"meta":"6/20/2019 9:00 PM","value":"2300"},
+                             {"meta":"6/21/2019 9:00 PM","value":"2350"},
+                             {"meta":"6/22/2019 9:00 PM","value":"2400"},
+                             {"meta":"6/23/2019 9:00 PM","value":"2450"},
+                             {"meta":"6/24/2019 9:00 PM","value":"2350"},
+                             {"meta":"6/25/2019 9:00 PM","value":"2500"},
+                             {"meta":"6/26/2019 9:00 PM","value":"2550"},
+                             {"meta":"6/27/2019 9:00 PM","value":"2700"},
+                             {"meta":"6/28/2019 9:00 PM","value":"2900"},
+                             {"meta":"6/29/2019 9:00 PM","value":"2750"},
+                             {"meta":"6/30/2019 9:00 PM","value":"3500"}
+                           ]
+                         ]' data-labels='["June 01","June 02","June 03","June 04","June 05","June 06","June 07","June 08","June 09","June 10","June 11","June 12","June 13","June 14","June 15","June 16","June 17","June 18","June 19","June 20","June 21","June 22","June 23","June 24","June 25","June 26","June 27","June 28","June 29","June 30"]'
+                                data-labels-qty="6" data-labels-start-from="1" data-prefix="$" data-height="250" data-mobile-height="75" data-high="4000" data-low="500" data-offset-x="30" data-offset-y="60" data-is-line-smooth='[false]' data-line-width='["1px"]'
+                                data-line-colors='["#8069f2"]' data-fill-opacity="1" data-fill-colors='["#ecebfa"]' data-text-size-x="14px" data-text-color-x="#4a4e69" data-text-offset-top-x="10" data-text-align-axis-x="center" data-text-size-y="14px" data-text-color-y="#868e96"
+                                data-is-show-tooltips="true" data-is-tooltip-divided="true" data-tooltip-custom-class="chart-tooltip--divided chart-tooltip__value--bg-black chart-tooltip__meta--bg-primary small text-white" data-tooltip-currency="USD " data-is-show-points="true"
+                                data-point-custom-class='chart__point--donut chart__point--has-line-helper chart__point--border-xxs border-primary rounded-circle' data-point-dimensions='{"width":8,"height":8}'></div>
+                        </div>
+                        <!-- 예방수칙 View-->
+                        <div class="tab-pane fade" id="litecoin" role="tabpanel">
+                            <div class="_content">
+                                <div class="step_area">
+                                    <h3 class="title_area">국민 예방수칙</h3>
+                                    <ul class="step_detail">
+                                        <li>흐르는 물에 비누로 꼼꼼하게 손씻기</li>
+                                        <li>기침이나 재채기할 때 옷소매로 입과 코 가리기</li>
+                                        <li>씻지 않은 손으로 눈·코·입 만지지 않기</li>
+                                        <li>발열, 호흡기 증상자와의 접촉 피하기</li>
+                                        <li>의료기관 방문 시 마스크 착용하기</li>
+                                        <li>사람 많은 곳 방문 자제하기</li>
+                                    </ul>
+                                    <h3 class="title_area">유상증상자 예방수칙</h3>
+                                    <ul class="step_detail">
+                                        <li>등교나 출근을 하지 않고 외출 자제하기</li>
+                                        <li>3~4일 경과를 관찰하며 집에서 충분히 휴식 취하기</li>
+                                        <li>38도 이상 고열이 지속되거나 증상이 심해질 경우<br>콜센터(1339, 지역번호+120), 관할 보건소 문의 및 선별진료소 우선 방문 후 진료받기</li>
+                                        <li>의료기관 방문 시 마스크 착용 및 자차 이용하기</li>
+                                        <li>진료 의료진에게 해외여행력 및 호흡기 증상자와의 접촉여부 알리기</li>
+                                        <li>국내 코로나19 유행지역에서는<br>외출, 타지역 방문을 자제하고 격리자는 의료인, 방역당국의 지시 철저히 따르기</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="one_line" style="border-color: #ecf0f2"></div>
+                            <div class="csp_subInfo_area no_top_line">
+                                <div class="type_info case2">
+                                    <p class="text">코로나19 감염이 의심되면 즉시 보건소 및 콜센터(전화 1339)에 신고바랍니다.</p>
+                                    <p class="text"> <span class="origin">출처</span> <span class="group_link"> <a onclick='return goOtherCR(this,&quot;a=nco_xxe*1&r=1&i=&quot;+urlencode(&quot;80202lh0_000000D39981&quot;)+&quot;&u=&quot;+urlencode(this.href));' href="http://ncov.mohw.go.kr/" target="_blank" class="link_more">중앙재난안전대책본부</a>, <a onclick='return goOtherCR(this,&quot;a=nco_xxe*1&r=1&i=&quot;+urlencode(&quot;80202lh0_000000D39981&quot;)+&quot;&u=&quot;+urlencode(this.href));' href="http://www.mohw.go.kr" target="_blank" class="link_more">중앙사고수습본부</a>, <a onclick='return goOtherCR(this,&quot;a=nco_xxe*1&r=1&i=&quot;+urlencode(&quot;80202lh0_000000D39981&quot;)+&quot;&u=&quot;+urlencode(this.href));' href="http://www.cdc.go.kr/" target="_blank" class="link_more">중앙방역대책본부</a>, <a onclick='return goOtherCR(this,&quot;a=nco_xxe*1&r=1&i=&quot;+urlencode(&quot;80202lh0_000000D39981&quot;)+&quot;&u=&quot;+urlencode(this.href));' href="https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6" target="_blank" class="link_more">Johns Hopkins CSSE</a> </span>                                        </p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- End Card -->
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-xl-4 mb-3 mb-md-4">
+                <!-- Card -->
+                <div class="card h-100">
+                    <div class="card-header d-flex">
+                        <h5 class="h6 font-weight-semi-bold text-uppercase mb-0">일별 확진자수</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="border-bottom p-3 p-md-4 mt-3 pb-md-6">
+                            <div class="js-bar-chart position-relative" style="height: 160px;" data-series="[
+                               [160,160,160,160,160,160,160,160,160,160,160,900],
+                               [92,97,124,137,97,124,46,97,90,97,111,33],
+                               [69,47,69,53,45,94,34,31,68,73,83,32]
+                             ]" data-height="160" data-high="160" data-low="0" data-distance="20" data-stroke-width="5" data-stroke-color='["#e0f6fc","#a0eee7","#8069f2"]' data-is-stack-bars="true" data-is-show-axis-x="false" data-is-show-axis-y="false"
+                                data-is-show-label-axis-x="false" data-is-show-label-axis-y="false" data-is-stroke-rounded="true" data-is-show-tooltips="true" data-postfix="%" data-tooltip-custom-class="chart-tooltip chart-tooltip--black small text-white px-2 py-1"></div>
+                        </div>
+
+                        <div class="border-bottom media align-items-center p-3">
+                            <div class="media-body d-flex align-items-center mr-2">
+                                <span>국내</span>
+                                <span class="ml-auto">848</span>
+                            </div>
+
+                            <i class="gd-arrow-up icon-text icon-text-xs d-flex text-danger ml-auto"></i>
+                            <!--
+                                전일 대비 비교하여 + 경우 up/danger, - 경우 /down/success
+                                <i class="gd-arrow-down icon-text icon-text-xs d-flex text-danger ml-auto"></i>-->
+                        </div>
+
+                        <div class="media align-items-center p-3">
+                            <div class="media-body d-flex align-items-center mr-2">
+                                <span>해외입국</span>
+                                <span class="ml-auto">32</span>
+                            </div>
+
+                            <i class="gd-arrow-up icon-text icon-text-xs d-flex text-success ml-auto"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Card -->
+            </div>
+            <div class="col-md-6 col-xl-4 mb-3 mb-md-4">
+                <!-- Card -->
+                <div class="card h-100">
+                    <div class="card-header d-flex">
+                        <h5 class="h6 font-weight-semi-bold text-uppercase mb-0">Available Balance</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="border-bottom text-center p-3 p-md-4 pb-md-6">
+                            <div class="js-donut-chart position-relative d-flex mx-auto mb-3 mb-md-4" style="width: 130px; height: 130px;" data-series="[65,35]" data-border-width="12" data-slice-margin="2" data-start-angle="0" data-fill-colors='["#8069f2","#0cdcB9"]' data-is-show-tooltips="true"
+                                data-tooltip-currency="%" data-is-tooltip-currency-reverse="true" data-tooltip-custom-class="chart-tooltip chart-tooltip--triangle-right chart-tooltip--black small text-white px-2 py-1 mt-5 ml-n5"></div>
+
+                            <div class="small text-muted">Total Balance ≈ 32,754.56 USD</div>
+                        </div>
+
+                        <div class="border-bottom media align-items-center p-3">
+                            <div class="media-body d-flex align-items-center mr-2">
+                                <span>Cash</span>
+                                <span class="ml-auto">$13,380.25</span>
+                            </div>
+
+                            <i class="gd-arrow-up icon-text icon-text-xs d-flex text-success ml-auto"></i>
+                        </div>
+
+                        <div class="media align-items-center p-3">
+                            <div class="media-body d-flex align-items-center mr-2">
+                                <span>Bank Account</span>
+                                <span class="ml-auto">$19,432.80</span>
+                            </div>
+
+                            <i class="gd-arrow-up icon-text icon-text-xs d-flex text-success ml-auto"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Card -->
+            </div>
+            <div class="col-lg-6 col-xl-4 mb-3 mb-lg-4">
+                <!-- Card -->
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5 class="h6 text-uppercase font-weight-semi-bold mb-0">Recent Transactions</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="border-top p-3 px-md-4 mx-0">
+                            <div class="row justify-content-between small mb-2">
+                                <div class="col">
+                                    <span class="text-primary mr-3">TOK</span>
+
+                                    <span class="mr-1">$3,320.98</span>
+                                    <i class="gd-arrow-left text-success mr-3"></i>
+                                </div>
+
+                                <div class="col-auto text-muted">
+                                    3h ago
+                                </div>
+                            </div>
+
+                            Balance update
+                        </div>
+                        <div class="border-top p-3 px-md-4 mx-0">
+                            <div class="row justify-content-between small mb-2">
+                                <div class="col">
+                                    <span class="text-primary mr-3">NYC</span>
+
+                                    <span class="mr-1">$4,320.98</span>
+                                    <i class="gd-arrow-left text-success mr-3"></i>
+                                </div>
+
+                                <div class="col-auto text-muted">
+                                    5h ago
+                                </div>
+                            </div>
+
+                            Balance update
+                        </div>
+                        <div class="border-top p-3 px-md-4 mx-0">
+                            <div class="row justify-content-between small mb-2">
+                                <div class="col">
+                                    <span class="text-primary mr-3">NYC</span>
+
+                                    <span class="mr-1">$3,320.98</span>
+                                    <i class="gd-arrow-right text-danger mr-3"></i>
+                                </div>
+
+                                <div class="col-auto text-muted">
+                                    7h ago
+                                </div>
+                            </div>
+                            Marketing Expenses
+                        </div>
+                        <div class="border-top p-3 px-md-4 mx-0">
+                            <div class="row justify-content-between small mb-2">
+                                <div class="col">
+                                    <span class="text-primary mr-3">NYC</span>
+
+                                    <span class="mr-1">$1,320.98</span>
+                                    <i class="gd-arrow-left text-success mr-3"></i>
+                                </div>
+
+                                <div class="col-auto text-muted">
+                                    12h ago
+                                </div>
+                            </div>
+
+                            Balance update
+                        </div>
+
+                    </div>
+                </div>
+                <!-- End Card -->
+            </div>
+
+            <div class="col-md-6 col-xl-4 mb-3 mb-md-4">
+                <!-- Card -->
+                <div class="card flex-row align-items-center p-3 p-md-4">
+                    <div>
+                        <h5 class="lh-1 mb-0">Orers</h5>
+                        <small>125 (+5)</small>
+                    </div>
+                    <div class="js-area-chart chart--points-invisible chart--labels-hidden py-1 ml-auto" data-series='[
+                           [
+                            {"value":"25"},
+                            {"value":"35"},
+                            {"value":"10"},
+                            {"value":"40"},
+                            {"value":"20"}
+                           ]
+                         ]' data-width="100" data-height="40" data-high="40" data-is-line-smooth='["simple"]' data-line-width='["1px"]' data-line-colors='["#0cdcB9"]' data-fill-opacity=".3" data-is-fill-colors-gradient="true" data-fill-colors='[
+                           ["rgba(28,240,221,.6)","rgba(255,255,255,.6)"]
+                         ]' data-is-show-tooltips="true" data-is-tooltips-append-to-body="true" data-tooltip-custom-class="chart-tooltip chart-tooltip--none-triangle d-flex align-items-center small text-white p-2 mt-5 ml-5" data-tooltip-badge-markup='<span class="indicator indicator-sm bg-secondary rounded-circle mr-1"></span>'
+                        data-is-show-points="true" data-point-custom-class='chart__point--hidden' data-point-dimensions='{"width":8,"height":8}'></div>
+                </div>
+                <!-- End Card -->
+            </div>
+
+            <div class="col-md-6 col-xl-4 mb-3 mb-md-4">
+                <!-- Card -->
+                <div class="card flex-row align-items-center p-3 p-md-4">
+                    <div>
+                        <h5 class="lh-1 mb-0">Visitors</h5>
+                        <small>1,450 (+325)</small>
+                    </div>
+                    <div class="js-area-chart chart--points-invisible chart--labels-hidden py-2 ml-auto" data-series='[
+                           [
+                             {"value":"40"},
+                             {"value":"40"},
+                             {"value":"40"},
+                             {"value":"25"},
+                             {"value":"30"},
+                             {"value":"35"},
+                             {"value":"50"},
+                             {"value":"35"},
+                             {"value":"35"},
+                             {"value":"35"},
+                             {"value":"30"},
+                             {"value":"30"},
+                             {"value":"40"},
+                             {"value":"35"},
+                             {"value":"35"},
+                             {"value":"55"},
+                             {"value":"50"},
+                             {"value":"45"},
+                             {"value":"60"},
+                             {"value":"70"},
+                             {"value":"80"}
+                           ]
+                         ]' data-width="100" data-height="40" data-high="100" data-is-line-smooth='[false]' data-line-width='["1px"]' data-line-colors='["#8069f2"]' data-fill-opacity=".3" data-is-fill-colors-gradient="true" data-fill-colors='[
+                           ["rgba(128,105,242,.7)","rgba(255,255,255,.6)"]
+                         ]' data-is-show-tooltips="true" data-is-tooltips-append-to-body="true" data-tooltip-custom-class="chart-tooltip chart-tooltip--none-triangle d-flex align-items-center small text-white p-2 mt-5 ml-5" data-tooltip-badge-markup='<span class="indicator indicator-sm bg-primary rounded-circle mr-1"></span>'
+                        data-is-show-points="true" data-point-custom-class='chart__point--hidden' data-point-dimensions='{"width":8,"height":8}'></div>
+                </div>
+                <!-- End Card -->
+            </div>
+
+            <div class="col-md-6 col-xl-4 mb-3 mb-md-4">
+                <!-- Card -->
+                <div class="card flex-row align-items-center p-3 p-md-4">
+                    <div>
+                        <h5 class="lh-1 mb-0">Customers</h5>
+                        <small>320 (+20)</small>
+                    </div>
+                    <div class="js-area-chart chart--points-invisible chart--labels-hidden py-2 ml-auto" data-series='[
+                           [
+                             {"value":"35"},
+                             {"value":"20"},
+                             {"value":"10"},
+                             {"value":"20"},
+                             {"value":"20"},
+                             {"value":"0"},
+                             {"value":"10"},
+                             {"value":"0"},
+                             {"value":"10"},
+                             {"value":"10"},
+                             {"value":"15"},
+                             {"value":"35"},
+                             {"value":"15"},
+                             {"value":"20"},
+                             {"value":"35"},
+                             {"value":"35"},
+                             {"value":"40"},
+                             {"value":"42"}
+                           ]
+                         ]' data-is-hide-area="true" data-width="123" data-height="42" data-high="42" data-is-line-smooth='[false]' data-line-width='["2px"]' data-line-colors='["#8069f2"]' data-is-show-tooltips="true" data-is-tooltips-append-to-body="true"
+                        data-tooltip-custom-class="chart-tooltip chart-tooltip--none-triangle d-flex align-items-center small text-white p-2 mt-5 ml-5" data-tooltip-badge-markup='<span class="indicator indicator-sm bg-primary rounded-circle mr-1"></span>'
+                        data-is-show-points="true" data-point-custom-class='chart__point--hidden' data-point-dimensions='{"width":8,"height":8}'></div>
+                </div>
+                <!-- End Card -->
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-3 mb-md-4">
+                    <div class="card-header">
+                        <h5 class="font-weight-semi-bold mb-0">실시간 긴급재난 문자리스트</h5>
+                    </div>
+
+                    <div class="card-body pt-0">
+                        <div class="table-responsive-xl">
+                            <table class="table text-nowrap mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">#</th>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">위치</th>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">내용</th>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">발표</th>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">Status</th>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="py-3">111111</td>
+                                        <td class="py-3">
+                                            <div>서울 중랑구</div>
+                                            <div class="text-muted">test</div>
+                                        </td>
+                                        <td class="py-3">502번추가확진자(면목3.8)발생. 490~502번확진자 역학조사완료. 세부내용 홈페이지 ...</td>
+                                        <td class="py-3">중랑구청</td>
+                                        <td class="py-3">
+                                            <span class="badge badge-pill badge-warning">Pending</span>
+                                        </td>
+                                        <td class="py-3">
+                                            <div class="position-relative">
+                                                <a id="dropDown16Invoker" class="link-dark d-flex" href="#" aria-controls="dropDown16" aria-haspopup="true" aria-expanded="false" data-unfold-target="#dropDown16" data-unfold-event="click" data-unfold-type="css-animation" data-unfold-duration="300" data-unfold-animation-in="fadeIn"
+                                                    data-unfold-animation-out="fadeOut">
+                                                    <i class="gd-more-alt icon-text"></i>
+                                                </a>
+
+                                                <ul id="dropDown16" class="unfold unfold-light unfold-top unfold-right position-absolute py-3 mt-1 unfold-css-animation unfold-hidden fadeOut" aria-labelledby="dropDown16Invoker" style="min-width: 150px; animation-duration: 300ms; right: 0px;">
+                                                    <li class="unfold-item">
+                                                        <a class="unfold-link media align-items-center text-nowrap" href="#">
+                                                            <i class="gd-pencil unfold-item-icon mr-3"></i>
+                                                            <span class="media-body">Edit</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="unfold-item">
+                                                        <a class="unfold-link media align-items-center text-nowrap" href="#">
+                                                            <i class="gd-close unfold-item-icon mr-3"></i>
+                                                            <span class="media-body">Delete</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script>
+        $.GDCore.components.GDChartistArea.init('.js-area-chart');
+        $.GDCore.components.GDChartistBar.init('.js-bar-chart');
+        $.GDCore.components.GDChartistDonut.init('.js-donut-chart');
+    </script>

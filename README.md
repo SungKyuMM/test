@@ -22,6 +22,7 @@
 ##### npm i fs
 ##### npm i async
 ##### npm i method-override
+##### npm i jquery
 
 # MongoDB
 ##### 몽고 DB폴더에 있는 각 코로나 종목별 mongo파일에 DB문 작성

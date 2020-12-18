@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    
+    <div style="width: 500px; margin: 50px 50px 0px 50px;">
+        성별 나이 COVID 테스트<br><hr>        
+
+        나이때)
+        <table>
+            <thead>
+                <tr>
+                    <td>구분</td>
+                    <td>확진자(%)</td>
+                    <td>사망자(%)</td>
+                    <td>치명율(%)</td>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (var i = 0; i < 9; i++) { %>
+                    <tr>
+                        <td><%=ageGender[i].gubun %></td>
+                        <td><%=ageGender[i].conf_case%>명(<%=ageGender[i].conf_case_rate %>%)</td>
+                        <td><%=ageGender[i].death%>명(<%=ageGender[i].death_rate %>%)</td>
+                        <td><%=ageGender[i].critical_rate%>%</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+        <br>
+
+        성별)<br>
+        확진율<br>
+        <div class="progress">
+            <div class="progress-bar progress-bar-info" role="progressbar" style="width: <%=ageGender[10].conf_case_rate %>%">
+                <%=ageGender[10].gubun %>(<%=ageGender[10].conf_case%>명 | <%=ageGender[10].conf_case_rate %>%)
+            </div>
+            <div class="progress-bar progress-bar-warning" role="progressbar" style="width:<%=ageGender[9].conf_case_rate %>%">
+                <%=ageGender[9].gubun %>(<%=ageGender[9].conf_case%>명 | <%=ageGender[9].conf_case_rate %>%)
+            </div>
+        </div>
+        <br>
+        사망율<br>
+        <div class="progress">
+            <div class="progress-bar progress-bar-info" role="progressbar" style="width: <%=ageGender[10].death_rate %>%">
+                <%=ageGender[10].gubun %>(<%=ageGender[10].death%>명 | <%=ageGender[10].death_rate %>%)
+            </div>
+            <div class="progress-bar progress-bar-warning" role="progressbar" style="width:<%=ageGender[9].death_rate %>%">
+                <%=ageGender[9].gubun %>(<%=ageGender[9].death%>명 | <%=ageGender[9].death_rate %>%)
+            </div>
+        </div>
+        <br>                
+    </div>
+
+</body>
+</html>
