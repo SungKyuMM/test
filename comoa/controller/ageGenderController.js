@@ -16,12 +16,14 @@ module.exports = {
         let data = {create_dt: {$gte: now}};
 
         let ageGender = await ageGenderMongo.findMany(data);
-        let age = new Array;
-        for(let i = 0; i < 9; i++) {
-            age.push(ageGender[i]);
+        
+        if(Object.keys(ageGender).length == 0) {
+            let yesterDate = now.getTime() - (1 * 24 * 60 * 60 * 1000);
+            now.setTime(yesterDate);
+            
+            data = {create_dt: {$gte: now}};
+            ageGender = await ageGenderMongo.findMany(data);
         }
-        let female = ageGender[9];
-        let male = ageGender[10];
 
         res.render('testAgeGender', {ageGender: ageGender});
     }

@@ -39,7 +39,7 @@
                             <% } else { %>
                                 <% list.forEach(item => { %>
                                     <tr>
-                                        <td class="py-3">번호</td>
+                                        <td class="py-3"><%=boardNum-- %></td>
                                         <td class="py-3">
                                             <a href="./<%=type %>/<%=item._id %>">
                                                 <%-item.title %>

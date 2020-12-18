@@ -118,7 +118,7 @@ module.exports = async (key) => {
                 jsonData = JSON.parse(jsonData);
     
                 let msg = 'SafetyNews MongoDB Success!';
-                infectionStatus.insertMany(jsonData);
+                infectionStatus.insertMany(jsonData, msg);
             }
         });
     }

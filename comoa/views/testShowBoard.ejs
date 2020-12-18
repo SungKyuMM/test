@@ -44,6 +44,7 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-12 col-md-12">
+                            <a href="../<%=type %>?startPage=1" class="btn btn-soft-secondary float-left">목록으로</a>
                             <% if(loginUser) { %>
                                 <% if(board.writer.email == loginUser.email) { %>
                                     <form action="../delete/<%-board.type %>?_method=DELETE" method="POST">

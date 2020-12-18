@@ -17,5 +17,16 @@ module.exports = {
                 }
             });
         });
+    },
+
+    replyDelete: async (data) => {
+        // return new Promise (resolve => {
+            Reply.deleteOne(data, (err) => {
+                if(err) console.log(`Reply MongoDB Error: ${err}`);
+                else {                    
+                    // resolve("ok");
+                }
+            });
+        // });
     }
 };

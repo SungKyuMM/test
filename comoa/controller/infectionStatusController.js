@@ -6,5 +6,13 @@ module.exports = {
         let infectionData = await infectionMongo.find(data);        
         
         res.render('t2', {infectionData: infectionData});
+    }, 
+
+    showInfection: async (req, res, next) => {
+        let data = {};
+        let infection = await infectionMongo.sortFind(data);
+
+        res.end()
+
     }
 }

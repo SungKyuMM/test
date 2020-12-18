@@ -1,5 +1,5 @@
 var express = require('express');
-var coronaService = require('../service/coronaService');
+// var coronaService = require('../service/coronaService');
 var router = express.Router();
 
 const infectionController = require('../controller/infectionStatusController');
@@ -13,15 +13,15 @@ router.get('/', (req, res, next) => {
     res.render('test');
 });
 
-router.get('/info', async(req, res, next) => {
-    let safetyData = await coronaService.safetyNews();    
-    let infectionData = await coronaService.infectionStatus();
-    let ageGenderData = await coronaService.ageGenderStatus();
-    let cityData = await coronaService.cityStatus();
-    let overseaData = await coronaService.overseaOutbreak();
+// router.get('/info', async(req, res, next) => {
+//     let safetyData = await coronaService.safetyNews();    
+//     let infectionData = await coronaService.infectionStatus();
+//     let ageGenderData = await coronaService.ageGenderStatus();
+//     let cityData = await coronaService.cityStatus();
+//     let overseaData = await coronaService.overseaOutbreak();
 
-    res.render('coronaInfo', {safetyData: safetyData, infectionData: infectionData, ageGenderData: ageGenderData, cityData: cityData, overseaData: overseaData});    
-});
+//     res.render('coronaInfo', {safetyData: safetyData, infectionData: infectionData, ageGenderData: ageGenderData, cityData: cityData, overseaData: overseaData});    
+// });
 
 router.get('/t2', infectionController.infectionGraph);
 
@@ -34,5 +34,7 @@ router.get('/world', overSeaOutController.worldStatus);
 router.get('/city', cityStatusController.allInfo);
 
 router.get('/ageGender', ageGenderController.todayInfo);
+
+router.get('/infec', ageGenderController.todayInfo);
 
 module.exports = router;

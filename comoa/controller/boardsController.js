@@ -29,8 +29,9 @@ module.exports = {
         };
 
         let boardList = await boardMongo.typePaging(data);
+        let boardNum = count-((nowPage-1)*data.maxPage);
 
-        res.render('testboards', {type: data.type, list: boardList, nowPage: nowPage, start: start, end: end});
+        res.render('testboards', {type: data.type, list: boardList, nowPage: nowPage, start: start, end: end, boardNum: boardNum});
     }, 
 
     showBoard: async (req, res, next) => {
@@ -39,7 +40,7 @@ module.exports = {
         let data = {board_id: mongoose.Types.ObjectId(_id)};
 
         let board = await boardMongo.findBoard(_id);       
-        let reply = await replyMongo.replyList(data);        
+        let reply = await replyMongo.replyList(data);            
         
         res.render('testShowBoard', {type: type, board: board, reply: reply});
     },

@@ -3,6 +3,13 @@ const replyMongo = require('../mongoDB/replyMongo');
 const mongoose = require("mongoose");
 
 module.exports = {
+    listReply: async (req, res, next) => {
+        let body = req.body;
+        let replies = await replyMongo.replyList({board_id: mongoose.Types.ObjectId(body.id)});
+
+        res.json({replies: replies});
+    },
+
     insertReply: async (req, res, next) => {
         let body = req.body;
         let data = {
@@ -15,20 +22,21 @@ module.exports = {
             }
         }
         
-        let replies;
         let result = await replyMongo.replyInsert(data);
-        if(result == 'ok')
-            replies = await replyMongo.replyList({board_id: mongoose.Types.ObjectId(body.id)});
-        
-        res.json({replies: replies});
+
+        if(result == 'ok') res.json({status: 'OK'});
+        else res.json({status: 'NO'});        
     },
 
     deleteReply: async (req, res, next) => {
         let body = req.body;
+        let data = {
+            _id: mongoose.Types.ObjectId(body.reply_id)
+        }
 
-        console.log(body);
+       replyMongo.replyDelete(data);
 
-
-        res.end();
+        res.json({status: 'OK'});
+        // else res.json({status: 'NO'});   
     }
 }

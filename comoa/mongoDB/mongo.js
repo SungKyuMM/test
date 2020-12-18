@@ -7,8 +7,7 @@ module.exports = () => {
         mongo.set('useUnifiedTopology', true);
         mongo.connect(url, {useNewUrlParser: true}, (err) => {
             if(err) console.error('mongoDB connection error', err);
-
-            console.log('mongoDB connected!');
+            else console.log('mongoDB connected!');
         });       
     };
     connect();    
