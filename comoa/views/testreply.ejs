@@ -7,31 +7,42 @@
 </head>
 <body>
     
-    <textarea id="content" name="content" style="width:100%;" rows="5"></textarea>
-    <div style="text-align: right;">
-        <button id="enter">댓글달기</button>
-        <button id="cancel">취소</button>
-    </div>
+    <br><br><hr>
+    <textarea class="form-control" id="content" name="content" style="width:100%;" rows="2" placeholder="댓글 입력"></textarea>
+    <br>
+    
+    <button id="cancel" class="btn btn-soft-danger float-right">취소</button>
+    <button id="enter" class="btn btn-soft-secondary mr-3 float-right">댓글달기</button>
+    <br><br>
 
     <hr>
 
     <div id='replyList'>    
         <% if(Object.keys(reply).length > 0) { %>  
             <% reply.forEach(item => { %>  
-                <div style="border: 1px slategrey solid; padding: 10px 10px 10px 10px;">
-                    <div style="display: flex;">
-                        <div>profile</div>|
-                        <div><%-item.content %></div>
-                    </div>
-                    <% if(loginUser) { %>
-                        <% if(item.writer.email == loginUser.email) { %>
-                            <hr>                    
-                            <div style="text-align: right;">
-                                <button id="enter">수정</button>
-                                <button id="cancel">삭제</button>
-                            </div>
+                <div class="card-body p-2" style="border: 1px slategrey solid; border-radius: 5px;">
+                    <div class="d-flex">
+                        <div style="flex-grow: 2; text-align: center;">
+                            <div class="mr-md-2 avatar-placeholder">
+                                <i class="gd-user"></i>
+                            </div><br>
+                            <%=item.writer.name %>
+                        </div>
+                        <div style="flex-grow: 100;"><%-item.content %></div>                        
+                        <% if(loginUser) { %>
+                            <% if(item.writer.email == loginUser.email) { %>
+                                <div class="dropdown float-right" style="flex-grow: 0.1; text-align: right;">
+                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                                        <i class="gd-settings"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item">수정</a>
+                                        <a class="dropdown-item">삭제</a>
+                                    </div>
+                                </div>
+                            <% } %>
                         <% } %>
-                    <% } %>
+                    </div>
                 </div>  
                 <br>   
             <% }); %>   
@@ -42,7 +53,6 @@
         <% } %>
     </div>
 
-    <script type="text/javascript" src="/node_modules/jquery/dist/jquery.js"></script>
     <script>
 
         $('#enter').on('click', ()=> {
@@ -70,20 +80,29 @@
                             if(result != undefined) {                                
                                 var htmls = '';
                                 result.replies.forEach(e => {
-                                    htmls += '<div style="border: 1px slategrey solid; padding: 10px 10px 10px 10px;">';
-                                    htmls += '<div style="display: flex;">';
-                                    htmls += '<div>profile</div>|';
-                                    htmls += '<div>' + e.content + '</div>';
-                                    htmls += '</div>';
+                                    htmls += '<div class="card-body p-2" style="border: 1px slategrey solid; border-radius: 5px;">';
+                                    htmls += '<div class="d-flex">';
+                                    htmls += '<div style="flex-grow: 2; text-align: center;">';
+                                        
+                                    htmls += '<div class="mr-md-2 avatar-placeholder">';
+                                    htmls += '<i class="gd-user"></i>';
+                                    htmls += '</div><br>' + e.writer.name + '</div>';
+
+                                    htmls += '<div style="flex-grow: 100;">' + e.content + '</div>';
                                     
                                     if(user.email == e.writer.email) {
-                                        htmls += '<hr>';
-                                        htmls += '<div style="text-align: right;">';
-                                        htmls += '<button id="enter">수정</button>&nbsp;';
-                                        htmls += '<button id="cancel">삭제</button>';
+                                        htmls += '<div class="dropdown float-right" style="flex-grow: 0.1; text-align: right;">';
+                                        htmls += '<button type="button" class="btn dropdown-toggle" data-toggle="dropdown">';
+                                        htmls += '<i class="gd-settings"></i>';
+                                        htmls += '</button>';
+                                        htmls += '<div class="dropdown-menu">';
+                                        htmls += '<a class="dropdown-item">수정</a>';
+                                        htmls += '<a class="dropdown-item">삭제</a>';
+                                        htmls += '</div>';
                                         htmls += '</div>';
                                     }
 
+                                    htmls += '</div>';
                                     htmls += '</div>';
                                     htmls += '<br>';
                                 });
@@ -101,6 +120,10 @@
                     alert('로그인 후 댓글 작성이 가능합니다.');
                 }
             }
+        });
+
+        $('#cancel').on('click', () => {
+            $('#content').val('');
         });
 
     </script>

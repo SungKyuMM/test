@@ -10,17 +10,16 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="/img/favicon.ico">
-
+    <link rel="shortcut icon" href="/images/favicon.ico">
 
     <!-- DEMO CHARTS -->
     <link rel="stylesheet" href="/demo/chartist.css">
     <link rel="stylesheet" href="/demo/chartist-plugin-tooltip.css">
 
     <!-- Template -->
-    <link rel="stylesheet" href="/graindashboard/css/graindashboard.css">
-    <script src="/graindashboard/js/graindashboard.js"></script>
-    <script src="/graindashboard/js/graindashboard.vendor.js"></script>
+    <link rel="stylesheet" href="/css/graindashboard.css">
+    <script src="/js/graindashboard.js"></script>
+    <script src="/js/graindashboard.vendor.js"></script>
 
     <!-- DEMO CHARTS -->
     <script src="/demo/resizeSensor.js"></script>
@@ -30,6 +29,12 @@
     <script src="/demo/gd.chartist-bar.js"></script>
     <script src="/demo/gd.chartist-donut.js"></script>
 
+    <!-- jquery -->
+    <!-- <script type="text/javascript" src="/node_modules/jquery/dist/jquery.js"></script> -->
+
+    <!-- summernote editer -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 </head>
 
 <body class="has-sidebar has-fixed-sidebar-and-header">
@@ -110,11 +115,14 @@
                         <!-- User Avatar -->
                         <div class="dropdown mx-3 dropdown ml-2">
                             <!-- 유저 이름 부분 -->
-                            <a id="profileMenuInvoker" class="header-complex-invoker" href="#" aria-controls="profileMenu" aria-haspopup="true" aria-expanded="false" data-unfold-event="click" data-unfold-target="#profileMenu" data-unfold-type="css-animation" data-unfold-duration="300"
-                                data-unfold-animation-in="fadeIn" data-unfold-animation-out="fadeOut">
+                            <a id="profileMenuInvoker" class="header-complex-invoker" href="#" aria-controls="profileMenu" aria-haspopup="true" aria-expanded="false" data-unfold-event="click" data-unfold-target="#profileMenu" data-unfold-type="css-animation" data-unfold-duration="300" data-unfold-animation-in="fadeIn" data-unfold-animation-out="fadeOut">
                                 <!--img class="avatar rounded-circle mr-md-2" src="#" alt="John Doe"-->
-                                <span class="mr-md-2 avatar-placeholder">M</span>
-                                <span class="d-none d-md-block">임준혁</span>
+                                <% if(!loginUser.profile) { %>
+                                    <span class="mr-md-2 avatar-placeholder">
+                                        <i class="gd-user"></i>
+                                    </span>
+                                <%  } %>
+                                <span class="d-none d-md-block"><%=loginUser.name %></span>
                                 <i class="gd-angle-down d-none d-md-block ml-2"></i>
                             </a>
 
@@ -122,8 +130,8 @@
                                 <li class="unfold-item">
                                     <a class="unfold-link d-flex align-items-center text-nowrap" href="/users/mypage">
                                         <span class="unfold-item-icon mr-3">
-                      <i class="gd-user"></i>
-                    </span> 내 프로필
+                                            <i class="gd-user"></i>
+                                        </span> 내 프로필
                                     </a>
                                 </li>
 
@@ -132,19 +140,20 @@
                                     <li class="unfold-item unfold-item-has-divider">
                                         <a class="unfold-link d-flex align-items-center text-nowrap" href="javascript:{}" onclick="document.getElementById('my_form').submit();">
                                             <span class="unfold-item-icon mr-3 ">
-                      <i class="gd-power-off "></i>
-                    </span> 로그아웃
+                                                <i class="gd-power-off "></i>
+                                            </span> 로그아웃
                                         </a>
                                     </li>
                                 </form>
                             </ul>
                         </div>
+
                         <!-- End User Avatar -->
                         <% } else { %>
                             <div class="dropdown ml-auto ">
                                 <a href="/login ">로그인</a>
                             </div>
-                            <% } %>
+                        <% } %>
                 </div>
 
             </div>

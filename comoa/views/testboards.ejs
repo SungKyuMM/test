@@ -7,23 +7,21 @@
                 <nav class="d-none d-md-block" aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="#">
-                                <%=type %> Boards</a>
+                            <a href="#"><%=type %> Boards</a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">
-                            <%=type %> Boards </li>
+                        <li class="breadcrumb-item active" aria-current="page"><%=type %> Boards </li>
                     </ol>
                 </nav>
                 <!-- End Breadcrumb -->
 
                 <div class="mb-3 mb-md-4 d-flex justify-content-between">
-                    <div class="h3 mb-0">
-                        <%=type %> Boards </div>
+                    <div class="h3 mb-0"><%=type %> Boards </div>
                 </div>
 
-
-                <button type="button" onclick="location.replace('./register/<%=type %>')" class="btn btn-primary rounded-pill">글작성</button>
-                <br><br>
+                <% if(loginUser) { %>
+                    <button type="button" onclick="location.replace('./register/<%=type %>')" class="btn btn-primary rounded-pill">글작성</button>
+                    <br><br>
+                <% } %>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -54,8 +52,8 @@
                                             <%-item.reg_date.toISOString().substring(0, 10) %>
                                         </td>
                                     </tr>
-                                    <% }); %>
-                                        <% } %>
+                                <% }); %>
+                            <% } %>
                     </tbody>
                 </table>
                 <!-- 페이징 예시 
@@ -93,16 +91,16 @@
 
                                 </a>
                             </li>
-                            <% } %>
-                                &nbsp;
-                                <% if(end) { %>
-                                    <li class="page-item">
-                                        <a class="page-link" href="/boards/<%=type %>?startPage=<%=parseInt(nowPage) + 1 %>" aria-label="Next">
-                                            <i class="gd-angle-right icon-text icon-text-xs d-inline-block" aria-hidden="true"></i>
-                                            <span class="sr-only">Next</span>
-                                        </a>
-                                    </li>
-                                    <% } %>
+                        <% } %>
+                            &nbsp;
+                        <% if(end) { %>
+                            <li class="page-item">
+                                <a class="page-link" href="/boards/<%=type %>?startPage=<%=parseInt(nowPage) + 1 %>" aria-label="Next">
+                                    <i class="gd-angle-right icon-text icon-text-xs d-inline-block" aria-hidden="true"></i>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        <% } %>
                     </ul>
                 </nav>
             </div>
