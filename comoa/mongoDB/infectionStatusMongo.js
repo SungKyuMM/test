@@ -35,14 +35,39 @@ module.exports = {
 
     infectionPaging: async (data) => {
         return new Promise (resolve => {
-            let result = InfectionStatus.find(data).sort({create_dt: -1});
+            let result = InfectionStatus.find(data.search)
+            .sort({create_dt: data.sort})
+            .skip(data.startPage)
+            .limit(data.maxPage);
+
             resolve(result);
         });
     },
 
-    count: async () => {
+    count: async (data) => {
         return new Promise (resolve => {
-            let result = InfectionStatus.find({}).count;
+            InfectionStatus.countDocuments(data, (err, result) => {
+                if(err) console.log(`InfectionStatus MongoDB Error: ${err}`);
+                else {
+                   resolve(result);
+                }
+            });
+        });
+    },
+
+    updateInit: (data) => {
+        InfectionStatus.updateOne({create_dt: {$gte: new Date(data.create_dt)}}, {$set: data}, {upsert: true}, (err) => {
+            if(err) throw err;
+        });
+    },
+
+    dateSearch: async (data) => {
+        return new Promise (resolve => {
+            let result = InfectionStatus.find(data.search)
+            .sort({create_dt: data.sort})
+            .skip(data.startPage)
+            .limit(data.maxPage);
+            
             resolve(result);
         });
     }

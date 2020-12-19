@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div>
+        <h1>코로나19 감염현황</h1>
+        <div>
+            <% var today = new Date().toISOString().substring(0, 10) %>
+            <input type="date" id="start" name="start" value="<%=today %>" min="2020-10-01" max="<%=today %>">
+            ~
+            <input type="date" id="end" name="end" value="<%=today %>" min="2020-10-01" max="<%=today %>">
+            <button id="search">검색</button>
+        </div>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>날짜</td>
+                <td>누적 확진율</td>
+                <td>확진자 수</td>
+                <td>사망자 수</td>
+                <td>검사 수</td>
+                <td>검사 진행 수</td>
+                <td>검사완료 수</td>
+                <td>결과 음성 수</td>
+                <td>치료 중 환자 수</td>
+                <td>격리 해제 수</td>
+            </tr>
+        </thead>
+        <tbody id="infectionList">            
+            <% infection.forEach(item => { %>
+                <tr>
+                    <td><%=item.create_dt.toISOString().substring(0, 10) %></td>
+                    <td><%=item.acc_def_rate %>%</td>
+                    <td><%=item.decide_cnt %>명</td>
+                    <td><%=item.death_cnt %>명</td>
+                    <td><%=item.acc_exam_cnt %>명</td>
+                    <td><%=item.exam_cnt %>명</td>
+                    <td><%=item.acc_exam_comp_cnt %>명</td>
+                    <td><%=item.result_neg_cnt %>명</td>
+                    <td><%=item.care_cnt %>명</td>
+                    <td><%=item.clear_cnt %>명</td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+
+    <div id="paging">
+        <!-- 이전 화살표 -->
+        <% if(start) { %>        
+            <a href="./infection?startPage=<%=parseInt(nowPage) - 1 %>&startTime=<%=startTime %>&endTime=<%=endTime %>"> < </a>        
+        <% } %>
+
+        <!-- 시작번호, 표시 마지막 번호를 위한 카운트 -->
+        <% var first = 1, last = 5; %>        
+        <!-- 현재 페이지가 4보다 크면 시작 번호 수정과 마자막 두번째 번호일 때 설정   -->
+        <% if(nowPage >= 4) { %>
+            <% first = nowPage - 2; %>
+            <% if(nowPage >= lastPageNum - 2) { first = lastPageNum - 4; } %>
+        <% } %>
+        <!-- 전체 페이지 수가 5보다 작을 때 설정 -->
+        <% if(lastPageNum < 5) { last = lastPageNum } %>
+        <!-- 번호 5개만 표시 -->
+        <% for(var i = first; i < first + last; i++ ) { %>
+            <a href="./infection?startPage=<%=i %>&startTime=<%=startTime %>&endTime=<%=endTime %>"><%=i %></a>       
+        <% } %>                
+        
+        <!-- 다음 화살표 -->
+        <% if(end) { %>
+            <a href="./infection?startPage=<%=parseInt(nowPage) + 1 %>&startTime=<%=startTime %>&endTime=<%=endTime %>"> > </a>
+        <% } %>
+    </div>
+
+    <script>
+        $('#search').on('click', () => {
+            let start = $('#start').val();
+            let end = $('#end').val();
+
+            if(new Date(start) < new Date(end)) {
+                var paramData = {
+                    start: start,
+                    end: end
+                }
+                
+                $.ajax({
+                    type : "POST",
+                    url : "/covid/infectionSearch",
+                    dataType : "json",
+                    data : paramData,
+                                            
+                    success : (result) => {
+                        var htmls = '';
+                        var paging = '';
+                        if(result.list.length > 0) {
+                            result.list.forEach(e => {
+                                htmls += '<tr>';
+                                htmls += '<td>' + e.create_dt.substring(0, 10) + '</td>';
+                                htmls += '<td>' + e.acc_def_rate + '%</td>';
+                                htmls += '<td>' + e.decide_cnt + '명</td>';
+                                htmls += '<td>' + e.death_cnt + '명</td>';
+                                htmls += '<td>' + e.acc_exam_cnt + '명</td>';
+                                htmls += '<td>' + e.exam_cnt + '명</td>';
+                                htmls += '<td>' + e.acc_exam_comp_cnt + '명</td>';
+                                htmls += '<td>' + e.result_neg_cnt + '명</td>';
+                                htmls += '<td>' + e.care_cnt + '명</td>';
+                                htmls += '<td>' + e.clear_cnt + '명</td>';
+                                htmls += '</tr>';
+                            });
+                            
+
+                            if(result.lastPageNum > 1) {
+                                for(var i = 1; i <= result.lastPageNum; i++) 
+                                    paging += '<a href="./infection?startPage=' + i + '&startTime=' + start + '&endTime=' + end + '">' + i + '</a>';
+
+                                paging += '<a href="./infection?startPage=2&startTime=' + start + '&endTime=' + end + '"> > </a>';
+                            }
+                                
+                        } else {
+                            htmls += '<div style="text-align: center;"><h3>데이터가 없습니다.</h3></div>';
+                        }
+                        $('#infectionList').html(htmls);
+                        $('#paging').html(paging);
+                    },
+                    
+                    error : () => {
+                        console.log("실패")
+                    }
+                });
+            } else {
+                alert('시작 날짜가 마지막 날짜보다 미래입니다.');
+            }
+        });
+    </script>
+</body>
+</html>

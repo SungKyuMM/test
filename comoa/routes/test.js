@@ -35,6 +35,6 @@ router.get('/city', cityStatusController.allInfo);
 
 router.get('/ageGender', ageGenderController.todayInfo);
 
-router.get('/infec', ageGenderController.todayInfo);
+router.get('/infection', infectionController.showInfection);
 
 module.exports = router;
