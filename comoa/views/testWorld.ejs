@@ -1,53 +1,72 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
     <link rel="stylesheet" href="/css/jquery-jvectormap-2.0.5.css" type="text/css" media="screen"/>
-    <script src="/js/jquery-1.8.2.js"></script>
     <script src="/js/jquery-jvectormap-2.0.5.min.js"></script>
     <script src="/js/jquery-jvectormap-world-mill-en.js"></script>
-</head>
-<body>
+    
+    <div class="content">
+        <div class="py-4 px-3 px-md-4">
+            <div class="card mb-3 mb-md-4">
+    
+                <div class="card-body">
+                    <!-- Breadcrumb -->
+                    <nav class="d-none d-md-block" aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="#">
+                                    해외</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                세계지도</li>
+                        </ol>
+                    </nav>
+                    <!-- End Breadcrumb -->
+    
+                    <div class="mb-3 mb-md-4 d-flex justify-content-between">
+                        <div class="h3 mb-0">
+                            세계지도</div>
+                    </div>
+    
 
-    <div id="world-map" style="width: 90%; height: 700px"></div>
+    
 
-    <script>
-    $(function(){
-        var data = JSON.parse('<%-JSON.stringify(worldData)%>');
+                    <div id="world-map" style="width: 100%; height: 700px"></div>
 
-        $('#world-map').vectorMap({
-            map: 'world_mill_en',
-            panOnDrag: true,
-            focusOn: {
-            x: 0.5,
-            y: 0.5,
-            scale: 1,
-            animate: true
-            },
-            series: {
-                regions: [{
-                    scale: ['#FFC6C6', '#930000'],
-                    normalizeFunction: 'polynomial',
-                    values: JSON.parse('<%-JSON.stringify(covidData)%>')
-                }]
-            },  
-            onRegionTipShow: (e, el, code) => {
-                var htmls = '';                
-                if(data[code] == undefined) {
-                    el.html('자료없음');
-                } else {
-                    htmls += '지역명: ' + data[code].area_nm + '<br>';
-                    htmls += '확진자: ' + data[code].nat_def_cnt + '명<br>';
-                    htmls += '사망자: ' + data[code].nat_death_cnt + '명<br>';
-                    htmls += '사망율: ' + data[code].nat_death_rate + '%';
-                    el.html(data[code].nation_nm + ')<br>' + htmls);
-                }
-            }
-        });
-    });
-    </script>
-</body>
-</html>
+                    <script>
+                    $(function(){
+                        var data = JSON.parse('<%-JSON.stringify(worldData)%>');
+
+                        $('#world-map').vectorMap({
+                            map: 'world_mill_en',
+                            panOnDrag: true,
+                            focusOn: {
+                            x: 0.5,
+                            y: 0.5,
+                            scale: 1,
+                            animate: true
+                            },
+                            series: {
+                                regions: [{
+                                    scale: ['#FFC6C6', '#930000'],
+                                    normalizeFunction: 'polynomial',
+                                    values: JSON.parse('<%-JSON.stringify(covidData)%>')
+                                }]
+                            },  
+                            onRegionTipShow: (e, el, code) => {
+                                var htmls = '';                
+                                if(data[code] == undefined) {
+                                    el.html('자료없음');
+                                } else {
+                                    htmls += '지역명: ' + data[code].area_nm + '<br>';
+                                    htmls += '확진자: ' + data[code].nat_def_cnt + '명<br>';
+                                    htmls += '사망자: ' + data[code].nat_death_cnt + '명<br>';
+                                    htmls += '사망율: ' + data[code].nat_death_rate + '%';
+                                    el.html(data[code].nation_nm + ')<br>' + htmls);
+                                }
+                            }
+                        });
+                    });
+                    </script>
+
+    
+                </div>
+            </div>
+        </div>

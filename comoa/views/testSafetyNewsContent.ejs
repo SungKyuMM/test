@@ -1,17 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    나라 : <%=safeContent.country %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    등록일 : <%=safeContent.create_dt.toISOString().substring(0, 10) %><br>
-    <hr>
-    제목 : <%=safeContent.title %><br>
-    내용 : <br>
-        <%-safeContent.content %>
-    
-</body>
-</html>
+<div class="content">
+    <div class="py-4 px-3 px-md-4">
+        <div class="card mb-3 mb-md-4">
+
+            <div class="card-body">
+                <!-- Breadcrumb -->
+                <nav class="d-none d-md-block" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="#">
+                                해외</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            최신안전소식</li>
+                    </ol>
+                </nav>
+                <!-- End Breadcrumb -->
+
+                <div class="mb-3 mb-md-4 d-flex justify-content-between">
+                    <div class="h3 mb-0">
+                        최신안전소식</div>
+                </div>
+
+                <!-- Form -->
+                <div>
+                    <div class="form-row">
+                        <div class="form-group col-12 col-md-12">
+                            <label for="title">나라</label>
+                            <input class="form-control" id="title" type="text" name="title" aria-describedby="titleHelp" placeholder="제목입력" value="<%=safeContent.country %>" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-12 col-md-12">
+                            <label for="title">등록일</label>
+                            <input class="form-control" id="title" type="text" name="title" aria-describedby="titleHelp" placeholder="제목입력" value="<%=safeContent.create_dt.toISOString().substring(0, 10) %>" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-12 col-md-12">
+                            <label for="title">제목</label>
+                            <input class="form-control" id="title" type="text" name="title" aria-describedby="titleHelp" placeholder="제목입력" value="<%=safeContent.title %>" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-12 col-md-12">
+                            <label for="title">내용</label>
+                            <%-safeContent.content %>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-12 col-md-12">
+                            <button onclick="location.replace('../test/safePaging?startPage=1')" class="btn btn-soft-primary mr-3 float-right">목록으로</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Form -->
+            </div>
+        </div>
+
+        

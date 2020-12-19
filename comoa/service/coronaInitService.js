@@ -95,6 +95,8 @@ module.exports = async (key) => {
     
             var list = jsonBody.elements[0].elements[1].elements[0].elements;    
     
+            let i = 0;
+
             if(list) {
                 list.forEach(item => {
                     let data = new Object();
@@ -111,13 +113,24 @@ module.exports = async (key) => {
                     data.result_neg_cnt = item.elements[9].elements[0].text * 1;
                     data.seq = item.elements[10].elements[0].text * 1;
     
-                    listData.push(data);
+                    if(i > 0){
+                        let now = data.create_dt.substring(0, 10);
+                        let prev = listData[i-1].create_dt.substring(0, 10)
+
+                        if(now != prev) {
+                            listData.push(data);  
+                            i++;
+                        }
+                    } else {
+                        listData.push(data);                                      
+                        i++;
+                    }
                 });
-    
+   
                 var jsonData = JSON.stringify(listData);
                 jsonData = JSON.parse(jsonData);
-    
-                let msg = 'SafetyNews MongoDB Success!';
+
+                let msg = 'InfectionStatus MongoDB Success!';
                 infectionStatus.insertMany(jsonData, msg);
             }
         });

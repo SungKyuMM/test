@@ -24,6 +24,8 @@
 ##### npm i method-override
 ##### npm i jquery
 ##### npm i express-ejs-layout
+##### npm i axios
+
 
 # MongoDB
 ##### 몽고 DB폴더에 있는 각 코로나 종목별 mongo파일에 DB문 작성

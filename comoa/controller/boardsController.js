@@ -64,7 +64,7 @@ module.exports = {
             };
 
             boardMongo.registerBoard(data);
-            res.render(`/boards/${type}`);
+            res.redirect(`/boards/${type}?startPage=1`);
         }
     },
 
@@ -86,7 +86,7 @@ module.exports = {
                 }
             }
             boardMongo.updateBoard(query, data);
-            res.redirect(`/boards/${body.type}`);
+            res.redirect(`/boards/${body.type}?startPage=1`);
         }
     },
 
@@ -96,6 +96,6 @@ module.exports = {
         let data = {_id: mongoose.Types.ObjectId(id)};
 
         boardMongo.deleteBoard(data);
-        res.redirect(`/boards/${type}`);
+        res.redirect(`/boards/${type}?startPage=1`);
     }
 };

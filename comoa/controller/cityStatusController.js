@@ -12,12 +12,13 @@ module.exports = {
             day = '0' + day;
         }
         
-        let now = new Date(year + '-' + month + '-' + day);        
-        let data = {create_dt: {$gte: now}};
+        let now = new Date(year + '-' + month + '-' + day);
+        //console.log(now); 
+        let data = {create_dt: {$gte: new Date(now)}};
 
         let city = await cityMongo.findMany(data);
 
-        res.render('testCity', {city: city});
+        res.render('ncovCity', {cityData: city});
     }
 };
 

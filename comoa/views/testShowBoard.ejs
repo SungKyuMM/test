@@ -31,9 +31,14 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-12 col-md-12">
-                            <label for="title">작성일 : <%-board.reg_date.toISOString().substring(0, 10) %></label> /
-                            <label for="title">작성자 : <%-board.writer.name %></label>
-
+                            <label for="title">작성일</label>
+                            <input class="form-control" id="title" type="text" name="title" aria-describedby="titleHelp" placeholder="제목입력" value="<%-board.reg_date.toISOString().substring(0, 10) %>" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-12 col-md-12">
+                            <label for="title">작성자</label>
+                            <input class="form-control" id="title" type="text" name="title" aria-describedby="titleHelp" placeholder="제목입력" value="<%-board.writer.name %>" readonly="readonly">
                         </div>
                     </div>
                     <div class="form-row">
