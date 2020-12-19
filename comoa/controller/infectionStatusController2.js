@@ -3,7 +3,7 @@ const { json } = require('express');
 const { MongooseDocument } = require('mongoose');
 const infectionMongo = require('../mongoDB/infectionStatusMongo');
 const overSeaMongo = require('../mongoDB/overseaOutBreakMongo');
-
+const cityMongo = require('../mongoDB/cityStatusMongo');
 
 
 module.exports = {
@@ -44,6 +44,34 @@ module.exports = {
             }
         ]
         let overSeaData = await overSeaMongo.finday(data2);
+
+        let data3 = [
+            {
+                $match : { gubun : '합계'}
+         },
+         {  
+             '$project' : 
+             {
+                 '_id' : 0,
+                 'inc_dec' : 1,
+                 'local_occ_cnt':1,
+                 'over_flow_cnt' : 1,
+                 'death_cnt':1,           
+                'def_cnt' : 1,
+                'isol_clear_cnt' : 1,
+                 'day_' : { $dateToString: { format: "%Y-%m-%d", date: "$create_dt" } },
+             }
+         },
+         {$sort :
+             {
+                day_ : -1
+             }
+         },
+         {
+             $limit : 32
+         }
+        ]
+        let cityData = await cityMongo.finday(data3);
        
         var today = { 
             'Kodecide_cnt' : infectionData[0].decide_cnt -  infectionData[1].decide_cnt,
