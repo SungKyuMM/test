@@ -16,114 +16,78 @@
                 </a>
             </li>
             <!-- End Dashboard -->
-
-            <!-- 자유게시판 -->
-            <li class="side-nav-menu-item">
-                <a class="side-nav-menu-link media align-items-center" href="/boards/free?startPage=1" target="_self">
-                    <span class="side-nav-menu-icon d-flex mr-3">
-                <i class="gd-file"></i>
-              </span>
-                    <span class="side-nav-fadeout-on-closed media-body">자유게시판</span>
-                </a>
-            </li>
-            <!-- End 자유게시판 -->
-            <!-- 코로나게시판 -->
-            <li class="side-nav-menu-item">
-                <a class="side-nav-menu-link media align-items-center" href="/boards/covid?startPage=1" target="_self">
-                    <span class="side-nav-menu-icon d-flex mr-3">
-                <i class="gd-file"></i>
-              </span>
-                    <span class="side-nav-fadeout-on-closed media-body">코로나게시판</span>
-                </a>
-            </li>
-            <!-- End 코로나게시판 -->
-
-            <!-- Title -->
-            <li class="sidebar-heading h6">Examples</li>
-            <!-- End Title -->
-
-            <!-- Users -->
+            <!-- 국내코로나 -->
             <li class="side-nav-menu-item side-nav-has-menu">
-                <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subUsers">
+                <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subKorea">
                     <span class="side-nav-menu-icon d-flex mr-3">
                     <i class="gd-user"></i>
                   </span>
-                    <span class="side-nav-fadeout-on-closed media-body">Users</span>
+                    <span class="side-nav-fadeout-on-closed media-body">국내</span>
                     <span class="side-nav-control-icon d-flex">
                 <i class="gd-angle-right side-nav-fadeout-on-closed"></i>
               </span>
                     <span class="side-nav__indicator side-nav-fadeout-on-closed"></span>
                 </a>
 
-                <!-- Users: subUsers -->
-                <ul id="subUsers" class="side-nav-menu side-nav-menu-second-level mb-0">
+                <ul id="subKorea" class="side-nav-menu side-nav-menu-second-level mb-0">
                     <li class="side-nav-menu-item">
-                        <a class="side-nav-menu-link" href="users.html">All Users</a>
+                        <a class="side-nav-menu-link" href="users.html">감염현황 지도</a>
                     </li>
                     <li class="side-nav-menu-item">
-                        <a class="side-nav-menu-link" href="user-edit.html">Add new</a>
+                        <a class="side-nav-menu-link" href="/test/ageGender">연령/성별 상황</a>
                     </li>
                 </ul>
-                <!-- End Users: subUsers -->
             </li>
-            <!-- End Users -->
-
-            <!-- Authentication -->
+            <!-- 국내코로나 -->
+            <!-- 해외코로나 -->
             <li class="side-nav-menu-item side-nav-has-menu">
-                <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subPages">
+                <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subWorlds">
                     <span class="side-nav-menu-icon d-flex mr-3">
-                <i class="gd-lock"></i>
-              </span>
-                    <span class="side-nav-fadeout-on-closed media-body">Authentication</span>
+                    <i class="gd-user"></i>
+                  </span>
+                    <span class="side-nav-fadeout-on-closed media-body">해외</span>
                     <span class="side-nav-control-icon d-flex">
                 <i class="gd-angle-right side-nav-fadeout-on-closed"></i>
               </span>
                     <span class="side-nav__indicator side-nav-fadeout-on-closed"></span>
                 </a>
 
-                <!-- Pages: subPages -->
-                <ul id="subPages" class="side-nav-menu side-nav-menu-second-level mb-0">
+                <ul id="subWorlds" class="side-nav-menu side-nav-menu-second-level mb-0">
                     <li class="side-nav-menu-item">
-                        <a class="side-nav-menu-link" href="login.html">Login</a>
+                        <a class="side-nav-menu-link" href="/test/world">감염현황 세계지도</a>
                     </li>
                     <li class="side-nav-menu-item">
-                        <a class="side-nav-menu-link" href="register.html">Register</a>
+                        <a class="side-nav-menu-link" href="/test/safePaging?startPage=1">최신안전소식</a>
                     </li>
                     <li class="side-nav-menu-item">
-                        <a class="side-nav-menu-link" href="password-reset.html">Forgot Password</a>
-                    </li>
-                    <li class="side-nav-menu-item">
-                        <a class="side-nav-menu-link" href="password-reset-2.html">Forgot Password 2</a>
-                    </li>
-                    <li class="side-nav-menu-item">
-                        <a class="side-nav-menu-link" href="email-verification.html">Email Verification</a>
+                        <a class="side-nav-menu-link" href="user-edit.html">세계지역감염검색</a>
                     </li>
                 </ul>
-                <!-- End Pages: subPages -->
             </li>
-            <!-- End Authentication -->
-
-            <!-- Settings -->
-            <li class="side-nav-menu-item">
-                <a class="side-nav-menu-link media align-items-center" href="settings.html">
+            <!-- 해외코로나 -->
+            <!-- 게시판 -->
+            <li class="side-nav-menu-item side-nav-has-menu">
+                <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subBoards">
                     <span class="side-nav-menu-icon d-flex mr-3">
-                <i class="gd-settings"></i>
+                    <i class="gd-file"></i>
+                  </span>
+                    <span class="side-nav-fadeout-on-closed media-body">게시판</span>
+                    <span class="side-nav-control-icon d-flex">
+                <i class="gd-angle-right side-nav-fadeout-on-closed"></i>
               </span>
-                    <span class="side-nav-fadeout-on-closed media-body">Settings</span>
+                    <span class="side-nav__indicator side-nav-fadeout-on-closed"></span>
                 </a>
-            </li>
-            <!-- End Settings -->
 
-            <!-- Static -->
-            <li class="side-nav-menu-item">
-                <a class="side-nav-menu-link media align-items-center" href="static-non-auth.html">
-                    <span class="side-nav-menu-icon d-flex mr-3">
-                <i class="gd-file"></i>
-              </span>
-                    <span class="side-nav-fadeout-on-closed media-body">Static page</span>
-                </a>
+                <ul id="subBoards" class="side-nav-menu side-nav-menu-second-level mb-0">
+                    <li class="side-nav-menu-item">
+                        <a class="side-nav-menu-link" href="/boards/free?startPage=1">자유</a>
+                    </li>
+                    <li class="side-nav-menu-item">
+                        <a class="side-nav-menu-link" href="/boards/covid?startPage=1">코로나</a>
+                    </li>
+                </ul>
             </li>
-            <!-- End Static -->
+            <!-- End 게시판 -->
 
         </ul>
     </aside>

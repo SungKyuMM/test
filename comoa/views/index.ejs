@@ -1,3 +1,8 @@
+<%
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+%>
 <div class="content">
     <div class="py-4 px-3 px-md-4">
 
@@ -15,9 +20,9 @@
                     <div class="card-body p-0">
                         <div class="media align-items-center px-3 px-md-4 mb-3 mb-md-4">
                             <div class="media-body">
-                                <h4 class="h3 lh-1 mb-2">총 <%= infectionData[0].decide_cnt %> 명</h4>
+                                <h4 class="h3 lh-1 mb-2">총 <%= numberWithCommas(infectionData[0].decide_cnt) %> 명</h4>
                                 <p class="small text-muted mb-0">
-                                    Today <span class="text-danger mx-1"><%= today.Kodecide_cnt %></span> 명
+                                    Today <span class="text-danger mx-1"><%= numberWithCommas(today.Kodecide_cnt) %></span> 명
                                 </p>
                             </div>
                         </div>
@@ -40,9 +45,9 @@
                     <div class="card-body p-0">
                         <div class="media align-items-center px-3 px-md-4 mb-3 mb-md-4">
                             <div class="media-body">
-                                <h4 class="h3 lh-1 mb-2">총 <%= today.outDecide_cnt %> 명</h4>
+                                <h4 class="h3 lh-1 mb-2">총 <%= numberWithCommas(today.outDecide_cnt) %> 명</h4>
                                 <p class="small text-muted mb-0">
-                                    Today <span class="text-danger mx-1"><%= today.outTodayDecide_cnt %></span> 명
+                                    Today <span class="text-danger mx-1"><%= numberWithCommas(today.outTodayDecide_cnt) %></span> 명
                                 </p>
                             </div>
                         </div>
