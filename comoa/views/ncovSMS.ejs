@@ -1,0 +1,26 @@
+<div class="content">
+    <div class="py-4 px-3 px-md-4">
+        <div class="card mb-3 mb-md-4">
+
+            <div class="card-body">
+                <!-- Breadcrumb -->
+                <nav class="d-none d-md-block" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="#">국내현황</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">긴급 재난 문자</li>
+                    </ol>
+                </nav>
+                <!-- End Breadcrumb -->
+
+                <div class="mb-3 mb-md-4 d-flex justify-content-between">
+                    <div class="h3 mb-0">긴급 재난 문자</div>
+                </div>
+                <% sms.forEach(elem => { %>
+                 현재 <%=elem._text%> 의 현황 : <%=elem._num%> <br/>
+                <% }) %>
+            </div>
+
+        </div>
+    </div>
