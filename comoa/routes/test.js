@@ -7,6 +7,7 @@ const safetyNewsController = require('../controller/safeNewsController');
 const overSeaOutController = require('../controller/overSeaOutController');
 const cityStatusController = require('../controller/cityStatusController');
 const ageGenderController = require('../controller/ageGenderController');
+const smsController = require('../controller/smsController');
 
 // 테이스용 페이지 (나중에 폭발)
 router.get('/', (req, res, next) => {
@@ -36,5 +37,7 @@ router.get('/city', cityStatusController.allInfo);
 router.get('/ageGender', ageGenderController.todayInfo);
 
 router.get('/infec', ageGenderController.todayInfo);
+
+router.get('/sms', smsController.todaySmsInfo);
 
 module.exports = router;
