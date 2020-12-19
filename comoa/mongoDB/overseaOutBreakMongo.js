@@ -36,5 +36,16 @@ module.exports = {
                 }
             });
         });
+    },
+
+    finday: (data) =>{
+        return new Promise (resolve => {
+            OverseaOutbreak.aggregate(data, (err, result) => {
+                if(err) console.log(`OverseaOutbreak MongoDB Error: ${err}`);
+                else {
+                   resolve(result);
+                }
+            });
+        });
     }
 };
