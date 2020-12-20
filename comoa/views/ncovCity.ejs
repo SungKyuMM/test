@@ -1,0 +1,58 @@
+<div class="content">
+    <div class="py-4 px-3 px-md-4">
+        <div class="card mb-3 mb-md-4">
+
+            <div class="card-body">
+                <!-- Breadcrumb -->
+                <nav class="d-none d-md-block" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="#">국내현황</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">코로나19 시·도발생 현황</li>
+                    </ol>
+                </nav>
+                <!-- End Breadcrumb -->
+
+                <div class="mb-3 mb-md-4 d-flex justify-content-between">
+                    <div class="h3 mb-0">코로나19 시·도발생 현황</div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <td>seq</td>
+                            <td>구분</td>
+                            <td>누적 확진자 수</td>
+                            <td>전일대비 증감 수</td>
+                            <td>격리 해제 수</td>
+                            <td>격리 환자 수</td>
+                            <td>10만명당 발생률</td>
+                            <td>국내발병 수</td>
+                            <td>해외유입 수</td>
+                            <td>사망자 수</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if(locals.cityData) { %>
+                            <% cityData.forEach(item => { %>
+                                <tr>
+                                    <td><%=item.seq %></td>
+                                    <td><%=item.gubun %></td>
+                                    <td><%=item.def_cnt %></td>
+                                    <td><%=item.inc_dec %></td>
+                                    <td><%=item.isol_clear_cnt %></td>
+                                    <td><%=item.isoling_cnt %></td>
+                                    <td><%=item.qur_rate %></td>
+                                    <td><%=item.local_occ_cnt %></td>
+                                    <td><%=item.over_flow_cnt %></td>
+                                    <td><%=item.death_cnt %></td>
+                                </tr>
+                            <% }); %>
+                        <% } %>
+                    </tbody>
+                </table>
+                
+            </div>
+
+        </div>
+    </div>

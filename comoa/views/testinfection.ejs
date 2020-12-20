@@ -1,14 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-    <div>
-        <h1>코로나19 감염현황</h1>
+
+<div class="content">
+    <div class="py-4 px-3 px-md-4">
+        <div class="card mb-3 mb-md-4">
+
+            <div class="card-body">
+                <!-- Breadcrumb -->
+                <nav class="d-none d-md-block" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="#">
+                                해외</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            코로나19 감염현황</li>
+                    </ol>
+                </nav>
+                <!-- End Breadcrumb -->
+
+                <div class="mb-3 mb-md-4 d-flex justify-content-between">
+                    <div class="h3 mb-0">
+                        코로나19 감염현황</div>
+                </div>
+
+
+<div>
         <div>
             <% var today = new Date().toISOString().substring(0, 10) %>
             <input type="date" id="start" name="start" value="<%=today %>" min="2020-10-01" max="<%=today %>">
@@ -51,12 +66,18 @@
         </tbody>
     </table>
 
-    <div id="paging">
-        <!-- 이전 화살표 -->
-        <% if(start) { %>        
-            <a href="./infection?startPage=<%=parseInt(nowPage) - 1 %>&startTime=<%=startTime %>&endTime=<%=endTime %>"> < </a>        
-        <% } %>
-
+    <nav class="d-flex justify-content-between align-items-center" aria-label="Page navigation example">
+        <small class="text-muted">Showing <%=nowPage%> of <%=lastPageNum%></small>
+        <ul class="pagination font-weight-semi-bold" id="paging">
+            <% if (nowPage != 1){ %> 
+                <li class="page-item">
+                <a class="page-link" href="./infection?startPage=<%=parseInt(nowPage) - 1 %>&startTime=<%=startTime %>&endTime=<%=endTime %>" aria-label="Previous">
+                    <i class="gd-angle-left icon-text icon-text-xs d-inline-block" aria-hidden="true"></i>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            <% } %>
+            
         <!-- 시작번호, 표시 마지막 번호를 위한 카운트 -->
         <% var first = 1, last = 5; %>        
         <!-- 현재 페이지가 4보다 크면 시작 번호 수정과 마자막 두번째 번호일 때 설정   -->
@@ -67,15 +88,25 @@
         <!-- 전체 페이지 수가 5보다 작을 때 설정 -->
         <% if(lastPageNum < 5) { last = lastPageNum } %>
         <!-- 번호 5개만 표시 -->
-        <% for(var i = first; i < first + last; i++ ) { %>
-            <a href="./infection?startPage=<%=i %>&startTime=<%=startTime %>&endTime=<%=endTime %>"><%=i %></a>       
+        <% for(var i = first; i < first + last; i++ ) { 
+            if(nowPage == i){ %>
+            <li class="page-item disabled"><a class="page-link" href="./infection?startPage=<%=i %>&startTime=<%=startTime %>&endTime=<%=endTime %>"><%=i%></a></li>   
+            <% } else { %>
+            <li class="page-item"><a class="page-link" href="./infection?startPage=<%=i %>&startTime=<%=startTime %>&endTime=<%=endTime %>"><%=i%></a></li>   
+            <% } %>
         <% } %>                
         
-        <!-- 다음 화살표 -->
-        <% if(end) { %>
-            <a href="./infection?startPage=<%=parseInt(nowPage) + 1 %>&startTime=<%=startTime %>&endTime=<%=endTime %>"> > </a>
-        <% } %>
-    </div>
+        <% if (nowPage != lastPageNum){ %> 
+            <li class="page-item">
+                <a class="page-link" href="./infection?startPage=<%=parseInt(nowPage) + 1 %>&startTime=<%=startTime %>&endTime=<%=endTime %>" aria-label="Next">
+                    <i class="gd-angle-right icon-text icon-text-xs d-inline-block" aria-hidden="true"></i>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+            <% } %>                
+        </ul>
+    </nav>
+
 
     <script>
         $('#search').on('click', () => {
@@ -116,9 +147,9 @@
 
                             if(result.lastPageNum > 1) {
                                 for(var i = 1; i <= result.lastPageNum; i++) 
-                                    paging += '<a href="./infection?startPage=' + i + '&startTime=' + start + '&endTime=' + end + '">' + i + '</a>';
+                                    paging += '<li class="page-item disabled"><a class="page-link" href="./infection?startPage=' + i + '&startTime=' + start + '&endTime=' + end + '">'+i+'</a></li>'; 
 
-                                paging += '<a href="./infection?startPage=2&startTime=' + start + '&endTime=' + end + '"> > </a>';
+                                paging += '<li class="page-item disabled"><a class="page-link" href="./infection?startPage=2&startTime=' + start + '&endTime=' + end + '"> > </a></li>';
                             }
                                 
                         } else {
@@ -137,5 +168,7 @@
             }
         });
     </script>
-</body>
-</html>
+
+    
+</div>
+</div>
