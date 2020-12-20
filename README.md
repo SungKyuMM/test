@@ -27,7 +27,6 @@
 ##### npm i jquery
 ##### npm i express-ejs-layout
 ##### npm i axios
-##### npm i fs
 ##### npm i multer
 
 
