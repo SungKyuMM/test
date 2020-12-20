@@ -29,13 +29,13 @@ module.exports = {
         let start = false;
         let end = false;
         let nowPage = req.query.startPage;
-        let lastPageNum = parseInt(count / 10);
+        let lastPage = parseInt(count / 10);
 
-        if(count % 10 != 0) lastPageNum += 1;
+        if(count % 10 != 0) lastPage += 1;
 
         if(nowPage > 1) start = true;
-        if(lastPageNum > 1) end = true;
-        if(lastPageNum == nowPage) end = false;
+        if(lastPage > 1) end = true;
+        if(lastPage == nowPage) end = false;
 
         let paginData = {
             search: data,
@@ -46,7 +46,7 @@ module.exports = {
 
         let infection = await infectionMongo.infectionPaging(paginData);
 
-        res.render('testinfection', {infection: infection, nowPage: nowPage, start: start, end: end, startTime: startTime, endTime: endTime, lastPageNum: lastPageNum});
+        res.render('testinfection', {infection: infection, nowPage: nowPage, start: start, end: end, startTime: startTime, endTime: endTime, lastPage: lastPage});
     },
 
     searchInfection: async (req, res, next) => {
@@ -61,9 +61,9 @@ module.exports = {
         }
 
         let count = await infectionMongo.count(data);
-        let lastPageNum = parseInt(count / 10);
+        let lastPage = parseInt(count / 10);
 
-        if(count % 10 != 0) lastPageNum += 1;
+        if(count % 10 != 0) lastPage += 1;
 
         let paginData = {
             search: data,
@@ -73,6 +73,6 @@ module.exports = {
         };
 
         let infectionList = await infectionMongo.dateSearch(paginData);
-        res.json({list: infectionList, lastPageNum: lastPageNum});
+        res.json({list: infectionList, lastPage: lastPage});
     }
 }
