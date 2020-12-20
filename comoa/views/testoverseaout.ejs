@@ -8,24 +8,33 @@
                 <nav class="d-none d-md-block" aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="#">
-                                해외</a>
+                            <a href="#">해외</a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">
-                            코로나19 감염현황</li>
+                        <li class="breadcrumb-item active" aria-current="page">세계지역 검색</li>
                     </ol>
                 </nav>
                 <!-- End Breadcrumb -->
 
                 <div class="mb-3 mb-md-4 d-flex justify-content-between">
-                    <div class="h3 mb-0">
-                        코로나19 감염현황</div>
+                    <div class="h3 mb-0">코로나19 세계지역 검색</div>
                 </div>
-
+            
 
     <div>
         <div>
             <% var today = new Date().toISOString().substring(0, 10) %>
+            <select id="area" style="width: 120px;">
+                <option value="null">--------------------</option>
+                <% for(var i = 0; i < areaSelect.length; i++) {%>
+                    <option value="<%=areaSelect[i] %>"><%=areaSelect[i] %></option>
+                <% } %>
+            </select>
+            <select id="nation" style="width: 200px;">
+                <option value="null">------------------------------------</option>
+                <% for(var i = 0; i < nationSelect.length; i++) {%>
+                    <option value="<%=nationSelect[i] %>"><%=nationSelect[i] %></option>
+                <% } %>
+            </select>
             <input type="date" id="start" name="start" value="<%=today %>" min="2020-10-01" max="<%=today %>">
             ~
             <input type="date" id="end" name="end" value="<%=today %>" min="2020-10-01" max="<%=today %>">
@@ -36,31 +45,23 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <td>날짜</td>
-                <td>누적 확진율</td>
+                <td>지역명</td>
+                <td>국가명</td>
                 <td>확진자 수</td>
                 <td>사망자 수</td>
-                <td>검사 수</td>
-                <td>검사 진행 수</td>
-                <td>검사완료 수</td>
-                <td>결과 음성 수</td>
-                <td>치료 중 환자 수</td>
-                <td>격리 해제 수</td>
+                <td>사망률</td>
+                <td>등록일</td>
             </tr>
         </thead>
-        <tbody id="infectionList">            
-            <% infection.forEach(item => { %>
+        <tbody id="overseaoutList">            
+            <% overseaout.forEach(item => { %>
                 <tr>
-                    <td><%=item.create_dt.toISOString().substring(0, 10) %></td>
-                    <td><%=item.acc_def_rate %>%</td>
-                    <td><%=item.decide_cnt %>명</td>
-                    <td><%=item.death_cnt %>명</td>
-                    <td><%=item.acc_exam_cnt %>명</td>
-                    <td><%=item.exam_cnt %>명</td>
-                    <td><%=item.acc_exam_comp_cnt %>명</td>
-                    <td><%=item.result_neg_cnt %>명</td>
-                    <td><%=item.care_cnt %>명</td>
-                    <td><%=item.clear_cnt %>명</td>
+                    <td><%=item.area_nm %></td>
+                    <td><%=item.nation_nm %></td>
+                    <td><%=item.nat_def_cnt %>명</td>
+                    <td><%=item.nat_death_cnt %>명</td>
+                    <td><%=item.nat_death_rate %>%</td>
+                    <td><%=item.create_dt.toISOString().substring(0, 10) %></td>                    
                 </tr>
             <% }); %>
         </tbody>
@@ -72,14 +73,14 @@
             <% if (nowPage != 1){ %>
                 <!-- 첫 페이지 -->
                 <li class="page-item">
-                    <a class="page-link" href="./infection?startPage=1&startTime=<%=startTime %>&endTime=<%=endTime %>" aria-label="Previous">
+                    <a class="page-link" href="./overseaout?startPage=1&startTime=<%=startTime %>&endTime=<%=endTime %>&area=<%=area %>&nation=<%=nation %>" aria-label="Previous">
                         <i class="gd-angle-double-left icon-text icon-text-xs d-inline-block" aria-hidden="true"></i>
                         <span class="sr-only">Previous</span>
                     </a>
                 </li>
                 <!-- 이전 페이지 -->
                 <li class="page-item">
-                    <a class="page-link" href="./infection?startPage=<%=parseInt(nowPage) - 1 %>&startTime=<%=startTime %>&endTime=<%=endTime %>" aria-label="Previous">
+                    <a class="page-link" href="./overseaout?startPage=<%=parseInt(nowPage) - 1 %>&startTime=<%=startTime %>&endTime=<%=endTime %>&area=<%=area %>&nation=<%=nation %>" aria-label="Previous">
                         <i class="gd-angle-left icon-text icon-text-xs d-inline-block" aria-hidden="true"></i>
                         <span class="sr-only">Previous</span>
                     </a>
@@ -98,23 +99,23 @@
             <!-- 번호 5개만 표시 -->
             <% for(var i = first; i < first + last; i++ ) { 
                 if(nowPage == i){ %>
-                <li class="page-item disabled"><a class="page-link" href="./infection?startPage=<%=i %>&startTime=<%=startTime %>&endTime=<%=endTime %>"><%=i%></a></li>   
+                <li class="page-item disabled"><a class="page-link" href="./overseaout?startPage=<%=i %>&startTime=<%=startTime %>&endTime=<%=endTime %>&area=<%=area %>&nation=<%=nation %>"><%=i%></a></li>   
                 <% } else { %>
-                <li class="page-item"><a class="page-link" href="./infection?startPage=<%=i %>&startTime=<%=startTime %>&endTime=<%=endTime %>"><%=i%></a></li>   
+                <li class="page-item"><a class="page-link" href="./overseaout?startPage=<%=i %>&startTime=<%=startTime %>&endTime=<%=endTime %>&area=<%=area %>&nation=<%=nation %>"><%=i%></a></li>   
                 <% } %>
             <% } %>                
             
             <% if (nowPage != lastPage){ %> 
                 <!-- 다음 페이지 -->
                 <li class="page-item">
-                    <a class="page-link" href="./infection?startPage=<%=parseInt(nowPage) + 1 %>&startTime=<%=startTime %>&endTime=<%=endTime %>" aria-label="Next">
+                    <a class="page-link" href="./overseaout?startPage=<%=parseInt(nowPage) + 1 %>&startTime=<%=startTime %>&endTime=<%=endTime %>&area=<%=area %>&nation=<%=nation %>" aria-label="Next">
                         <i class="gd-angle-right icon-text icon-text-xs d-inline-block" aria-hidden="true"></i>
                         <span class="sr-only">Next</span>
                     </a>
                 </li>
                 <!-- 마지막 페이지 -->
                 <li class="page-item">
-                    <a class="page-link" href="./infection?startPage=<%=parseInt(lastPage) %>&startTime=<%=startTime %>&endTime=<%=endTime %>" aria-label="Next">
+                    <a class="page-link" href="./overseaout?startPage=<%=parseInt(lastPage) %>&startTime=<%=startTime %>&endTime=<%=endTime %>&area=<%=area %>&nation=<%=nation %>" aria-label="Next">
                         <i class="gd-angle-double-right icon-text icon-text-xs d-inline-block" aria-hidden="true"></i>
                         <span class="sr-only">Next</span>
                     </a>
@@ -124,20 +125,24 @@
     </nav>
 
 
-    <script>
+    <script>        
         $('#search').on('click', () => {
             let start = $('#start').val();
             let end = $('#end').val();
+            let area = ($('#area option:selected').val() == 'null') ? '' : $('#area option:selected').val();
+            let nation = ($('#nation option:selected').val() == 'null') ? '' : $('#nation option:selected').val();
 
-            if(new Date(start) < new Date(end)) {
+            if(new Date(start) <= new Date(end)) {
                 var paramData = {
                     start: start,
-                    end: end
+                    end: end,
+                    area: area,
+                    nation: nation
                 }
                 
                 $.ajax({
                     type : "POST",
-                    url : "/covid/infectionSearch",
+                    url : "/covid/overseaoutSearch",
                     dataType : "json",
                     data : paramData,
                                             
@@ -148,16 +153,12 @@
                             // 검색 결과
                             result.list.forEach(e => {
                                 htmls += '<tr>';
-                                htmls += '<td>' + e.create_dt.substring(0, 10) + '</td>';
-                                htmls += '<td>' + e.acc_def_rate + '%</td>';
-                                htmls += '<td>' + e.decide_cnt + '명</td>';
-                                htmls += '<td>' + e.death_cnt + '명</td>';
-                                htmls += '<td>' + e.acc_exam_cnt + '명</td>';
-                                htmls += '<td>' + e.exam_cnt + '명</td>';
-                                htmls += '<td>' + e.acc_exam_comp_cnt + '명</td>';
-                                htmls += '<td>' + e.result_neg_cnt + '명</td>';
-                                htmls += '<td>' + e.care_cnt + '명</td>';
-                                htmls += '<td>' + e.clear_cnt + '명</td>';
+                                htmls += '<td>' + e.area_nm + '</td>';
+                                htmls += '<td>' + e.nation_nm + '</td>';
+                                htmls += '<td>' + e.nat_def_cnt + '명</td>';
+                                htmls += '<td>' + e.nat_death_cnt + '명</td>';
+                                htmls += '<td>' + e.nat_death_rate + '%</td>';
+                                htmls += '<td>' + e.create_dt.substring(0, 10) + '</td>';                                
                                 htmls += '</tr>';
                             });
                             
@@ -170,18 +171,18 @@
                                 for(var i = 1; i <= endNum; i++) {
                                     if(i == 1) status = 'disabled';
                                     else status = '';
-                                    paging += '<li class="page-item '+status+'"><a class="page-link" href="./infection?startPage=' + i + '&startTime=' + start + '&endTime=' + end + '">'+i+'</a></li>'; 
+                                    paging += '<li class="page-item '+status+'"><a class="page-link" href="./overseaout?startPage=' + i + '&startTime=' + start + '&endTime=' + end + '&area=' + area + '&nation=' + nation + '">'+i+'</a></li>'; 
                                 }
-                                paging += '<li class="page-item"><a class="page-link" href="./infection?startPage=2&startTime=' + start + '&endTime=' + end + '"> > </a></li>';
-                                paging += '<li class="page-item"><a class="page-link" href="./infection?startPage='+result.lastPage+'&startTime=' + start + '&endTime=' + end + '"> >> </a></li>';
+                                paging += '<li class="page-item"><a class="page-link" href="./overseaout?startPage=2&startTime=' + start + '&endTime=' + end + '&area=' + area + '&nation=' + nation + '"> > </a></li>';
+                                paging += '<li class="page-item"><a class="page-link" href="./overseaout?startPage='+result.lastPage+'&startTime=' + start + '&endTime=' + end + '&area=' + area + '&nation=' + nation + '"> >> </a></li>';
                             } else {
-                                paging += '<li class="page-item disabled"><a class="page-link" href="./infection?startPage=1&startTime=' + start + '&endTime=' + end + '">1</a></li>'; 
+                                paging += '<li class="page-item disabled"><a class="page-link" href="./overseaout?startPage=1&startTime=' + start + '&endTime=' + end + '&area=' + area + '&nation=' + nation + '">1</a></li>'; 
                             }
                                 
                         } else {
                             htmls += '<div style="text-align: center;"><h3>데이터가 없습니다.</h3></div>';
                         }
-                        $('#infectionList').html(htmls);
+                        $('#overseaoutList').html(htmls);
                         $('#paging').html(paging);
                     },
                     
@@ -193,8 +194,37 @@
                 alert('시작 날짜가 마지막 날짜보다 미래입니다.');
             }
         });
+
+        $('#area').on('change', () => {
+            let key = $('#area option:selected').val();
+            $.ajax({
+                type : "POST",
+                url : "/covid/overseaAreaGroup",
+                dataType : "json",
+                data : { key: key },
+                                        
+                success : (result) => {
+
+                    if(result.list.length > 0) {
+                        var htmls = '<option value="null">------------------------------------</option>';
+                        result.list.forEach(e => {
+                            htmls += '<option value="' + e.nation_nm + '">' + e.nation_nm + '</option>'
+                        });
+
+                        $('#nation').html(htmls);
+                    }
+                },
+
+                error : () => {
+                    console.log("실패")
+                }
+            });
+        });
+
+
+
     </script>
 
     
-</div>
+    </div>
 </div>
