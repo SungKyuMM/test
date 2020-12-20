@@ -49,54 +49,65 @@
                                             <%-item.writer.name %>
                                         </td>
                                         <td class="py-3">
-                                            <%-item.reg_date.toISOString().substring(0, 10) %>
+                                            <%-item.reg_date.toISOString().substring(0, 19).replace('T', ' ') %>
                                         </td>
                                     </tr>
                                 <% }); %>
                             <% } %>
                     </tbody>
                 </table>
-                <!-- 페이징 예시 
-                <nav class="d-flex justify-content-between align-items-center" aria-label="Page navigation example">
-                    <small class="text-muted">Showing 3 of 8</small>
-                    <ul class="pagination font-weight-semi-bold">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <i class="gd-angle-left icon-text icon-text-xs d-inline-block" aria-hidden="true"></i>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item disabled"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">8</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <i class="gd-angle-right icon-text icon-text-xs d-inline-block" aria-hidden="true"></i>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
--->
+                
                 <!-- 현재 페이지, 토탈페이지, 페이지 1,2,3.. 해줭-->
                 <nav class="d-flex justify-content-between align-items-center" aria-label="Page navigation example">
                     <small class="text-muted">Showing [now page] of [total page count]</small>
                     <ul class="pagination font-weight-semi-bold">
-                        <% if(start) { %>
+                        <% if (nowPage != 1){ %>
+                            <!-- 첫 페이지 -->
+                            <li class="page-item">
+                                <a class="page-link" href="/boards/<%=type %>?startPage=1" aria-label="Previous">
+                                    <i class="gd-angle-double-left icon-text icon-text-xs d-inline-block" aria-hidden="true"></i>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+                            <!-- 이전 페이지 -->
                             <li class="page-item">
                                 <a class="page-link" href="/boards/<%=type %>?startPage=<%=parseInt(nowPage) - 1 %>" aria-label="Previous">
                                     <i class="gd-angle-left icon-text icon-text-xs d-inline-block" aria-hidden="true"></i>
-
+                                    <span class="sr-only">Previous</span>
                                 </a>
                             </li>
                         <% } %>
-                            &nbsp;
-                        <% if(end) { %>
+                        
+                        <!-- 시작번호, 표시 마지막 번호를 위한 카운트 -->
+                        <% var first = 1, last = 5; %>        
+                        <!-- 현재 페이지가 4보다 크면 시작 번호 수정과 마자막 두번째 번호일 때 설정   -->
+                        <% if(nowPage >= 4) { %>
+                            <% first = nowPage - 2; %>
+                            <% if(nowPage >= lastPage - 2) { first = lastPage - 4; } %>
+                        <% } %>
+                        <!-- 전체 페이지 수가 5보다 작을 때 설정 -->
+                        <% if(lastPage < 5) { last = lastPage } %>
+                        <!-- 번호 5개만 표시 -->
+                        <% for(var i = first; i < first + last; i++ ) { 
+                            if(nowPage == i){ %>
+                            <li class="page-item disabled"><a class="page-link" href="/boards/<%=type %>?startPage=<%=i %>"><%=i%></a></li>   
+                            <% } else { %>
+                            <li class="page-item"><a class="page-link" href="/boards/<%=type %>?startPage=<%=i %>"><%=i%></a></li>   
+                            <% } %>
+                        <% } %>                
+                        
+                        <% if (nowPage != lastPage){ %> 
+                            <!-- 다음 페이지 -->
                             <li class="page-item">
                                 <a class="page-link" href="/boards/<%=type %>?startPage=<%=parseInt(nowPage) + 1 %>" aria-label="Next">
                                     <i class="gd-angle-right icon-text icon-text-xs d-inline-block" aria-hidden="true"></i>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                            <!-- 마지막 페이지 -->
+                            <li class="page-item">
+                                <a class="page-link" href="/boards/<%=type %>?startPage=<%=parseInt(lastPage) %>" aria-label="Next">
+                                    <i class="gd-angle-double-right icon-text icon-text-xs d-inline-block" aria-hidden="true"></i>
                                     <span class="sr-only">Next</span>
                                 </a>
                             </li>

@@ -23,6 +23,7 @@ var usersRouter = require('./routes/users');
 var boardsRouter = require('./routes/boards');
 var replyRouter = require('./routes/replys');
 var covidRouter = require('./routes/covid');
+var fileRouter = require('./routes/file');
 
 var app = express();
 app.use(layouts);
@@ -40,6 +41,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // 가상 경로
 app.use('/css', express.static('public/stylesheets'));
 app.use('/js', express.static('public/javascripts'));
+app.use('/uploads', express.static('public/uploads'));
 app.use('/node_modules', express.static(path.join(__dirname, '/node_modules')));
 
 // 실행 추가
@@ -75,6 +77,7 @@ app.use('/users', usersRouter);
 app.use('/boards', boardsRouter);
 app.use('/reply', replyRouter);
 app.use('/covid', covidRouter);
+app.use('/file', fileRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
