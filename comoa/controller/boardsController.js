@@ -13,13 +13,13 @@ module.exports = {
         let start = false;
         let end = false;
         let nowPage = req.query.startPage;
-        let lastPageNum = parseInt(count / 10);
+        let lastPage = parseInt(count / 10);
 
-        if(count % 10 != 0) lastPageNum += 1;
+        if(count % 10 != 0) lastPage += 1;
 
         if(nowPage > 1) start = true;
-        if(lastPageNum > 1) end = true;
-        if(lastPageNum == nowPage) end = false;
+        if(lastPage > 1) end = true;
+        if(lastPage == nowPage) end = false;
 
         let data = {
             type: type,
@@ -31,7 +31,7 @@ module.exports = {
         let boardList = await boardMongo.typePaging(data);
         let boardNum = count-((nowPage-1)*data.maxPage);
 
-        res.render('testboards', {type: data.type, list: boardList, nowPage: nowPage, start: start, end: end, boardNum: boardNum});
+        res.render('testboards', {type: data.type, list: boardList, nowPage: nowPage, start: start, end: end, boardNum: boardNum, lastPage: lastPage});
     }, 
 
     showBoard: async (req, res, next) => {
