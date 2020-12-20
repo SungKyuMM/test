@@ -20,9 +20,9 @@
                     <div class="card-body p-0">
                         <div class="media align-items-center px-3 px-md-4 mb-3 mb-md-4">
                             <div class="media-body">
-                                <h4 class="h3 lh-1 mb-2">총 <%= numberWithCommas(infectionData[0].decide_cnt) %> 명</h4>
+                                <h4 class="h3 lh-1 mb-2">Today <%= numberWithCommas(today.Kodecide_cnt) %> 명</h4>
                                 <p class="small text-muted mb-0">
-                                    Today <span class="text-danger mx-1"><%= numberWithCommas(today.Kodecide_cnt) %></span> 명
+                                    Total <span class="text-danger mx-1"><%= numberWithCommas(infectionData[0].decide_cnt) %></span> 명
                                 </p>
                             </div>
                         </div>
@@ -45,9 +45,9 @@
                     <div class="card-body p-0">
                         <div class="media align-items-center px-3 px-md-4 mb-3 mb-md-4">
                             <div class="media-body">
-                                <h4 class="h3 lh-1 mb-2">총 <%= numberWithCommas(today.outDecide_cnt) %> 명</h4>
+                                <h4 class="h3 lh-1 mb-2">Today <%= numberWithCommas(today.outTodayDecide_cnt) %> 명</h4>
                                 <p class="small text-muted mb-0">
-                                    Today <span class="text-danger mx-1"><%= numberWithCommas(today.outTodayDecide_cnt) %></span> 명
+                                    Total <span class="text-danger mx-1"><%= numberWithCommas(today.outDecide_cnt) %></span> 명
                                 </p>
                             </div>
                         </div>
@@ -322,11 +322,10 @@
                 </div>
                 <!-- End Card -->
             </div>
-        </div>
-
+<!--
         <div class="row">
             <div class="col-md-6 col-xl-4 mb-3 mb-md-4">
-                <!-- Card -->
+-->                <!-- Card 
                 <div class="card h-100">
                     <div class="card-header d-flex">
                         <h5 class="h6 font-weight-semi-bold text-uppercase mb-0">일별 확진자수</h5>
@@ -348,10 +347,10 @@
                             </div>
 
                             <i class="gd-arrow-up icon-text icon-text-xs d-flex text-danger ml-auto"></i>
-                            <!--
+ -->                           <!--
                                 전일 대비 비교하여 + 경우 up/danger, - 경우 /down/success
                                 <i class="gd-arrow-down icon-text icon-text-xs d-flex text-danger ml-auto"></i>-->
-                        </div>
+<!--                        </div>
 
                         <div class="media align-items-center p-3">
                             <div class="media-body d-flex align-items-center mr-2">
@@ -363,10 +362,10 @@
                         </div>
                     </div>
                 </div>
-                <!-- End Card -->
+-->                <!-- End Card 
             </div>
             <div class="col-md-6 col-xl-4 mb-3 mb-md-4">
-                <!-- Card -->
+-->                <!-- Card 
                 <div class="card h-100">
                     <div class="card-header d-flex">
                         <h5 class="h6 font-weight-semi-bold text-uppercase mb-0">Available Balance</h5>
@@ -398,10 +397,11 @@
                         </div>
                     </div>
                 </div>
-                <!-- End Card -->
             </div>
+-->                
+            <!-- End Card 
             <div class="col-lg-6 col-xl-4 mb-3 mb-lg-4">
-                <!-- Card -->
+-->                <!-- Card 
                 <div class="card h-100">
                     <div class="card-header">
                         <h5 class="h6 text-uppercase font-weight-semi-bold mb-0">Recent Transactions</h5>
@@ -473,8 +473,9 @@
 
                     </div>
                 </div>
-                <!-- End Card -->
             </div>
+-->
+            <!-- End Card -->
 
             <div class="col-md-6 col-xl-4 mb-3 mb-md-4">
                 <!-- Card -->
@@ -498,7 +499,7 @@
                 </div>
                 <!-- End Card -->
             </div>
-
+            
             <div class="col-md-6 col-xl-4 mb-3 mb-md-4">
                 <!-- Card -->
                 <div class="card flex-row align-items-center p-3 p-md-4">

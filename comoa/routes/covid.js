@@ -39,7 +39,16 @@ router.get('/ageGender', ageGenderController.todayInfo);
 
 router.get('/infection', infectionController.showInfection);
 
+router.post('/infectionSearch', infectionController.searchInfection);
+
+router.get('/overseaout', overSeaOutController.showOverseaout);
+
+router.post('/overseaAreaGroup', overSeaOutController.areaGroup);
+
+router.post('/overseaoutSearch', overSeaOutController.searchOverSeaOut);
+
 router.get('/sms', smsController.todaySmsInfo);
+
 
 // 세계지역검색 - 공사중..
 router.get('/sample', (req, res, next)=>{

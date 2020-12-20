@@ -47,5 +47,38 @@ module.exports = {
                 }
             });
         });
+    }, 
+
+    count: async (data) => {
+        return new Promise (resolve => {
+            OverseaOutbreak.countDocuments(data, (err, result) => {
+                if(err) console.log(`OverseaOutbreak MongoDB Error: ${err}`);
+                else {
+                   resolve(result);
+                }
+            });
+        });
+    },
+
+    overseaoutPaging: async (data) => {
+        return new Promise (resolve => {
+            let result = OverseaOutbreak.find(data.search)
+            .sort({create_dt: data.sort})
+            .skip(data.startPage)
+            .limit(data.maxPage);
+
+            resolve(result);
+        });
+    },
+
+    overseaoutDistinct: async (data) => {
+        return new Promise (resolve => {
+            OverseaOutbreak.distinct(data, (err, result) => {
+                if(err) console.log(`OverseaOutbreak MongoDB Error: ${err}`);
+                else {
+                   resolve(result);
+                }
+            });
+        });
     }
 };

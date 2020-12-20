@@ -74,13 +74,14 @@ module.exports = {
         let cityData = await cityMongo.finday(data3);
        
         var today = { 
-            'Kodecide_cnt' : infectionData[0].decide_cnt -  infectionData[1].decide_cnt,
-            'KoEXAM_CNT' : infectionData[0].exam_cnt -  infectionData[1].exam_cnt,
-            'KoCLEAR_CNT' : infectionData[0].clear_cnt -  infectionData[1].clear_cnt,
-            'outTodayDecide_cnt' : overSeaData[0].decide_total - overSeaData[1].decide_total,
-            'outTodaydeath_cnt' : overSeaData[0].death_total - overSeaData[1].death_total,
+            'Kodecide_cnt' : infectionData[0].decide_cnt -  infectionData[1].decide_cnt,    // 확진자 수
+            'KoEXAM_CNT' : infectionData[0].exam_cnt -  infectionData[1].exam_cnt,          // 검사 진행 수
+            'KoCLEAR_CNT' : infectionData[0].clear_cnt -  infectionData[1].clear_cnt,       // 격리 해제 수
+            'outTodayDecide_cnt' : overSeaData[0].decide_total - overSeaData[1].decide_total, // 확진자 수 토탈
+            'outTodaydeath_cnt' : overSeaData[0].death_total - overSeaData[1].death_total,  // 사망자 수 토탈
             'outDecide_cnt' : overSeaData[0].decide_total
         };
+        console.log(today);
 
         var KoList = new Array();
         var outSeaList = new Array();
@@ -102,6 +103,9 @@ module.exports = {
             outSeaList.push(tempDate2);
         }
         
+        console.log('국내 ')
+        console.log(KoList);  
+        console.log('세계 ')
         console.log(outSeaList);  
 
         res.render('index', {infectionData: infectionData, today : today, KoList : KoList, dateList : dateList, outSeaList : outSeaList });
