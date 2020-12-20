@@ -22,8 +22,8 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var boardsRouter = require('./routes/boards');
 var replyRouter = require('./routes/replys');
-var covidRouter = require('./routes/covids');
-var testRouter = require('./routes/test');
+var covidRouter = require('./routes/covid');
+// var testRouter = require('./routes/covid');
 
 var app = express();
 app.use(layouts);
@@ -76,7 +76,8 @@ app.use('/users', usersRouter);
 app.use('/boards', boardsRouter);
 app.use('/reply', replyRouter);
 app.use('/covid', covidRouter);
-app.use('/test', testRouter);
+// app.use('/test', testRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

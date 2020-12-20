@@ -41,6 +41,8 @@ router.get('/infection', infectionController.showInfection);
 
 router.get('/sms', smsController.todaySmsInfo);
 
+router.post('/infectionSearch', infectionController.searchInfection);
+
 // 세계지역검색 - 공사중..
 router.get('/sample', (req, res, next)=>{
     res.render('sample');
