@@ -32,7 +32,7 @@
                 <% post.forEach(item => { %>
                     <tr>
                         <td class="py-3"><%=item.country %></td>
-                        <td class="py-3"><a href="/test/safeContent?id=<%=item._id %>"><%=item.title %></a></td>
+                        <td class="py-3"><a href="/covid/safeContent?id=<%=item._id %>"><%=item.title %></a></td>
                         <td class="py-3"><%=item.create_dt.toISOString().substring(0, 10) %></td>
                     </tr>
                 <% }); %>   
@@ -42,11 +42,11 @@
    
                 <!-- 현재 페이지, 토탈페이지, 페이지 1,2,3.. 해줭-->
                 <nav class="d-flex justify-content-between align-items-center" aria-label="Page navigation example">
-                    <small class="text-muted">Showing [now page] of [total page count]</small>
+                    <small class="text-muted">Showing <%=nowPage%> of <%=lastPageNum%></small>
                     <ul class="pagination font-weight-semi-bold">
                         <% if(start) { %>
                             <li class="page-item">
-                                <a class="page-link" href="/test/safePaging?startPage=<%=parseInt(nowPage) - 1 %>" aria-label="Previous">
+                                <a class="page-link" href="/covid/safePaging?startPage=<%=parseInt(nowPage) - 1 %>" aria-label="Previous">
                                     <i class="gd-angle-left icon-text icon-text-xs d-inline-block" aria-hidden="true"></i>
 
                                 </a>
@@ -55,7 +55,7 @@
                             &nbsp;
                         <% if(end) { %>
                             <li class="page-item">
-                                <a class="page-link" href="/test/safePaging?startPage=<%=parseInt(nowPage) + 1 %>" aria-label="Next">
+                                <a class="page-link" href="/covid/safePaging?startPage=<%=parseInt(nowPage) + 1 %>" aria-label="Next">
                                     <i class="gd-angle-right icon-text icon-text-xs d-inline-block" aria-hidden="true"></i>
                                     <span class="sr-only">Next</span>
                                 </a>

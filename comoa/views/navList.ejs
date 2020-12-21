@@ -20,6 +20,13 @@
 
                 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=bab3d8cc60f04070a5fddb1bf106d195"></script>
 
+                <div>
+                    <% var today = new Date().toISOString().substring(0, 10) %>
+                    <input type="date" id="start" name="start" value="<%=today %>" min="2020-10-01" max="<%=today %>">
+                    ~
+                    <input type="date" id="end" name="end" value="<%=today %>" min="2020-10-01" max="<%=today %>">
+                    <button id="search">검색</button>
+                </div>
                 
                 <div id="map" style="width:100%;height:700px;"></div>
                 
@@ -33,7 +40,7 @@
                             <th class="font-weight-semi-bold border-top-0 py-2">경도</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tablelist">
                         <% 
                             let pos = new Array();
                             if(Object.keys(list).length == 0) { %>
@@ -46,6 +53,7 @@
     var positions = [];
 </script>
                                 <%
+                                let i = list.length;
                                 list.forEach(nav => { 
                                     %>
 <script>
@@ -55,7 +63,7 @@
     positions.push(items);
 </script>
                                     <tr>
-                                        <td class="py-3"><%=++navNum %></td>
+                                        <td class="py-3"><%=i %></td>
                                         <td class="py-3">
                                                 <%-nav.title %>
                                         </td>
@@ -65,7 +73,9 @@
                                         <td class="py-3"><%-nav.latitude %></td>
                                         <td class="py-3"><%-nav.longitude %></td>
                                     </tr>
-                                <% }); %>
+                                <%
+                                i--;
+                             }); %>
                             <% } %>
                     </tbody>
                 </table>
@@ -84,7 +94,13 @@
                     var distanceOverlay; // 선의 거리정보를 표시할 커스텀오버레이 입니다 
                     var dots = {}; // 선이 그려지고 있을때 클릭할 때마다 클릭 지점과 거리를 표시하는 커스텀 오버레이 배열입니다.
 
+                    mapResizing();
+                    marker();
+                    liner();
+
 //  마커에 따라 지도 크기 조절                   
+
+                function mapResizing(){
                     var bounds = new kakao.maps.LatLngBounds();    
                     var marker;
                     for (var i = 0; i < positions.length; i++) {
@@ -92,15 +108,12 @@
                         bounds.extend(positions[i].latlng);
                         map.setBounds(bounds);
                     }
-
-                    function setBounds() {
-                        // LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
-                        // 이때 지도의 중심좌표와 레벨이 변경될 수 있습니다
-                    }
+                }
 
 
 // 마커추가
                     //마커 이미지의 이미지 주소입니다
+                    function marker(){
                     var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
                     // console.log(parseFloat(positions[0].latitude) + ', ' + parseFloat(positions[0].longitude));
                     // console.log(positions);
@@ -124,33 +137,35 @@
                         // 마커 이미지 
                         });
                     }
+                }
 
 // 라인추가
-                    var linePath;
-                    var lineLine = new daum.maps.Polyline();
-                    var distance;
-                 
-                    for (var i = 0; i < positions.length; i++) {
-                        if (i != 0) {
-                            linePath = [ positions[i - 1].latlng, positions[i].latlng ] //라인을 그리려면 두 점이 있어야하니깐 두 점을 지정했습니다
+                    function liner(){
+                        var linePath;
+                        var lineLine = new daum.maps.Polyline();
+                        var distance;
+                    
+                        for (var i = 0; i < positions.length; i++) {
+                            if (i != 0) {
+                                linePath = [ positions[i - 1].latlng, positions[i].latlng ] //라인을 그리려면 두 점이 있어야하니깐 두 점을 지정했습니다
+                            }
+                            ;
+                            lineLine.setPath(linePath); // 선을 그릴 라인을 세팅합니다
+                    
+                            var drawLine = new daum.maps.Polyline({
+                                map : map, // 선을 표시할 지도입니다 
+                                path : linePath,
+                                strokeWeight : 3, // 선의 두께입니다 
+                                strokeColor : '#db4040', // 선의 색깔입니다
+                                strokeOpacity : 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
+                                strokeStyle : 'solid' // 선의 스타일입니다
+                            });
+                    
+                            distance = Math.round(lineLine.getLength());
+                            displayCircleDot(positions[i].latlng, distance);
+                            
                         }
-                        ;
-                        lineLine.setPath(linePath); // 선을 그릴 라인을 세팅합니다
-                 
-                        var drawLine = new daum.maps.Polyline({
-                            map : map, // 선을 표시할 지도입니다 
-                            path : linePath,
-                            strokeWeight : 3, // 선의 두께입니다 
-                            strokeColor : '#db4040', // 선의 색깔입니다
-                            strokeOpacity : 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
-                            strokeStyle : 'solid' // 선의 스타일입니다
-                        });
-                 
-                        distance = Math.round(lineLine.getLength());
-                        displayCircleDot(positions[i].latlng, distance);
-                         
                     }
-                 
                     function displayCircleDot(position, distance) {
                         if (distance > 0) {
                             // 클릭한 지점까지의 그려진 선의 총 거리를 표시할 커스텀 오버레이를 생성합니다
@@ -167,7 +182,63 @@
                             distanceOverlay.setMap(map);
                         }
                     }
+    
+        $('#search').on('click', () => {
+            let start = $('#start').val();
+            let end = $('#end').val();
 
+            if(new Date(start) <= new Date(end)) {
+                var paramData = {
+                    start: start,
+                    end: end,
+                }
+                
+                $.ajax({
+                    type : "POST",
+                    url : "/nav",
+                    dataType : "json",
+                    data : paramData,
+                                            
+                    success : (result) => {
+                        var htmls = '';
+                        positions = [];
+                        if(result.list.length > 0) {
+                            // 검색 결과
+                            var i = result.list.length;
+                            result.list.forEach(e => {
+    var items = new Object();
+    items.title = e.title;
+    items.latlng = new daum.maps.LatLng(e.latitude, e.longitude);
+    positions.push(items);
+                                htmls += '<tr>';
+                                htmls += '<td>' + i + '</td>';
+                                htmls += '<td>' + e.title + '</td>';
+                                htmls += '<td>' + e.reg_date.substring(0, 19) + '</td>';
+                                htmls += '<td>' + e.latitude + '</td>';
+                                htmls += '<td>' + e.longitude + '</td>';                              
+                                htmls += '</tr>';
+                                i--;
+                            });
+                            
+                        } else {
+                            htmls += '<div style="text-align: center;"><h3>데이터가 없습니다.</h3></div>';
+                        }
+                        $('#tablelist').html(htmls);
+                        
+                        // 지도 다시그리기
+                        mapResizing();
+                        marker();
+                        liner();
+                    },
+                    
+                    error : () => {
+                        console.log("실패")
+                    }
+                });
+            } else {
+                alert('시작 날짜가 마지막 날짜보다 미래입니다.');
+            }
+        });
 
                 </script>
 

@@ -3,58 +3,47 @@ const { get } = require("../routes");
 const navMongo = require('../mongoDB/navMongo');
 const nav = require("../mongoDB/schema/nav");
 const mongoose = require("mongoose");
+const { searchnav } = require("../mongoDB/navMongo");
 
 module.exports = {
     showList: async (req, res, next) => {
-        let data2 = [
-            {
-                'writer.email': req.user.email,
-                'writer.name': req.user.name,
-                'reg_date': {
-                    $gte : new Date('2020-12-20')
-                }
-            }
-        ];
-        let count = await navMongo.countnav(data2);
-        let start = false;
-        let end = false;
-        let nowPage = req.query.startPage;
-        let lastPageNum = parseInt(count / 10);
+        
+        let date = new Date();
+        let year = date.getFullYear() + '';
+        let month = (date.getMonth() + 1) + '';
+        let day = date.getDate();
 
-        if(count % 10 != 0) lastPageNum += 1;
-
-        if(nowPage > 1) start = true;
-        if(lastPageNum > 1) end = true;
-        if(lastPageNum == nowPage) end = false;
-
+        if(day < 10) {
+            day += '';
+            day = '0' + day;
+        }
+        
+        let now = new Date(year + '-' + month + '-' + day);  
         let data = {
             email: req.user.email,
             name: req.user.name,
-            reg_date: new Date().toISOString().substring(0, 10),
-            sort: -1,
-            maxPage: 10,
-            startPage: (nowPage-1) * 10
+            reg_date: new Date(now),
+            sort: -1
         };
 
-        let navList = await navMongo.typePaging(data);
-        let navNum = count-((nowPage-1)*data.maxPage);
+        let navList = await navMongo.navList(data);
 
-        res.render('navList', {list: navList, nowPage: nowPage, start: start, end: end, navNum: navNum});
+        res.render('navList', {list: navList});
     }, 
+    showSearchList: async (req, res, next) => {
+        let data = {
+            email: req.user.email,
+            name: req.user.name,
+            start: new Date(req.body.start),
+            end: new Date(req.body.end+ "T23:59:59"),
+            sort: -1
+        };
+        console.log('startday : ' + req.body.start);
+        console.log('endday : ' + req.body.end);
+        let navList = await navMongo.navSearchList(data);
 
-    
-    shownav: async (req, res, next) => {
-        let data = 
-            {
-                'writer.email': req.user.email,
-                'writer.name': req.user.name,
-                'reg_date': {
-                    $gte : new Date('2020-12-20')
-                }
-            };
-        let nav = await navMongo.findnav(data);
-        res.render('navList', {nav: nav});
-    },
+        res.json({list: navList});
+    }, 
     
     registernav: (req, res, next) => {
         if(req.method === 'GET') {
@@ -73,7 +62,7 @@ module.exports = {
             };
 
             navMongo.registernav(data);
-            res.redirect(`/nav?startPage=1`);
+            res.redirect(`/nav`);
         }
     },
 
@@ -94,7 +83,7 @@ module.exports = {
                 }
             }
             navMongo.updatenav(query, data);
-            res.redirect(`/nav?startPage=1`);
+            res.redirect(`/nav`);
         }
     },
 
@@ -103,6 +92,7 @@ module.exports = {
         let data = {_id: mongoose.Types.ObjectId(id)};
 
         navMongo.deletenav(data);
-        res.redirect(`/nav?startPage=1`);
-    }
+        res.redirect(`/nav`);
+    },
+    
 };

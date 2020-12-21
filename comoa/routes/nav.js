@@ -13,10 +13,11 @@ router.get('/register', isAuthenticated.user, navController.registernav);
 router.post('/register', isAuthenticated.user, navController.registernav);
 
 // 네비 삭제
-router.delete('/delete', isAuthenticated.user, navController.deletenav);
+//router.delete('/delete', isAuthenticated.user, navController.deletenav);
 
-// 타입별 네비 확인(리스트)
+// 네비 리스트
 router.get('/', isAuthenticated.user, navController.showList);
-router.get('/:_id', isAuthenticated.user, navController.shownav);
+router.post('/', isAuthenticated.user, navController.showSearchList);
+//router.get('/search', isAuthenticated.user, navController.showSearchList);
 
 module.exports = router;

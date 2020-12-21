@@ -1,13 +1,26 @@
 const nav = require('./schema/nav');
 
 module.exports = {
-    typePaging: async (data) => {
+    navList: async (data) => {
         return new Promise (resolve => {
             let navList = nav.find({
                 'writer.name':data.name,
                 'writer.email':data.email,
                 'reg_date': {
                     $gte : new Date(data.reg_date)
+                }
+            }).sort({reg_date:data.sort});
+            resolve(navList);
+        });
+    },
+    navSearchList: async (data) => {
+        return new Promise (resolve => {
+            let navList = nav.find({
+                'writer.name':data.name,
+                'writer.email':data.email,
+                'reg_date': {
+                    $gte : new Date(data.start),
+                    $lte : new Date(data.end)
                 }
             }).sort({reg_date:data.sort});
             
@@ -52,4 +65,6 @@ module.exports = {
             if(err) console.log(`nav MongoDB Error: ${err}`);
         });
     }
+
+    
 };
