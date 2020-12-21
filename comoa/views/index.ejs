@@ -70,7 +70,10 @@
                         <h5 class="h6 font-weight-semi-bold text-uppercase mb-0">국내치료상황</h5>
                     </div>
                     <div class="card-body pt-0">
-                        <h4 class="h2 lh-1 mb-2">현재 70% 완치</h4>
+                        <%
+                            let a = today.KoCLEAR_CNT_Total/today.Kodecide_cnt_Total*100;
+                        %>
+                        <h4 class="h2 lh-1 mb-2">현재  <%=a.toFixed(2)%> % 완치</h4>
 
                         <p class="mb-3 mb-md-4">Total Income</p>
 
@@ -80,7 +83,7 @@
 
                                 <div class="d-flex align-items-center text-muted mb-2">
                                     <span class="indicator indicator-lg indicator-primary rounded-circle mr-2"></span>
-                                    <small>완치</small>
+                                    <small>격리해제</small>
                                 </div>
 
                                 <div class="d-flex align-items-center text-muted">
@@ -90,8 +93,8 @@
                             </div>
 
                             <div class="js-donut-chart position-relative d-flex ml-auto" style="width: 120px; height: 120px;" data-series='[
-                               {"meta":"AdWords - ","value":78},
-                               {"meta":"Facebook - ","value":22}
+                               {"meta":"AdWords - ","value":<%=a%>},
+                               {"meta":"Facebook - ","value":<%=100-a%>}
                              ]' data-border-width="8" data-start-angle="0" data-fill-colors='["#8069f2","#eeeef1"]' data-is-show-tooltips="true" data-tooltip-currency="%" data-is-tooltip-currency-reverse="true" data-tooltip-custom-class="chart-tooltip chart-tooltip--none-triangle chart-tooltip--centered chart-tooltip--black small text-white text-nowrap px-2 py-1"></div>
                         </div>
                     </div>
@@ -108,8 +111,12 @@
                         <i class="gd-bar-chart icon-text d-inline-block text-primary"></i>
                     </div>
                     <div>
-                        <h4 class="lh-1 mb-1">75%</h4>
-                        <h6 class="mb-0">코로나 완치 확률</h6>
+                        <%
+                            let koreaPeopleCount = 51834302;
+                            let b = 3683094/koreaPeopleCount*100;
+                        %>
+                        <h4 class="lh-1 mb-1"><%=b.toFixed(2)%> %</h4>
+                        <h6 class="mb-0">대한민국 코로나 검사 확률 <br><small>인구 : <%=numberWithCommas(koreaPeopleCount)%> 명 (2020.11)</small></h6>
                     </div>
                     <i class="gd-arrow-up icon-text d-flex text-success ml-auto"></i>
                 </div>
@@ -123,7 +130,7 @@
                         <i class="gd-wallet icon-text d-inline-block text-secondary"></i>
                     </div>
                     <div>
-                        <h4 class="lh-1 mb-1">180,000 원</h4>
+                        <h4 class="lh-1 mb-1">82,000 원</h4>
                         <h6 class="mb-0">코로나 검사 비용</h6>
                     </div>
                     <i class="gd-arrow-down icon-text d-flex text-danger ml-auto"></i>
@@ -257,14 +264,14 @@
                             <div class="row text-center">
                                 <div class="col-6 col-md-4 mb-3 mb-md-0">
                                     <div class="h3 mb-0">
-                                        <%= today.outTodayDecide_cnt %>
+                                        <span class="text-danger">+</span> <%= today.outTodayDecide_cnt %>
                                     </div>
                                     <small class="text-muted">확진 환자</small>
                                 </div>
 
                                 <div class="col-6 col-md-4 mb-3 mb-md-0 border-left">
                                     <div class="h3 mb-0">
-                                        <span class="text-success">+</span><%= today.outTodaydeath_cnt %>
+                                        <span class="text-danger">+</span><%= today.outTodaydeath_cnt %>
                                     </div>
                                     <small class="text-muted"> 사망자</small>
                                 </div>
@@ -280,7 +287,7 @@
                             <div class="js-area-chart chart chart--axis-x--nowrap chart--points-invisible position-relative mh-15_6 safari-overflow-hidden pt-4 pt-md-5 pb-1" data-series='[
                             <%- JSON.stringify(outSeaList) %>
                          ]' data-labels='<%- JSON.stringify(dateList) %>'
-                                data-labels-qty="6" data-labels-start-from="1" data-height="250" data-mobile-height="75" data-high="1000000" data-low="100000" data-offset-x="30" data-offset-y="60" data-is-line-smooth='[false]' data-line-width='["1px"]'
+                                data-labels-qty="6" data-labels-start-from="1" data-height="250" data-mobile-height="75" data-high="1500000" data-low="300000" data-offset-x="30" data-offset-y="60" data-is-line-smooth='[false]' data-line-width='["1px"]'
                                 data-line-colors='["#8069f2"]' data-fill-opacity="1" data-fill-colors='["#ecebfa"]' data-text-size-x="14px" data-text-color-x="#4a4e69" data-text-offset-top-x="10" data-text-align-axis-x="center" data-text-size-y="14px" data-text-color-y="#868e96"
                                 data-is-show-tooltips="true" data-is-tooltip-divided="true" data-tooltip-custom-class="chart-tooltip--divided chart-tooltip__value--bg-black chart-tooltip__meta--bg-primary small text-white" data-tooltip-currency="일일확진자 " data-is-show-points="true"
                                 data-point-custom-class='chart__point--donut chart__point--has-line-helper chart__point--border-xxs border-primary rounded-circle' data-point-dimensions='{"width":8,"height":8}'></div>
@@ -475,10 +482,10 @@
                 </div>
             </div>
 -->
-            <!-- End Card -->
+            <!-- End Card 
 
             <div class="col-md-6 col-xl-4 mb-3 mb-md-4">
-                <!-- Card -->
+-->                <!-- Card 
                 <div class="card flex-row align-items-center p-3 p-md-4">
                     <div>
                         <h5 class="lh-1 mb-0">Orers</h5>
@@ -496,12 +503,12 @@
                            ["rgba(28,240,221,.6)","rgba(255,255,255,.6)"]
                          ]' data-is-show-tooltips="true" data-is-tooltips-append-to-body="true" data-tooltip-custom-class="chart-tooltip chart-tooltip--none-triangle d-flex align-items-center small text-white p-2 mt-5 ml-5" data-tooltip-badge-markup='<span class="indicator indicator-sm bg-secondary rounded-circle mr-1"></span>'
                         data-is-show-points="true" data-point-custom-class='chart__point--hidden' data-point-dimensions='{"width":8,"height":8}'></div>
-                </div>
-                <!-- End Card -->
+                </div>-->
+                <!-- End Card 
             </div>
             
             <div class="col-md-6 col-xl-4 mb-3 mb-md-4">
-                <!-- Card -->
+-->                <!-- Card 
                 <div class="card flex-row align-items-center p-3 p-md-4">
                     <div>
                         <h5 class="lh-1 mb-0">Visitors</h5>
@@ -536,11 +543,11 @@
                          ]' data-is-show-tooltips="true" data-is-tooltips-append-to-body="true" data-tooltip-custom-class="chart-tooltip chart-tooltip--none-triangle d-flex align-items-center small text-white p-2 mt-5 ml-5" data-tooltip-badge-markup='<span class="indicator indicator-sm bg-primary rounded-circle mr-1"></span>'
                         data-is-show-points="true" data-point-custom-class='chart__point--hidden' data-point-dimensions='{"width":8,"height":8}'></div>
                 </div>
-                <!-- End Card -->
+-->                <!-- End Card
             </div>
 
             <div class="col-md-6 col-xl-4 mb-3 mb-md-4">
-                <!-- Card -->
+ -->                <!-- Card 
                 <div class="card flex-row align-items-center p-3 p-md-4">
                     <div>
                         <h5 class="lh-1 mb-0">Customers</h5>
@@ -571,9 +578,9 @@
                         data-tooltip-custom-class="chart-tooltip chart-tooltip--none-triangle d-flex align-items-center small text-white p-2 mt-5 ml-5" data-tooltip-badge-markup='<span class="indicator indicator-sm bg-primary rounded-circle mr-1"></span>'
                         data-is-show-points="true" data-point-custom-class='chart__point--hidden' data-point-dimensions='{"width":8,"height":8}'></div>
                 </div>
-                <!-- End Card -->
+-->                <!-- End Card 
             </div>
-
+-->
         </div>
 
         <div class="row">

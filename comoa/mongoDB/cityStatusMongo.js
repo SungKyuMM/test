@@ -30,6 +30,20 @@ module.exports = {
                 }
             });
         });
+    },
+
+    finday: async (data) => {
+        return new Promise (resolve => {
+            CityStatus.aggregate(data, (err, result) => {
+                if(err) console.log(`CityStatus MongoDB Error: ${err}`);
+                else {
+                   resolve(result);
+                }
+            });
+        });
     }
+
+
+    
 
 };

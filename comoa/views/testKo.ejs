@@ -1,0 +1,73 @@
+<link rel="stylesheet" href="/css/jquery-jvectormap-2.0.5.css" type="text/css" media="screen"/>
+<script src="/js/jquery-jvectormap-2.0.5.min.js"></script>
+<script src="/js/kormap.js"></script>
+<div class="content">
+    <div class="py-4 px-3 px-md-4">
+        <div class="card mb-3 mb-md-4">
+
+            <div class="card-body">
+                <!-- Breadcrumb -->
+                <nav class="d-none d-md-block" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="#">
+                                국내</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            국내 지역별 현황</li>
+                    </ol>
+                </nav>
+                <!-- End Breadcrumb -->
+
+                <div class="mb-3 mb-md-4 d-flex justify-content-between">
+                    <div class="h3 mb-0">
+                        국내 지역별 현황</div>
+                </div>
+
+
+
+
+                <div id="world-map"  style="width: 100%; height: 700px" ></div>
+
+                <script>
+                $(function(){
+                   var data = JSON.parse('<%-JSON.stringify(worldData)%>');
+                                        
+                    $('#world-map').vectorMap({
+                        map: 'kr_mill',
+                        panOnDrag: true,
+                        focusOn: {
+                        x: 0.5,
+                        y: 0.5,
+                        scale: 1,
+                        animate: true
+                        },
+                        series: {
+                            regions: [{
+                                scale: ['#FFC6C6', '#930000'],
+                                normalizeFunction: 'polynomial',
+                                values: JSON.parse('<%-JSON.stringify(covidData)%>')
+                                // 확진자 색
+                            }]
+                        },  
+                        onRegionTipShow: (e, el, code) => {
+                            var htmls = '';                
+                            if(data[code] == undefined) {
+                                el.html('자료없음');
+                            } else {
+                                htmls += '지역명: ' + data[code].gubun + '<br>';
+                                htmls += '일일확진자: ' + data[code].inc_dec + '명<br>';
+                                htmls += '확진자: ' + data[code].def_cnt + '명<br>';
+                                htmls += '사망자: ' + data[code].death_cnt + '명<br>';
+                                htmls += '격리중: ' + data[code].isoling_cnt + '명';
+                                el.html(htmls);
+                            }
+                        }
+                    });
+                });
+                </script>
+
+
+            </div>
+        </div>
+    </div>
