@@ -17,18 +17,19 @@
                 <div class="mb-3 mb-md-4 d-flex justify-content-between">
                     <div class="h3 mb-0">긴급 재난 문자</div>
                 </div>
-                <% sms.forEach(elem => { %>
-                 현재 <%=elem._text%> 의 현황 : <%=elem._num%> <br/>
-                <% }) %>
-
-
-
-
-
-
-
-
-
+               
+                <% 
+                for ( var i=0; i<3; i++)
+                { %>
+                    <%=sms[i].create_date%> /
+                    <%=sms[i].location_id%> / 
+                    <%=sms[i].location_name%> / 
+                    <%=sms[i].md101_sn%> / 
+                    <%=sms[i].msg%> / 
+                    <%=sms[i].send_platform%>
+                    <br /><br />
+                <% } %>
+ <!--
                 
                 <div id="map" style="width:800px;height:400px;"></div>
 
@@ -68,7 +69,7 @@
                     });
                 </script>
 
-                
+                -->
             </div>
 
         </div>
