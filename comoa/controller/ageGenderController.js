@@ -25,6 +25,6 @@ module.exports = {
             ageGender = await ageGenderMongo.findMany(data);
         }
 
-        res.render('testAgeGender', {ageGender: ageGender});
+        res.render('ageGender', {ageGender: ageGender});
     }
 }

@@ -75,7 +75,7 @@ module.exports = {
         let codeData = await codeService(data);
         let worldData = codeData['world'];
         let covidData = codeData['covid'];
-        res.render('testko', {worldData: worldData, covidData : covidData});
+        res.render('korea', {worldData: worldData, covidData : covidData});
     },
 
 
