@@ -31,7 +31,7 @@ module.exports = {
         let worldData = codeData['world'];
         let covidData = codeData['covid'];
 
-        res.render('testWorld', {worldData: worldData, covidData: covidData});
+        res.render('world', {worldData: worldData, covidData: covidData});
     },
 
     showOverseaout: async (req, res, next) => {
@@ -79,7 +79,7 @@ module.exports = {
         // for(var i = 0; i < areaSelect.length; i++)
         //     console.log(areaSelect[i])
 
-        res.render('testoverseaout', {overseaout: overseaout, nowPage: nowPage, start: start, end: end, startTime: startTime, endTime: endTime, area: area_nm, nation: nation_nm, lastPage: lastPage, areaSelect: areaSelect, nationSelect: nationSelect});
+        res.render('overseaout', {overseaout: overseaout, nowPage: nowPage, start: start, end: end, startTime: startTime, endTime: endTime, area: area_nm, nation: nation_nm, lastPage: lastPage, areaSelect: areaSelect, nationSelect: nationSelect});
     }, 
 
     areaGroup: async (req, res, next) => {

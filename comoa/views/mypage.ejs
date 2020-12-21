@@ -1,10 +1,167 @@
-<h1>마이페이지</h1>
-<h3>이름 :
-    <%=loginUser.name %>
-</h3>
-<h3>이메일 :
-    <%=loginUser.email %>
-</h3>
-<h3>가입날짜 :
-    <%=loginUser.reg_date %>
-</h3>
+<style>
+    .mypage-image {
+		text-align: center;
+	}
+
+    .filebox input[type="file"] { 
+		/* 파일 필드 숨기기 */ 
+		position: absolute; 
+		width: 1px; 
+		height: 1px; 
+		padding: 0; 
+		margin: -1px; 
+		overflow: hidden; 
+		clip:rect(0,0,0,0); 
+		border: 0; 
+	}
+	
+	.form-parent {
+		display: flex;
+		justify-content: center;
+	}
+</style>
+
+
+<div>
+    <h1>마이페이지</h1><br>
+
+    <h2>프로필 바꾸기</h2>
+    <div class="mypage-image" style="border: 1px solid blue; padding-top: 10px;">
+        <div id="image_area">
+            <% if(loginUser.profile === undefined || loginUser.profile == '') { %>
+                <i class="gd-user" style="font-size:200px;"></i>
+            <% } else { %>
+                <img class="img-profile" id="image_preview" src="<%=loginUser.profile %>" width="200" height="200">
+            <% } %>
+        </div>
+        <br>
+        <div class="form-parent">
+            <div class="filebox form-child"> 
+                <label for="file" class="btn btn-info btn-user">파일선택</label> 
+                <input type="file" id="file" name="file"> 
+            </div>
+            &nbsp;
+            <div class="form-child">
+                <button id="btn_upload" class="btn btn-success btn-user">업로드</button>
+                <button id="btn_reset" class="btn btn-warning btn-user">초기화</button>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <h2>개인 정보</h2>
+    <div style="border: 1px solid blue;">
+        <h3>이름 :
+            <%=loginUser.name %>
+        </h3>
+        <h3>이메일 :
+            <%=loginUser.email %>
+        </h3>
+        <h3>가입날짜 :
+            <%=loginUser.reg_date.substring(0, 19).replace('T', ' ') %>
+        </h3>
+    </div>
+
+    <br>
+
+    <h2>패스워드 변경 및 탈퇴</h2>
+    <div>
+        <a href="./password-email" class="btn btn-success" style="width: 100%;">패스워드 수정</a><br><br>
+        <a href="./leaveUser" class="btn btn-danger" style="width: 100%;">회원탈퇴</a>
+    </div>
+</div>
+
+<script>
+    // 이미지 업로드 변경 시 change을 읽어 들이는 함수
+    $('#file').change((e) => {        
+        readImg(e);
+    });
+    
+    // 이미지를 미리보기 출력을 위한 함수
+    var readImg = (input) => {
+        if(input.target.files){            
+            var file = input.target.files[0];
+            
+            if(file.type.match('image.*')) {
+                var reader = new FileReader();
+                reader.onload = (e) => {
+                    $('#image_area').html('<img class="img-profile" id="image_preview" src="' + e.target.result + '" width="200" height="200">');
+                }
+                
+                reader.readAsDataURL(file);
+            }
+        }
+    }
+
+    // 프로필 사진 업로드
+    $('#btn_upload').on('click', () => {
+        var data = new FormData();
+        data.append("file", $('#file')[0].files[0]);
+        data.append("type", "profile");
+
+        $.ajax({ // ajax를 통해 파일 업로드 처리
+            data : data,
+            dataType : "json",
+            type : "POST",
+            url : "/file/profileUpload",
+            enctype: "multipart/form-data",
+            cache : false,
+            contentType : false,
+            processData : false, 	
+            
+            success : (result) => { // 처리가 성공할 경우
+                if(result.status == "OK"){
+                    console.log("성공");
+                    alert("프로필 사진이 변경되었습니다.");
+
+                    window.location.href = './mypage';
+                    // setTimeout(() => {                         
+                    //     console.log('success!');
+                    //     $('#header_image').html('<img class="mr-md-2 avatar-placeholder" src="' + result.url + '">');                
+                    // }, 2000);
+                }
+            },
+            
+            error : () => {
+                console.log("실패");
+            }
+        });
+    });
+
+    // 프로필 사진 초기화 (삭제)
+    $('#btn_reset').on('click', () => {
+        
+        if(confirm('정말 프로필 사진을 초기화 시키시겠습니까?') == true) {	// 프로필 사진 초기화 확인 창
+            let src = $('#image_preview').attr("src");
+
+            $.ajax({ // ajax를 통해 파일 업로드 처리
+                dataType : "json",
+                type : "DELETE",
+                url : "/file/profileReset",
+                data : {type: 'profile', src: src},
+                
+                success : (result) => { // 처리가 성공할 경우
+                    if(result.status == "OK"){
+                        console.log("성공");
+                        alert("프로필 사진이 변경되었습니다.");
+                        
+                        // 마이페이지 프로필 사진 변경
+                        $('#image_area').html('<i class="gd-user" style="font-size:200px;"></i>');
+                        // topbar 프로필 사진 변경
+                        $('#header_image').html('<span class="mr-md-2 avatar-placeholder"><i class="gd-user"></i></span>');                        
+                    }
+                },
+                
+                error : () => {
+                    console.log("실패");
+                }
+            });	
+            
+        } else {
+            return;
+        }			
+        
+    });
+
+</script>

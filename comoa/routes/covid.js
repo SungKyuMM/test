@@ -47,7 +47,9 @@ router.post('/overseaAreaGroup', overSeaOutController.areaGroup);
 
 router.post('/overseaoutSearch', overSeaOutController.searchOverSeaOut);
 
-router.get('/sms', smsController.todaySmsInfo);
+router.get('/crawling', smsController.todaySmsInfo);
+
+router.get('/sms', smsController.smsInfo);
 
 
 // 세계지역검색 - 공사중..

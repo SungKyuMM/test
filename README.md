@@ -1,5 +1,3 @@
-# test 라우터 명칭 covid로 변경
-
 # 코모아(Co-Moa)
 
 # 동작 명령어
@@ -28,6 +26,7 @@
 ##### npm i express-ejs-layout
 ##### npm i axios
 ##### npm i multer
+##### npm i nodemailer
 
 
 # MongoDB

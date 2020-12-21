@@ -19,9 +19,20 @@ module.exports = {
         });
     },
 
+    replyUpdate: async (query, data) => {
+        return new Promise (resolve => {
+            Reply.updateMany(query, data, (err) => {
+                if(err) console.log(`Reply MongoDB Error: ${err}`);
+                else {                    
+                    resolve("ok");
+                }
+            });
+        });
+    },
+
     replyDelete: async (data) => {
         // return new Promise (resolve => {
-            Reply.deleteOne(data, (err) => {
+            Reply.deleteMany(data, (err) => {
                 if(err) console.log(`Reply MongoDB Error: ${err}`);
                 else {                    
                     // resolve("ok");

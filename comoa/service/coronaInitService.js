@@ -5,6 +5,7 @@ const infectionStatus = require('../mongoDB/infectionStatusMongo');
 const ageGenderStatus = require('../mongoDB/ageGenderStatusMongo');
 const cityStatus = require('../mongoDB/cityStatusMongo');
 const overseaOutBreak = require('../mongoDB/overseaOutBreakMongo');
+const smsMongo = require('../mongoDB/smsMongo');
 const { json } = require('express');
 
 let date = new Date();
@@ -26,6 +27,7 @@ module.exports = async (key) => {
     let ageGender = await ageGenderStatus.findOne(data);
     let city = await cityStatus.findOne(data);
     let over = await overseaOutBreak.findOne(data);
+    let sms = await smsMongo.findOne(data);
     
     
     // 국가·지역별 최신안전소식(코로나관련) DB 초기화
@@ -282,4 +284,44 @@ module.exports = async (key) => {
         });
     }
 
+
+
+
+    // 긴급재난문자 초기화
+    if(sms == null) {
+        console.log('::::: 긴급재난문자 초기화!! :::::');
+        var url = 'http://apis.data.go.kr/1741000/DisasterMsg2/getDisasterMsgList';
+        var queryParams = '?' + encodeURIComponent('ServiceKey') + '=TPBNqjiytIA27IhRh7i4vjv6ezbtaOBtKP%2Fbs3VHwL2%2FkgMkmuNDPY50qFbpHr3oSVWlxg3r9BUhXW2Xpyh1Ew%3D%3D';
+        queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1');
+        queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('100');
+        queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('json'); /* */
+        queryParams += '&' + encodeURIComponent('flag') + '=' + encodeURIComponent('Y'); /* */
+        
+        request({
+            url: url + queryParams,
+            method: 'GET'
+        }, (err, response, body) => {
+            if(err) throw err;
+            
+            var listData = new Array();
+    
+            var jsonBody = (body);
+            jsonBody = JSON.parse(jsonBody);
+            //console.log('jsonbody => ' + jsonBody);
+            var list = jsonBody.DisasterMsg[1].row;    
+            console.log('list => ' + list[0].location_name);
+            if(list) {
+                for ( var i=0; i<list.length; i++){
+                    listData.push(list[i]);
+                }
+                var jsonData = JSON.stringify(listData);
+                //console.log('::: str result =>' + jsonData);
+                jsonData = JSON.parse(jsonData);
+                //console.log('::: data result =>' + jsonData);
+
+                let msg = 'sms MongoDB Success!';
+                smsMongo.insertMany(jsonData); 
+            }
+        });
+    }
 }
