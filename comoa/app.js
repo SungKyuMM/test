@@ -21,6 +21,7 @@ var methodOverride = require('method-override');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var boardsRouter = require('./routes/boards');
+var navRouter = require('./routes/nav');
 var replyRouter = require('./routes/replys');
 var covidRouter = require('./routes/covid');
 var fileRouter = require('./routes/file');
@@ -75,6 +76,7 @@ app.use((req, res, next) => {
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/boards', boardsRouter);
+app.use('/nav', navRouter);
 app.use('/reply', replyRouter);
 app.use('/covid', covidRouter);
 app.use('/file', fileRouter);

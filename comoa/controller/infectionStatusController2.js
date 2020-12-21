@@ -79,7 +79,13 @@ module.exports = {
             'KoCLEAR_CNT' : infectionData[0].clear_cnt -  infectionData[1].clear_cnt,       // 격리 해제 수
             'outTodayDecide_cnt' : overSeaData[0].decide_total - overSeaData[1].decide_total, // 확진자 수 토탈
             'outTodaydeath_cnt' : overSeaData[0].death_total - overSeaData[1].death_total,  // 사망자 수 토탈
-            'outDecide_cnt' : overSeaData[0].decide_total
+            'outDecide_cnt' : overSeaData[0].decide_total,
+
+            
+            // 코로나 확진자 격리해제율 구하는 용도
+            'Kodecide_cnt_Total' : infectionData[0].decide_cnt,
+            'KoEXAM_CNT_Total' : infectionData[0].exam_cnt,
+            'KoCLEAR_CNT_Total' : infectionData[0].clear_cnt
         };
         console.log(today);
 
@@ -112,10 +118,7 @@ module.exports = {
             }
         }
         
-        console.log('국내 ')
-        console.log(KoList);  
-        console.log('세계 ')
-        console.log(outSeaList);  
+        //console.log(outSeaList);  
 
         res.render('index', {infectionData: infectionData, today : today, KoList : KoList, dateList : dateList, outSeaList : outSeaList });
     }, 
