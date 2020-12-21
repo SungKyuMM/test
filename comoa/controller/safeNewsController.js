@@ -21,7 +21,7 @@ module.exports = {
         };
 
         let post = await safetyNewsMongo.paging(data);
-        res.render('testSafetyNews', {post: post, nowPage: nowPage, start: start, end: end, lastPageNum: lastPageNum});
+        res.render('safetyNews', {post: post, nowPage: nowPage, start: start, end: end, lastPageNum: lastPageNum});
     },
     
     safeContent: async (req, res, next) => {
