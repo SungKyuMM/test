@@ -10,7 +10,6 @@ module.exports = {
                     $gte : new Date(data.reg_date)
                 }
             }).sort({reg_date:data.sort});
-            
             resolve(navList);
         });
     },

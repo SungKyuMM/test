@@ -9,8 +9,11 @@ const layouts = require('express-ejs-layouts');
 // 선언 추가
 const coronaKey = 'gS9%2Fg7TGU2ycNJmvCRBkL%2F%2FGW%2BO%2B2qLz64HxeAkRsfDkc7tddS8J7LufAm7qFTrlZl0D3cIPjHv2q7IASZHI3Q%3D%3D';
 const cron = '*/10 * * * *'; // 스케줄러 반복 시간 CRON (현재 10분마다 실행)
+const smsKey = 'TPBNqjiytIA27IhRh7i4vjv6ezbtaOBtKP%2Fbs3VHwL2%2FkgMkmuNDPY50qFbpHr3oSVWlxg3r9BUhXW2Xpyh1Ew%3D%3D';
+const smsCron = '* 3 * * *'; // 스케줄러 반복 시간 CRON (현재 3분마다 실행)
 var mongodb = require('./mongoDB/mongo');
 var schedule = require('./service/scheduleService');
+var scheduleSMS = require('./service/scheduleServiceSMS');
 var coronaInit = require('./service/coronaInitService');
 var passport = require('passport');
 var passportConfig = require('./service/passport');
@@ -64,6 +67,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 passportConfig();
 schedule(coronaKey, cron);
+scheduleSMS(smsKey, smsCron);
 coronaInit(coronaKey);
 app.use(methodOverride('_method'))
 
