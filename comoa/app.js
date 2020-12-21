@@ -38,30 +38,25 @@ const chatDb = require('./mongoDB/chatMongo');
 const testMO = require('./mongoDB/infectionStatusMongo');
 
 let a = 0;
-let tempname = '';
 app.io = require('socket.io')();
-
-var socketids=[];
 app.io.on('connection', function(socket){
-    
      socket.on('login', async (tempdata)=>{
-         console.log(tempdata);
+        let userName = tempdata
+        console.log('???'); 
         chatDb.chatList().then(function(result){
             result.forEach(item =>{
-                app.io.to(socket.id).emit('Omessage', item.name, item.msg);
-              })
-        });
-        tempname = "익명" + a++;  
-        socket.name = tempname;
-        app.io.to(socket.id).emit('create name', tempname);  
-        console.log(tempname);
-    });    
+                if(userName == item.name)   {
+                    app.io.to(socket.id).emit('Mmessage', item.msg);      }
+                else {
+                    app.io.to(socket.id).emit('Omessage', item.name, item.msg);   }
+              });
+            if(userName=='')
+                userName = "익명" + a++;  
+            socket.name = userName;
+            app.io.to(socket.id).emit('create name', userName);  
 
-    // var chatlog = await chatDb.chatList();
-    // console.log(chatlog);
-    // for(key in chatlog) {
-    //     app.io.to(socket.id).emit('Omessage', key.name, key.msg);
-    // }
+        });
+    });    
     console.log("a user connected");
       
     socket.on('disconnect', function(){

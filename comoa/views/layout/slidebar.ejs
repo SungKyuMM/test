@@ -1,5 +1,6 @@
 <main class="main">
     <!-- Sidebar Nav -->
+ 
     <aside id="sidebar" class="js-custom-scroll side-nav">
         <ul id="sideNav" class="side-nav-menu side-nav-menu-top-level mb-0">
             <!-- Title -->
@@ -193,46 +194,53 @@
             font-size: 8pt; 
         }
     </style>
- 
+ <% if(loginUser) { %>
+    <script>
+        var a = '<%= loginUser.name %>'            
+    </script>
+<%  } else { %>
+    <script>
+        var a = ''            
+    </script>
+<%  }  %>
+
   <script>
-    $(function(){
-      //let socket = io();
-      
-      let socket = io('http://localhost:3000');
+        $(function(){
+        let socket = io('http://localhost:3000');
 
-      socket.emit('login', '<%=loginUser.name %>');
+        socket.emit('login', a);
+
+        socket.on('Mmessage', msg => {   //자기 메세지 
+            $('#messages').append($('<p class="talk me">').text(msg));
+            var objDiv = document.getElementById("messages"); 
+            objDiv.scrollTop = objDiv.scrollHeight;  //스크롤 최하단 포커스
+        });
+
+        socket.on('Omessage', (name, msg) => {   //다른사람 메세지 
+            var tempstr = name + msg;
+            $('#messages').append($('<p class="talk name">').text(name));
+            $('#messages').append($('<p class="talk other">').text(msg));
+            var objDiv = document.getElementById("messages"); 
+            objDiv.scrollTop = objDiv.scrollHeight;       //스크롤 최하단 포커스
+        });
+
+        socket.on('create name', function(name){ 
+        $('#nickName').val(name);
+        });
+
     
-      socket.on('Mmessage', msg => {   //자기 메세지 
-        $('#messages').append($('<p class="talk me">').text(msg));
-        var objDiv = document.getElementById("messages"); 
-        objDiv.scrollTop = objDiv.scrollHeight;  //스크롤 최하단 포커스
-      });
+        $("#msinput").keyup(function(key){
+            if(key.keyCode==13){    // 엔터 눌렀을 때
+                socket.emit('message', $("#nickName").val(),$("#msinput").val());
+            $("#msinput").val('');
+            }
+        });
 
-      socket.on('Omessage', (name, msg) => {   //다른사람 메세지 
-        var tempstr = name + msg;
-        $('#messages').append($('<p class="talk name">').text(name));
-        $('#messages').append($('<p class="talk other">').text(msg));
-        var objDiv = document.getElementById("messages"); 
-        objDiv.scrollTop = objDiv.scrollHeight;       //스크롤 최하단 포커스
-      });
-
-      socket.on('create name', function(name){ 
-      $('#nickName').val(name);
-      });
-
-  
-      $("#msinput").keyup(function(key){
-        if(key.keyCode==13){    // 엔터 눌렀을 때
+        $("#btns").on('click', function(){   // 전송 버튼 눌렀을 때
             socket.emit('message', $("#nickName").val(),$("#msinput").val());
-          $("#msinput").val('');
-        }
-      });
-
-      $("#btns").on('click', function(){   // 전송 버튼 눌렀을 때
-          socket.emit('message', $("#nickName").val(),$("#msinput").val());
-          $("#msinput").val('');
-      });
-    })
+            $("#msinput").val('');
+        });
+        })
   </script>
   </head>
   <body>
