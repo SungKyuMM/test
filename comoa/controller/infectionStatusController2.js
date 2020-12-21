@@ -88,19 +88,28 @@ module.exports = {
         var dateList = new Array();
         for(var i =30; i>=0; i--)
         {
+
+            var t1 = new Date(infectionData[i].create_dt).toISOString().split("T")[0];
+            var t2 = new Date(infectionData[i+1].create_dt).toISOString().split("T")[0];
+            var t3 = infectionData[i].decide_cnt - infectionData[i+1].decide_cnt;
+            if( t1 != t2 && t3 > 1) 
+            {
             var tempDate = new Object();
-            tempDate.meta =  new Date(infectionData[i].create_dt).toISOString().split("T")[0];
-            tempDate.value = infectionData[i].decide_cnt - infectionData[i+1].decide_cnt;
+            tempDate.meta =  t1;
+            tempDate.value = t3;
             KoList.push(tempDate);
             dateList.push( tempDate.meta.substring(5));
-
+            }
             
             // if(overSeaData[i]._id == '2020-12-17' || overSeaData[i]._id =='2020-12-16')
             //     continue;
+            var t1 = overSeaData[i].decide_total - overSeaData[i+1].decide_total;
+            if(t1 > 2000 && t1 < 10000000 ){
             var tempDate2 = new Object();
             tempDate2.meta =  overSeaData[i]._id;
             tempDate2.value = overSeaData[i].decide_total - overSeaData[i+1].decide_total;
             outSeaList.push(tempDate2);
+            }
         }
         
         console.log('국내 ')
