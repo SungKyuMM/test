@@ -1,7 +1,6 @@
 const { render } = require("../app");
 const { get } = require("../routes");
 const navMongo = require('../mongoDB/navMongo');
-const nav = require("../mongoDB/schema/nav");
 const mongoose = require("mongoose");
 const { searchnav } = require("../mongoDB/navMongo");
 
@@ -25,9 +24,7 @@ module.exports = {
             reg_date: new Date(now),
             sort: -1
         };
-
         let navList = await navMongo.navList(data);
-
         res.render('navList', {list: navList});
     }, 
     showSearchList: async (req, res, next) => {
