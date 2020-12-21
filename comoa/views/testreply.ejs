@@ -23,9 +23,14 @@
                 <div class="card-body p-2" style="border: 1px slategrey solid; border-radius: 5px;">
                     <div class="d-flex">
                         <div style="flex-grow: 2; text-align: center;">
-                            <div class="mr-md-2 avatar-placeholder">
-                                <i class="gd-user"></i>
-                            </div><br>
+                            <% if(!item.writer.profile || item.writer.profile == '') { %>
+                                <span class="mr-md-2 avatar-placeholder">
+                                    <i class="gd-user"></i>
+                                </span>
+                            <%  } else { %>
+                                <img class="mr-md-2 avatar-placeholder" src="<%=item.writer.profile %>">
+                            <% } %>
+                            <br>
                             <%=item.writer.name %>
                         </div>
                         <div style="flex-grow: 100;"><%-item.content %></div>                        
