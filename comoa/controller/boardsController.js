@@ -31,7 +31,7 @@ module.exports = {
         let boardList = await boardMongo.typePaging(data);
         let boardNum = count-((nowPage-1)*data.maxPage);
 
-        res.render('testboards', {type: data.type, list: boardList, nowPage: nowPage, start: start, end: end, boardNum: boardNum, lastPage: lastPage});
+        res.render('boards', {type: data.type, list: boardList, nowPage: nowPage, start: start, end: end, boardNum: boardNum, lastPage: lastPage});
     }, 
 
     showBoard: async (req, res, next) => {
@@ -42,14 +42,14 @@ module.exports = {
         let board = await boardMongo.findBoard(_id);       
         let reply = await replyMongo.replyList(data);            
         
-        res.render('testShowBoard', {type: type, board: board, reply: reply});
+        res.render('showBoard', {type: type, board: board, reply: reply});
     },
 
     registerBoard: (req, res, next) => {
         let type = req.params.type;
 
         if(req.method === 'GET') {
-            res.render('testregisterBoard', {type: type});
+            res.render('registerBoard', {type: type});
         } else {
             let body = req.body;
             let data = {
@@ -74,7 +74,7 @@ module.exports = {
         if(req.method === 'GET') {
             let board = await boardMongo.findBoard(_id);
 
-            res.render('testmodifyBoard', {board: board});
+            res.render('modifyBoard', {board: board});
         } else {
             let body = req.body;
             console.log(body);

@@ -46,7 +46,7 @@ module.exports = {
 
         let infection = await infectionMongo.infectionPaging(paginData);
 
-        res.render('testinfection', {infection: infection, nowPage: nowPage, start: start, end: end, startTime: startTime, endTime: endTime, lastPage: lastPage});
+        res.render('infection', {infection: infection, nowPage: nowPage, start: start, end: end, startTime: startTime, endTime: endTime, lastPage: lastPage});
     },
 
     searchInfection: async (req, res, next) => {

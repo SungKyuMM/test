@@ -21,13 +21,13 @@ module.exports = {
         };
 
         let post = await safetyNewsMongo.paging(data);
-        res.render('testSafetyNews', {post: post, nowPage: nowPage, start: start, end: end, lastPageNum: lastPageNum});
+        res.render('safetyNews', {post: post, nowPage: nowPage, start: start, end: end, lastPageNum: lastPageNum});
     },
     
     safeContent: async (req, res, next) => {
         let data = req.query.id;        
         let safeContent = await safetyNewsMongo.safeContent(data);
         
-        res.render('testSafetyNewsContent', {safeContent: safeContent});
+        res.render('safetyNewsContent', {safeContent: safeContent});
     }
 }
