@@ -27,6 +27,7 @@
 ##### npm i jquery
 ##### npm i express-ejs-layout
 ##### npm i axios
+##### npm i multer
 
 
 # MongoDB

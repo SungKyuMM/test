@@ -33,7 +33,7 @@ router.get('/safeContent', safetyNewsController.safeContent);
 
 router.get('/world', overSeaOutController.worldStatus);
 
-router.get('/city', cityStatusController.allInfo);
+router.get('/city', cityStatusController.ko);
 
 router.get('/ageGender', ageGenderController.todayInfo);
 
