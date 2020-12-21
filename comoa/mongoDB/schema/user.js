@@ -5,7 +5,8 @@ const userSchema = new mongodb.Schema({
     name: String,
     nickName: String,
     reg_date: Date,
-    authority: String
+    authority: String,
+    profile: String
 });
 
 // model에 작성한 문자열이 mongoDB collection이름을 나타냄

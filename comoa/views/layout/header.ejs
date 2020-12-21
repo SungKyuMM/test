@@ -117,11 +117,15 @@
                             <!-- 유저 이름 부분 -->
                             <a id="profileMenuInvoker" class="header-complex-invoker" href="#" aria-controls="profileMenu" aria-haspopup="true" aria-expanded="false" data-unfold-event="click" data-unfold-target="#profileMenu" data-unfold-type="css-animation" data-unfold-duration="300" data-unfold-animation-in="fadeIn" data-unfold-animation-out="fadeOut">
                                 <!--img class="avatar rounded-circle mr-md-2" src="#" alt="John Doe"-->
-                                <% if(!loginUser.profile) { %>
-                                    <span class="mr-md-2 avatar-placeholder">
-                                        <i class="gd-user"></i>
-                                    </span>
-                                <%  } %>
+                                <span id="header_image">
+                                    <% if(!loginUser.profile || loginUser.profile == '') { %>
+                                        <span class="mr-md-2 avatar-placeholder">
+                                            <i class="gd-user"></i>
+                                        </span>
+                                    <%  } else { %>
+                                        <img class="mr-md-2 avatar-placeholder" src="<%=loginUser.profile %>">
+                                    <% } %>
+                                </span>
                                 <span class="d-none d-md-block"><%=loginUser.name %></span>
                                 <i class="gd-angle-down d-none d-md-block ml-2"></i>
                             </a>
@@ -134,17 +138,15 @@
                                         </span> 내 프로필
                                     </a>
                                 </li>
-
-
-                                <form action="/logout" method="post" id="my_form">
-                                    <li class="unfold-item unfold-item-has-divider">
-                                        <a class="unfold-link d-flex align-items-center text-nowrap" href="javascript:{}" onclick="document.getElementById('my_form').submit();">
-                                            <span class="unfold-item-icon mr-3 ">
-                                                <i class="gd-power-off "></i>
-                                            </span> 로그아웃
-                                        </a>
-                                    </li>
-                                </form>
+                                
+                                <li class="unfold-item unfold-item-has-divider">
+                                    <a class="unfold-link d-flex align-items-center text-nowrap" href="./logout">
+                                        <span class="unfold-item-icon mr-3 ">
+                                            <i class="gd-power-off "></i>
+                                        </span> 로그아웃
+                                    </a>
+                                </li>
+                                
                             </ul>
                         </div>
 

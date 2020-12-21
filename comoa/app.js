@@ -25,6 +25,7 @@ var navRouter = require('./routes/nav');
 var replyRouter = require('./routes/replys');
 var covidRouter = require('./routes/covid');
 var fileRouter = require('./routes/file');
+var mailRouter = require('./routes/mail');
 
 var app = express();
 app.use(layouts);
@@ -80,6 +81,7 @@ app.use('/nav', navRouter);
 app.use('/reply', replyRouter);
 app.use('/covid', covidRouter);
 app.use('/file', fileRouter);
+app.use('/mail', mailRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
