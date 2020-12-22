@@ -10,9 +10,9 @@ module.exports = {
         });
     },
     
-    allCount: async () => {
+    allCount: async (data) => {
         return new Promise (resolve => {
-            smsStatus.countDocuments({}, (err, result) => {
+            smsStatus.countDocuments(data, (err, result) => {
                 if(err) console.log(`smsStatus MongoDB Error: ${err}`);
                 else {                    
                     resolve(result);
@@ -52,15 +52,35 @@ module.exports = {
             });
         });
     },
-    paging: async (data) => {
+    paging: async (data, sqldata) => {
         return new Promise (resolve => {
-            let page = smsStatus.find({})
+            let page = smsStatus.find(sqldata)
             .sort({md101_sn: -1})
             .skip(data.startPage)
             .limit(data.maxPage);
 
             resolve(page);
         });
-    }
+    },
+    count: async (data) => {
+        return new Promise (resolve => {
+            smsStatus.countDocuments(data, (err, result) => {
+                if(err) console.log(`smsStatus MongoDB Error: ${err}`);
+                else {
+                   resolve(result);
+                }
+            });
+        });
+    },
 
+    smsPaging: async (data) => {
+        return new Promise (resolve => {
+            let result = smsStatus.find(data.search)
+            .sort({md101_sn: data.sort})
+            .skip(data.startPage)
+            .limit(data.maxPage);
+
+            resolve(result);
+        });
+    }
 };

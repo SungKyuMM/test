@@ -17,8 +17,26 @@
                 <div class="mb-3 mb-md-4 d-flex justify-content-between">
                     <div class="h3 mb-0">긴급 재난 문자</div>
                 </div>
-
-                
+                    <div class="form-group">
+                        <select id="location_name"class="custom-select custom-select-lg">
+                            <option value="null">지역검색</option>
+                            <option value="서울특별시" <% if(location_name=='서울특별시'){ %>selected<% } %> >서울</option>
+                            <option value="인천광역시" <% if(location_name=='인천광역시'){ %>selected<% } %> >인천</option>
+                            <option value="경기도" <% if(location_name=='경기도'){ %>selected<% } %> >경기</option>
+                            <option value="광주광역시" <% if(location_name=='광주광역시'){ %>selected<% } %> >광주</option>
+                            <option value="대전광역시" <% if(location_name=='대전광역시'){ %>selected<% } %> >대전</option>
+                            <option value="부산광역시" <% if(location_name=='부산광역시'){ %>selected<% } %> >부산</option>
+                            <option value="강원도" <% if(location_name=='강원도'){ %>selected<% } %> >강원</option>
+                            <option value="울산광역시" <% if(location_name=='울산광역시'){ %>selected<% } %> >울산</option>
+                            <option value="전라북도" <% if(location_name=='전라북도'){ %>selected<% } %> >전북</option>
+                            <option value="전라남도" <% if(location_name=='전라남도'){ %>selected<% } %> >전남</option>
+                            <option value="충청북도" <% if(location_name=='충청북도'){ %>selected<% } %> >충북</option>
+                            <option value="충청남도" <% if(location_name=='충청남도'){ %>selected<% } %> >충남</option>
+                            <option value="경상북도" <% if(location_name=='경상북도'){ %>selected<% } %> >경북</option>
+                            <option value="경상남도" <% if(location_name=='경상남도'){ %>selected<% } %> >경남</option>
+                        </select>
+                        <button id="search" class="btn btn-primary btn-block" >검색</button>
+                    </div>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -29,7 +47,7 @@
                             <th class="font-weight-semi-bold border-top-0 py-2">배포자</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="smsList">
                     <% post.forEach(item => { %>
                         <tr>
                             <td class="py-3"><%=item.md101_sn %></td>
@@ -43,30 +61,138 @@
                     </table>
     
        
-                    <!-- 현재 페이지, 토탈페이지, 페이지 1,2,3.. 해줭-->
+
+
                     <nav class="d-flex justify-content-between align-items-center" aria-label="Page navigation example">
-                        <small class="text-muted">Showing <%=nowPage %> of <%=lastPageNum%></small>
-                        <ul class="pagination font-weight-semi-bold">
-                            <% if(start) { %>
+                        <small class="text-muted" id="paging_mute">Showing <%=nowPage%> of <%=lastPageNum%></small>
+                        <ul class="pagination font-weight-semi-bold" id="paging">
+                            <% if (nowPage != 1){ %>
+                                <!-- 첫 페이지 -->
                                 <li class="page-item">
-                                    <a class="page-link" href="../covid/sms?startPage=<%=parseInt(nowPage) - 1 %>" aria-label="Previous">
+                                    <a class="page-link" href="../covid/sms?startPage=1&location_name=<%=location_name%>" aria-label="Previous">
+                                        <i class="gd-angle-double-left icon-text icon-text-xs d-inline-block" aria-hidden="true"></i>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                </li>
+                                <!-- 이전 페이지 -->
+                                <li class="page-item">
+                                    <a class="page-link" href="../covid/sms?startPage=<%=parseInt(nowPage) - 1 %>&location_name=<%=location_name%>" aria-label="Previous">
                                         <i class="gd-angle-left icon-text icon-text-xs d-inline-block" aria-hidden="true"></i>
-    
+                                        <span class="sr-only">Previous</span>
                                     </a>
                                 </li>
                             <% } %>
-                                &nbsp;
-                            <% if(end) { %>
+                            
+                            <!-- 시작번호, 표시 마지막 번호를 위한 카운트 -->
+                            <% var first = 1, last = 5; %>        
+                            <!-- 현재 페이지가 4보다 크면 시작 번호 수정과 마자막 두번째 번호일 때 설정   -->
+                            <% if(nowPage > 4) { %>
+                                <% first = nowPage - 2; %>
+                                <% console.log('시작페이지2 ' + first); %>
+                                <% if(nowPage >= lastPageNum - 2) { first = lastPageNum - 4; } %>
+                                <% console.log('시작페이지3 ' + first); %>
+                                <% } %>
+                            <!-- 전체 페이지 수가 5보다 작을 때 설정 -->
+                            <% if(lastPageNum < 5) { last = lastPageNum } %>
+                            <!-- 번호 5개만 표시 -->
+                            <% for(var i = first; i < first + last; i++ ) { 
+                                if(nowPage == i){ %>
+                                <li class="page-item disabled"><a class="page-link" href="../covid/sms?startPage=<%=i %>&location_name=<%=location_name%>"><%=i%></a></li>   
+                                <% } else { %>
+                                <li class="page-item"><a class="page-link" href="../covid/sms?startPage=<%=i %>&location_name=<%=location_name%>"><%=i%></a></li>   
+                                <% } %>
+                            <% } %>                
+                            <%
+                            // console.log('시작페이지 ' + first); 
+                            // console.log('현재페이지 ' + nowPage); 
+                            // console.log('현재페이지 ' + nowPage); 
+                            // console.log('현재페이지 ' + nowPage); 
+                            // console.log('last페이지 ' + last); 
+                            // console.log('마지막페이지 ' + lastPageNum); 
+                            %>
+                            <% if (nowPage != lastPageNum){ %> 
+                                <!-- 다음 페이지 -->
                                 <li class="page-item">
-                                    <a class="page-link" href="../covid/sms?startPage=<%=parseInt(nowPage) + 1 %>" aria-label="Next">
+                                    <a class="page-link" href="../covid/sms?startPage=<%=parseInt(nowPage) + 1 %>&location_name=<%=location_name%>" aria-label="Next">
                                         <i class="gd-angle-right icon-text icon-text-xs d-inline-block" aria-hidden="true"></i>
                                         <span class="sr-only">Next</span>
                                     </a>
                                 </li>
-                            <% } %>
+                                <!-- 마지막 페이지 -->
+                                <li class="page-item">
+                                    <a class="page-link" href="../covid/sms?startPage=<%=parseInt(lastPageNum) %>&location_name=<%=location_name%>" aria-label="Next">
+                                        <i class="gd-angle-double-right icon-text icon-text-xs d-inline-block" aria-hidden="true"></i>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </li>
+                            <% } %>                
                         </ul>
                     </nav>
+                
+                
+                    <script>        
+                        $('#search').on('click', () => {
+                            let location_name = ($('#location_name option:selected').val() == 'null') ? '' : $('#location_name option:selected').val();
+                
+                                var paramData = {
+                                    location_name: location_name
+                                }
+                                
+                                $.ajax({
+                                    type : "POST",
+                                    url : "/covid/smsSearch",
+                                    dataType : "json",
+                                    data : paramData,
+                                                            
+                                    success : (result) => {
+                                        var htmls = '';
+                                        var paging = '';
+                                        var paging_mute = '';
+                                        if(result.list.length > 0) {
+                                            // 검색 결과
+                                            result.list.forEach(e => {
+                                                htmls += '<tr>';
+                                                htmls += '<td>' + e.md101_sn + '</td>';
+                                                htmls += '<td>' + e.create_date + '</td>';
+                                                htmls += '<td>' + e.location_name + '</td>';
+                                                htmls += '<td>' + e.msg + '</td>';
+                                                htmls += '<td>' + e.send_platform + '</td>';                           
+                                                htmls += '</tr>';
+                                            });
+                                            // 페이징 
+                                            if(result.lastPageNum > 1) {
+                                                var status = 'disabled';
+                                                var endNum = result.lastPageNum;
+                                                if(result.lastPageNum > 5) endNum = 5;
+                
+                                                for(var i = 1; i <= endNum; i++) {
+                                                    if(i == 1) status = 'disabled';
+                                                    else status = '';
+                                                    paging += '<li class="page-item '+status+'"><a class="page-link" href="./sms?startPage=' + i + '&location_name='+result.location_name+'">'+i+'</a></li>'; 
+                                                }
+                                                paging += '<li class="page-item"><a class="page-link" href="./sms?startPage=2&location_name='+result.location_name+'"> > </a></li>';
+                                                paging += '<li class="page-item"><a class="page-link" href="./sms?startPage='+result.lastPageNum+'&location_name='+result.location_name+'"> >> </a></li>';
+                                            } else {
+                                                paging += '<li class="page-item disabled"><a class="page-link" href="./sms?startPage=1&location_name='+result.location_name+'">1</a></li>'; 
+                                            }
+                                            paging_mute = 'Showing 1 of '+result.lastPageNum;   
+                                        } else {
+                                            htmls += '<div style="text-align: center;"><h3>데이터가 없습니다.</h3></div>';
+                                            paging_mute = 'Showing 0 of 0';   
+                                        }
+                                        $('#smsList').html(htmls);
+                                        $('#paging').html(paging);
+                                        $('#paging_mute').html(paging_mute);
 
+                                    },
+                                    
+                                    error : () => {
+                                        console.log("실패")
+                                    }
+                                });
+                            
+                        });
+                        </script>
             </div>
 
         </div>

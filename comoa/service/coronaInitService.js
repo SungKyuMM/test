@@ -293,7 +293,7 @@ module.exports = async (key) => {
         var url = 'http://apis.data.go.kr/1741000/DisasterMsg2/getDisasterMsgList';
         var queryParams = '?' + encodeURIComponent('ServiceKey') + '=TPBNqjiytIA27IhRh7i4vjv6ezbtaOBtKP%2Fbs3VHwL2%2FkgMkmuNDPY50qFbpHr3oSVWlxg3r9BUhXW2Xpyh1Ew%3D%3D';
         queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1');
-        queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('100');
+        queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('1000');
         queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('json'); /* */
         queryParams += '&' + encodeURIComponent('flag') + '=' + encodeURIComponent('Y'); /* */
         
