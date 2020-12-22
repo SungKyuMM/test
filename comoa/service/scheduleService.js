@@ -22,9 +22,9 @@ module.exports = (key, cron) => {
     let mongoNow = year + '-' + month + '-' + day;
     let data = {create_dt: {$gte: new Date(mongoNow)}};
     
-    schedule.scheduleJob(cron, async () => {
+    schedule.scheduleJob(cron, async () => {            // cron 정보에 따른 일정 시간 반복
         let sort = {create_dt: -1};
-        let safety = await safetyNews.findNew(sort);
+        let safety = await safetyNews.findNew(sort);    // 최신 데이터 출력
         
         var url = 'http://apis.data.go.kr/1262000/SafetyNewsList/getCountrySafetyNewsList';
         var queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + key;
@@ -65,17 +65,17 @@ module.exports = (key, cron) => {
                 var jsonData = JSON.stringify(listData);
                 jsonData = JSON.parse(jsonData);    
 
-                if(safety[0].title != jsonData[0].title)
-                    safetyNews.insertMany(jsonData);
+                if(safety[0].title != jsonData[0].title)    // 최신 DB데이터와 API 데이터 비교
+                    safetyNews.insertMany(jsonData);        // 다르면 DB 저장
             }
         });
     });
     
     
     schedule.scheduleJob(cron, async () => {    
-        let infec = await infectionStatus.findOne(data);
+        let infec = await infectionStatus.findOne(data);    // 최신 데이터 출력
 
-        if(infec == null) {
+        if(infec == null) {                                 // 데이터가 있는지 확인
             var url = 'http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19InfStateJson';
             var queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + key;
             queryParams += '&' + encodeURIComponent('startCreateDt') + '=' + encodeURIComponent(now);

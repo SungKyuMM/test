@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-const isAuthenticated = require('../service/isAuth');
-const boardsController = require('../controller/boardsController');
+const isAuthenticated = require('../service/isAuth');                   // 로그인 인증
+const boardsController = require('../controller/boardsController');     // 게시글 컨트롤러
 
 
 // 게시물 수정
