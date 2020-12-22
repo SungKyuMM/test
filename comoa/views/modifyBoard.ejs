@@ -58,3 +58,40 @@
     </div>
     <!-- summernote js -->
     <script src="/js/summernote.js"></script>
+
+    <script>
+        var uploadImageFile = (file, editor) => {
+            data = new FormData();
+            data.append("file", file);
+            data.append("type", "board");
+            $.ajax({ // ajax를 통해 파일 업로드 처리
+                data : data,
+                dataType : "json",
+                type : "POST",
+                url : "/file/fileUpload",
+                enctype: "multipart/form-data",
+                cache : false,
+                contentType : false,
+                processData : false,
+                
+                success : (data) => { // 처리가 성공할 경우
+                    // 에디터에 이미지 출력
+                    $('#summernote').summernote('insertImage', data.url);	        	
+                }
+            });
+        }	
+
+        var deleteImageFile = (src) => {    
+            console.log(src)        
+            $.ajax({ // ajax를 통해 파일 삭제 처리
+                type : "DELETE",
+                url : "/file/fileDelete",
+                dataType : "json",
+                data : {src: src, type: "board"},
+                
+                success : (data) => {
+                    console.log('삭제');	        	
+                }
+            });
+        }
+    </script>
