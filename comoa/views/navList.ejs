@@ -1,3 +1,5 @@
+
+
 <div class="content">
     <div class="py-4 px-3 px-md-4">
         <div class="card mb-3 mb-md-4">
@@ -18,7 +20,6 @@
                     <div class="h3 mb-0">내 위치추적</div>
                 </div>
 
-                <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=bab3d8cc60f04070a5fddb1bf106d195"></script>
 
                 <div>
                     <% var today = new Date().toISOString().substring(0, 10) %>
@@ -40,6 +41,9 @@
                             <th class="font-weight-semi-bold border-top-0 py-2">경도</th>
                         </tr>
                     </thead>
+<script type="text/javascript">
+    var positions = [];
+</script>
                     <tbody id="tablelist">
                         <% 
                             let pos = new Array();
@@ -49,14 +53,11 @@
                             </tr>
                             <% } else { %>
 
-<script>
-    var positions = [];
-</script>
                                 <%
                                 let i = list.length;
                                 list.forEach(nav => { 
                                     %>
-<script>
+<script type="text/javascript">
     var items = new Object();
     items.title = '<%=nav.title%>';
     items.latlng = new daum.maps.LatLng('<%=nav.latitude%>', '<%=nav.longitude%>');
@@ -81,8 +82,28 @@
                 </table>
                 
 
-                <script>    
+                <script type="text/javascript">    
+                    // 기본 저장 데이터가 없을 시 현재 위치 표시
+                        function getLocation(position) {
+                            
+                            var latitude = position.coords.latitude;
+                            var longitude = position.coords.longitude;
+                            var items = new Object({
+                                title : '현위치',
+                                latlng : new daum.maps.LatLng(latitude, longitude)
+                            });
+                            console.log('default no = > ' + items.latlng);
+                            positions.push(items);                            
+                        }
 
+                        if(navigator.geolocation) {
+                            navigator.geolocation.getCurrentPosition(getLocation, function(error) {
+                                console.log(error.message);    
+                            })
+                        } else {
+                            //console.log('Geolocation을 지원하지 않는 브라우저 입니다.');
+                        }
+                        
                     var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
                     mapOption = {
                         center : positions[0].latlng, // 지도의 중심좌표
@@ -249,3 +270,14 @@
 
         </div>
     </div>
+
+<div id="map22" style="width:500px;height:400px;"></div>
+<script>
+    var container = document.getElementById('map22');
+    var options = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667),
+        level: 3
+    };
+
+    var map = new kakao.maps.Map(container, options);
+</script>
