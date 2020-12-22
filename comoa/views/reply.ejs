@@ -41,7 +41,6 @@
                                         <i class="gd-settings"></i>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" onclick="fn_replyModify()">수정</a>
                                         <a class="dropdown-item" onclick="fn_replyDelete('<%=item._id %>')">삭제</a>
                                     </div>
                                 </div>
@@ -72,7 +71,8 @@
                         content: $('#content').val(),
                         id: board_id,
                         email: user.email,
-                        name: user.name
+                        name: user.name,
+                        profile: user.profile
                     }
 
                     $.ajax({
@@ -141,9 +141,15 @@
                             htmls += '<div class="d-flex">';
                             htmls += '<div style="flex-grow: 2; text-align: center;">';
                                 
-                            htmls += '<div class="mr-md-2 avatar-placeholder">';
-                            htmls += '<i class="gd-user"></i>';
-                            htmls += '</div><br>' + e.writer.name + '</div>';
+                            if(!e.writer.profile || e.writer.profile == '') {
+                                htmls += '<div class="mr-md-2 avatar-placeholder">';
+                                htmls += '<i class="gd-user"></i>';
+                                htmls += '</div>';
+                            } else {
+                                htmls += '<img class="mr-md-2 avatar-placeholder" src="' + e.writer.profile + '">';
+                            }
+
+                            htmls += '<br>' + e.writer.name + '</div>';
 
                             htmls += '<div style="flex-grow: 100;">' + e.content + '</div>';
                             
@@ -153,7 +159,6 @@
                                 htmls += '<i class="gd-settings"></i>';
                                 htmls += '</button>';
                                 htmls += '<div class="dropdown-menu">';
-                                htmls += '<a class="dropdown-item">수정</a>';
                                 htmls += '<a class="dropdown-item" onclick="fn_replyDelete(\'' + e._id + '\')">삭제</a>';
                                 htmls += '</div>';
                                 htmls += '</div>';

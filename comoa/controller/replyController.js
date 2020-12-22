@@ -18,7 +18,8 @@ module.exports = {
             reg_date: new Date,
             writer: {
                 email: body.email,
-                name: body.name
+                name: body.name,
+                profile: body.profile
             }
         }
         
