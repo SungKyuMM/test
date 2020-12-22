@@ -30,10 +30,6 @@ var covidRouter = require('./routes/covid');
 var fileRouter = require('./routes/file');
 var mailRouter = require('./routes/mail');
 
-//
-var chatSo = require('./routes/testChat');
-//
-
 var app = express();
 app.use(layouts);
 
@@ -127,7 +123,6 @@ app.use('/file', fileRouter);
 app.use('/mail', mailRouter);
 
 //
-app.use('/chat', chatSo);
 //
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
