@@ -30,14 +30,9 @@ module.exports = {
         });
     },
 
-    replyDelete: async (data) => {
-        // return new Promise (resolve => {
-            Reply.deleteMany(data, (err) => {
-                if(err) console.log(`Reply MongoDB Error: ${err}`);
-                else {                    
-                    // resolve("ok");
-                }
-            });
-        // });
+    replyDelete: (data) => {
+        Reply.deleteMany(data, (err) => {
+            if(err) console.log(`Reply MongoDB Error: ${err}`);            
+        });
     }
 };
