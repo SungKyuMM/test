@@ -49,8 +49,11 @@
                             let pos = new Array();
                             if(Object.keys(list).length == 0) { %>
                             <tr>
-                                <td class="py-3" colspan="5">게시글이 없습니다.</td>
+                                <td class="py-3" colspan="5">위치등록 정보가 없습니다. 등록 후 이용해주세요.</td>
                             </tr>
+                            <script>
+                            document.location.replace('/nav/register');    
+                            </script>
                             <% } else { %>
 
                                 <%
@@ -83,27 +86,6 @@
                 
 
                 <script type="text/javascript">    
-                    // 기본 저장 데이터가 없을 시 현재 위치 표시
-                        function getLocation(position) {
-                            
-                            var latitude = position.coords.latitude;
-                            var longitude = position.coords.longitude;
-                            var items = new Object({
-                                title : '현위치',
-                                latlng : new daum.maps.LatLng(latitude, longitude)
-                            });
-                            console.log('default no = > ' + items.latlng);
-                            positions.push(items);                            
-                        }
-
-                        if(navigator.geolocation) {
-                            navigator.geolocation.getCurrentPosition(getLocation, function(error) {
-                                console.log(error.message);    
-                            })
-                        } else {
-                            //console.log('Geolocation을 지원하지 않는 브라우저 입니다.');
-                        }
-                        
                     var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
                     mapOption = {
                         center : positions[0].latlng, // 지도의 중심좌표
@@ -114,6 +96,9 @@
                     var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
                     var distanceOverlay; // 선의 거리정보를 표시할 커스텀오버레이 입니다 
                     var dots = {}; // 선이 그려지고 있을때 클릭할 때마다 클릭 지점과 거리를 표시하는 커스텀 오버레이 배열입니다.
+                    var marArray = [];
+                    var lineArray = [];
+                    var titleArray = [];
 
                     mapResizing();
                     marker();
@@ -135,10 +120,12 @@
 
 // 마커추가
                     //마커 이미지의 이미지 주소입니다
+
                 function marker(){
                     var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
                     // console.log(parseFloat(positions[0].latitude) + ', ' + parseFloat(positions[0].longitude));
                     // console.log(positions);
+                    marArray = [];
                     for (var i = 0; i < positions.length; i++) {
                         // console.log(i);
                         // 마커 이미지의 이미지 크기 입니다
@@ -158,6 +145,7 @@
                             image : markerImage
                         // 마커 이미지 
                         });
+                        marArray.push(marker);
                     }
                 }
 
@@ -166,7 +154,8 @@
                         var linePath;
                         var lineLine = new daum.maps.Polyline();
                         var distance;
-                    
+                        lineArray = [];
+                        titleArray = [];
                         for (var i = 0; i < positions.length; i++) {
                             if (i != 0) {
                                 linePath = [ positions[i - 1].latlng, positions[i].latlng ] //라인을 그리려면 두 점이 있어야하니깐 두 점을 지정했습니다
@@ -186,6 +175,7 @@
                             distance = Math.round(lineLine.getLength());
                             displayCircleDot(positions[i].latlng, distance);
                             
+                            lineArray.push(drawLine);
                         }
                     }
                     function displayCircleDot(position, distance) {
@@ -202,9 +192,10 @@
                  
                             // 지도에 표시합니다
                             distanceOverlay.setMap(map);
+
+                            titleArray.push(distanceOverlay);
                         }
                     }
-    
         $('#search').on('click', () => {
             let start = $('#start').val();
             let end = $('#end').val();
@@ -213,7 +204,6 @@
                     start: start,
                     end: end,
                 }
-                
                 $.ajax({
                     type : "POST",
                     url : "/nav",
@@ -223,6 +213,14 @@
                     success : (result) => {
                         var htmls = '';
                         positions = [];
+
+                        // 이전 맵 초기화
+                        for (var i = 0; i < marArray.length; i++) {
+                            marArray[i].setMap(null);
+                            lineArray[i].setPath(null);
+                            //titleArray[i].setMap(null);
+                        }
+
                         if(result.list.length > 0) {
                             // 검색 결과
                             var i = result.list.length;
@@ -270,14 +268,3 @@
 
         </div>
     </div>
-
-<div id="map22" style="width:500px;height:400px;"></div>
-<script>
-    var container = document.getElementById('map22');
-    var options = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667),
-        level: 3
-    };
-
-    var map = new kakao.maps.Map(container, options);
-</script>
