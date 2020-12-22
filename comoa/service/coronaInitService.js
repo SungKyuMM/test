@@ -8,6 +8,7 @@ const overseaOutBreak = require('../mongoDB/overseaOutBreakMongo');
 const smsMongo = require('../mongoDB/smsMongo');
 const { json } = require('express');
 
+// 오늘 날짜 저장
 let date = new Date();
 let year = date.getFullYear() + '';
 let month = (date.getMonth() + 1) + '';
@@ -21,7 +22,10 @@ let end = year + month + day;
 
 module.exports = async (key) => {    
 
+    // 기본 몽고DB 입력 데이터
     var data = {};
+
+    // 현 몽고 DB 데이터 확인
     let safety = await safetyNews.findOne(data);
     let infec = await infectionStatus.findOne(data);
     let ageGender = await ageGenderStatus.findOne(data);
@@ -42,30 +46,33 @@ module.exports = async (key) => {
         queryParams += '&' + encodeURIComponent('title4') + '=' + encodeURIComponent('항공권');
         queryParams += '&' + encodeURIComponent('title5') + '=' + encodeURIComponent('격리');
         
-        request({
+        request({                                   // api 연결
             url: url + queryParams,
             method: 'GET'
         }, (err, response, body) => {
             if(err) throw err;
                 
-            var jsonBody = convert.xml2json(body);
-            jsonBody = JSON.parse(jsonBody);
+            var jsonBody = convert.xml2json(body);  // api의 XML 데이터 json 변환
+            jsonBody = JSON.parse(jsonBody);        // json parse
     
-            var list = jsonBody.elements[0].elements[1].elements[0].elements;    
+            // api 데이터 필요 데이터 부분 추출
+            var list = jsonBody.elements[0].elements[1].elements[0].elements;
             
-            if(list) {
+            if(list) {                              // 데이터가 존재 하는지 확인
                 list.forEach(item => {
     
-                    let data = new Object();
+                    let data = new Object();        // 리스트 저장용 Object
                     data.id = item.elements[4].elements[0].text.trim();
                     data.country = item.elements[2].elements[0].text + '(' + item.elements[1].elements[0].text + ')';
                     data.title = item.elements[5].elements[0].text;
                     data.content = item.elements[0].elements[0].text;
                     data.create_dt = item.elements[6].elements[0].text;
                         
+                    // json 데이터 변환
                     var jsonData = JSON.stringify(data);
                     jsonData = JSON.parse(jsonData);    
 
+                    // 저장
                     safetyNews.updateMany(jsonData);
                 });
             
@@ -293,7 +300,7 @@ module.exports = async (key) => {
         var url = 'http://apis.data.go.kr/1741000/DisasterMsg2/getDisasterMsgList';
         var queryParams = '?' + encodeURIComponent('ServiceKey') + '=TPBNqjiytIA27IhRh7i4vjv6ezbtaOBtKP%2Fbs3VHwL2%2FkgMkmuNDPY50qFbpHr3oSVWlxg3r9BUhXW2Xpyh1Ew%3D%3D';
         queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1');
-        queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('1000');
+        queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('100');
         queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('json'); /* */
         queryParams += '&' + encodeURIComponent('flag') + '=' + encodeURIComponent('Y'); /* */
         

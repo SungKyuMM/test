@@ -4,6 +4,7 @@ const { MongooseDocument } = require('mongoose');
 const infectionMongo = require('../mongoDB/infectionStatusMongo');
 const overSeaMongo = require('../mongoDB/overseaOutBreakMongo');
 const cityMongo = require('../mongoDB/cityStatusMongo');
+const smsMongo = require('../mongoDB/smsMongo');
 
 
 module.exports = {
@@ -122,14 +123,14 @@ module.exports = {
         }
         
         //console.log(outSeaList);  
-
-        res.render('index', {infectionData: infectionData, today : today, KoList : KoList, dateList : dateList, outSeaList : outSeaList });
+        let smsList = await smsMongo.indexfindMany(data);
+        console.log(smsList);
+        res.render('index', {infectionData: infectionData, today : today, KoList : KoList, dateList : dateList, outSeaList : outSeaList, smsList:smsList });
     }, 
 
     showInfection: async (req, res, next) => {
         let data = {};
         let infection = await infectionMongo.sortFind(data);
         res.end()
-
     }
 }

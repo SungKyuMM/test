@@ -51,6 +51,15 @@ module.exports = {
                }
             });
         });
+    },    
+    indexfindMany: async (data) => {
+        return new Promise (resolve => {
+            let res = smsStatus.find()
+            .sort({md101_sn: -1})
+            .limit(3);
+            
+            resolve(res);
+        });
     },
     paging: async (data, sqldata) => {
         return new Promise (resolve => {

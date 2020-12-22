@@ -1,9 +1,10 @@
 const safetyNewsMongo = require('../mongoDB/safetyNewsMongo');
 
 module.exports = {
-    safePaging: async (req, res, next) => {
-        let count = await safetyNewsMongo.allCount();  
-        let start = false;
+    // 최신 안전소식 정보 View
+    safePaging: async (req, res, next) => {                
+        let count = await safetyNewsMongo.allCount();   // 전체 데이터 갯수
+        let start = false;                              // 페이징 정보 변수들
         let end = false;
         let nowPage = req.query.startPage;
         let lastPageNum = parseInt(count / 10);
@@ -24,6 +25,7 @@ module.exports = {
         res.render('safetyNews', {post: post, nowPage: nowPage, start: start, end: end, lastPageNum: lastPageNum});
     },
     
+    // 최신 안전소식 정보 content view
     safeContent: async (req, res, next) => {
         let data = req.query.id;        
         let safeContent = await safetyNewsMongo.safeContent(data);

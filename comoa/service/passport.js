@@ -22,9 +22,10 @@ module.exports = () => {
         done(null, user);
     });
 
+    // 로그인 인증
     passport.use(new LocalStrategy({
-        usernameField: 'email',
-        passwordField: 'password',
+        usernameField: 'email',         // 이메일 property 설정
+        passwordField: 'password',      // 패스워드 property 설정
         session: true,
         passReqToCallback: false,
     }, async (email, password, done) => {
@@ -32,14 +33,15 @@ module.exports = () => {
         let userInfo = await user.findOne(data);
 
         if(userInfo) {
+            // Hash 암호화 패스워드 비교
             let bool = bcrypt.compareSync(password, userInfo.password);
-            if(bool) {
+            if(bool) {                  // 로그인 성공
                 return done(null, userInfo);
-            } else {
+            } else {                    // 패스워드 에러
                 console.log('패스워드가 틀렸습니다.');
                 return done(null, false, {message: '아이디 또는 패스워드를 확인해 주세요.'});
             }
-        } else {
+        } else {                        // 등록 되지 않은 사용자
             console.log('없는 사용자 입니다.');
             return done(null, false, {message: '아이디 또는 패스워드를 확인해 주세요.'});            
         }
