@@ -3,6 +3,7 @@ const userMongo = require('../mongoDB/userMongo');
 const replyMongo = require('../mongoDB/replyMongo');
 
 module.exports = {
+    // 게시글 사진 및 내 프로필 사진 등록
     fileUpload: (req, res, next) => {
         let file = req.file;
         let type = req.body.type;

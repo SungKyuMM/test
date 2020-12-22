@@ -208,6 +208,17 @@
 <%  }  %>
 
   <script>
+        // 사이드 바 넓이에 따른 채팅창 Display
+        $('#sidebarToggle').on('click', () => {
+            if($(window).width() > 500) {
+                if($('#sideNav').width() > 64) {
+                    $('#Chatbackground').hide();
+                } else {                 
+                    $('#Chatbackground').show();
+                }
+            }
+        });
+
         $(function(){
         let socket = io('http://localhost:3000');
 
@@ -247,7 +258,7 @@
   </script>
   </head>
   <body>
-    <div class="Chatbackground" >
+    <div class="Chatbackground" id="Chatbackground">
       <div class ="msgbox" id="messages"></div>
       <input id="nickName" class="msg" type="text" class="nick"/>
       <input id="msinput" class="msg" type="text"/>
