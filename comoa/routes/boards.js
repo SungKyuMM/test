@@ -4,6 +4,7 @@ var router = express.Router();
 const isAuthenticated = require('../service/isAuth');
 const boardsController = require('../controller/boardsController');
 
+
 // 게시물 수정
 router.get('/modify/:_id', isAuthenticated.user, boardsController.modifyBoard);
 router.put('/modify/:_id', isAuthenticated.user, boardsController.modifyBoard);
