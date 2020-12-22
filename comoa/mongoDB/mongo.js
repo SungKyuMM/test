@@ -1,5 +1,6 @@
 var mongo = require('mongoose');
 
+// 몽고 DB 컨넥터
 module.exports = () => {
     let connect = () => {
         const db = 'comoaDB';
@@ -11,7 +12,7 @@ module.exports = () => {
         });       
     };
     connect();    
-    mongo.connection.on('disconnected', connect);
+    mongo.connection.on('disconnected', connect);   // DB가 disconnected되면 다시 재연결
     
     require('./schema/user');
     require('./schema/board');

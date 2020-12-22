@@ -20,7 +20,7 @@ router.post('/register', (req, res, next) => {
     authority: 'USER'
   }
 
-  uService.registerUser(data);
+  uService.registerUser(data);  // 회원 데이터 저장
   res.redirect('/login');
 });
 

@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 const multer = require('multer');
+
+// 게시글 업로드 multer 설정
 const upload = multer({
     storage: multer.diskStorage({
         destination: (req, res, cb) => {            
@@ -17,6 +19,7 @@ const upload = multer({
     }),
 });
 
+// 프로필 사진 업로드 multer 설정
 const profile = multer({
     storage: multer.diskStorage({
         destination: (req, res, cb) => {            
@@ -34,12 +37,16 @@ const profile = multer({
 
 const fileController = require('../controller/fileController');
 
+// 게시글 파일 업로드
 router.post('/fileUpload', upload.single('file'), fileController.fileUpload);
 
+// 사진 파일 삭제
 router.delete('/fileDelete', fileController.fileDelete);
 
+// 프로필 사진 파일 업로드
 router.post('/profileUpload', profile.single('file'), fileController.fileUpload);
 
+// 프로필 사진 파일 삭제(초기화)
 router.delete('/profileReset', fileController.fileDelete)
 
 module.exports = router;

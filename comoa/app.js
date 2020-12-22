@@ -39,38 +39,35 @@ app.use(layouts);
 
 //socket
 const chatDb = require('./mongoDB/chatMongo');
-const testMO = require('./mongoDB/infectionStatusMongo');
-
 let a = 0;
 app.io = require('socket.io')();
+//소켓 셋팅
 app.io.on('connection', function(socket){
-     socket.on('login', async (tempdata)=>{
-        let userName = tempdata
-        console.log('???'); 
-        chatDb.chatList().then(function(result){
-            result.forEach(item =>{
-                if(userName == item.name)   {
-                    app.io.to(socket.id).emit('Mmessage', item.msg);      }
-                else {
-                    app.io.to(socket.id).emit('Omessage', item.name, item.msg);   }
+     socket.on('login', async (tempdata)=>{  // 최초 접속시 ejs에서 login 호출
+        let userName = tempdata    // 로그인 되어있는지 확인
+        chatDb.chatList().then(function(result){    // 몽고디비서 상위 100개 대화 호출
+            result.forEach(item =>{   //결과 반복문으로 채팅창 삽입
+                if(userName == item.name)   
+                    app.io.to(socket.id).emit('Mmessage', item.msg);    // 내 메세지 표시   
+                else 
+                    app.io.to(socket.id).emit('Omessage', item.name, item.msg);   //다른사람 메세지 표시
               });
             if(userName=='')
-                userName = "익명" + a++;  
+                userName = "익명" + a++;     //로그인 안되있으명 익명으로 표시
             socket.name = userName;
-            app.io.to(socket.id).emit('create name', userName);  
-
+            app.io.to(socket.id).emit('create name', userName);     // 이름 설정 emit
         });
     });    
     console.log("a user connected");
       
     socket.on('disconnect', function(){
-        console.log('user disconnected');
+        console.log('user disconnected');   //연결끊김
     });     
-    socket.on('message', (name, msg) =>{
+    socket.on('message', (name, msg) =>{   //메세지 전송 시 호출
         tempname = name;
-        socket.emit('Mmessage', msg);
-        socket.broadcast.emit('Omessage', name, msg);
-        chatDb.chatInsert([{'name' : name, 'msg' : msg}]);
+        socket.emit('Mmessage', msg);   // 나한테만 보이는 메세지
+        socket.broadcast.emit('Omessage', name, msg);  // 나말고 전체에게 보이는 메세지
+        chatDb.chatInsert([{'name' : name, 'msg' : msg}]);   // 대화내역 DB삽입
     });
   });
 
