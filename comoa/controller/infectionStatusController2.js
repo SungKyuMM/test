@@ -87,7 +87,7 @@ module.exports = {
             'KoEXAM_CNT_Total' : infectionData[0].exam_cnt,
             'KoCLEAR_CNT_Total' : infectionData[0].clear_cnt
         };
-        console.log(today);
+        //console.log(today);
 
         var KoList = new Array();
         var outSeaList = new Array();
