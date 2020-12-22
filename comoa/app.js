@@ -39,7 +39,7 @@ app.use(layouts);
 
 //socket
 const chatDb = require('./mongoDB/chatMongo');
-let a = 0;
+let a = 0; //익명카운트 
 app.io = require('socket.io')();
 //소켓 셋팅
 app.io.on('connection', function(socket){
@@ -47,7 +47,7 @@ app.io.on('connection', function(socket){
         let userName = tempdata    // 로그인 되어있는지 확인
         chatDb.chatList().then(function(result){    // 몽고디비서 상위 100개 대화 호출
             result.forEach(item =>{   //결과 반복문으로 채팅창 삽입
-                if(userName == item.name)   
+                if(userName == item.name)    //나한테만 보이는 메세지 
                     app.io.to(socket.id).emit('Mmessage', item.msg);    // 내 메세지 표시   
                 else 
                     app.io.to(socket.id).emit('Omessage', item.name, item.msg);   //다른사람 메세지 표시
@@ -57,7 +57,7 @@ app.io.on('connection', function(socket){
             socket.name = userName;
             app.io.to(socket.id).emit('create name', userName);     // 이름 설정 emit
         });
-    });    
+    });       //socket.emit 하면 자신한테만 전송,  app.io.to().emit하면 특정인,  socket.broadcast는 자기빼고 전부 전송
     console.log("a user connected");
       
     socket.on('disconnect', function(){
