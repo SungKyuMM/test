@@ -50,6 +50,7 @@ router.post('/overseaoutSearch', overSeaOutController.searchOverSeaOut);
 router.get('/crawling', smsController.todaySmsInfo);
 
 router.get('/sms', smsController.smsInfo);
+router.post('/smsSearch', smsController.searchSMS);
 
 
 // 세계지역검색 - 공사중..

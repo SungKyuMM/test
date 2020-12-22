@@ -12,28 +12,70 @@ const log = console.log;
 
 module.exports = {
     smsInfo : async (req, res, next) => {
-        let count = await smsMongo.allCount();  
-        let start = false;
-        let end = false;
+        let sql = {};
+        let count = 0;
+        let location_name = req.query.location_name;
+
+        if(location_name!=''){
+            sql['search'] = {
+                location_name: { $regex : location_name }
+            };
+        }
+
+        count = await smsMongo.count(sql.search); 
+        console.log('total : ' +count);
+
         let nowPage = req.query.startPage;
-        let lastPageNum = parseInt(count / 10);
-                
-        if(count % 10 != 0) lastPageNum += 1;
+        let lastPageNum = parseInt(count / 30);
+        
+        if(count % 30 != 0) lastPageNum += 1;
 
         if(nowPage > 1) start = true;
         if(lastPageNum > 1) end = true;
         if(lastPageNum == nowPage) end = false;
 
         let data = {
+            search: sql.search ,
             sort: -1,
-            maxPage: 90,
-            startPage: (nowPage-1) * 10
+            maxPage: 30,
+            startPage: (nowPage-1) * 30
         };
-        console.log('total : ' +count);
-        let post = await smsMongo.paging(data);
-        res.render('ncovSMS', {post: post, nowPage: nowPage, start: start, end: end, lastPageNum: lastPageNum});
+        let post = await smsMongo.smsPaging(data);
+        res.render('ncovSMS', {post: post, nowPage: nowPage, lastPageNum: lastPageNum, location_name:location_name});
         
     },
+
+    searchSMS: async (req, res, next) => {
+        //console.log('긴급재난문자 검색 loop');
+        let lnm = req.body.location_name;
+        let data = {
+            location_name: {
+                $regex : lnm
+            }
+        }
+        //console.log('검색지역 ====> ' + data.location_name); 
+        let count = await smsMongo.count(data);
+        //let count = await smsMongo.count({location_name:/경기/});
+        
+        //console.log('검색 레코드 수 ==> ' + count);
+
+        let lastPageNum = parseInt(count / 30);
+
+        if(count % 30 != 0) lastPageNum += 1;
+
+        let paginData = {
+            search: data,
+            sort: -1,
+            maxPage: 30,
+            startPage: 0
+        };
+
+        let result = await smsMongo.smsPaging(paginData);
+        //console.log('결과 ==> ' + result);
+        //console.log('lnm =>'+lnm);
+        res.json({list: result, lastPageNum: lastPageNum, location_name: lnm});
+    },
+
     todaySmsInfo : async (req, res, next) => {
         let resultArr = [];
         /* 코로나 상황판 크롤링*/

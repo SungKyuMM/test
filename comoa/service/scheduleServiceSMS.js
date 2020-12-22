@@ -50,7 +50,7 @@ module.exports = (key, cron) => {
 
                 // 중복 검사 
                 if(safety[0].md101_sn < jsonData[0].md101_sn)
-                smsMongo.insertMany(jsonData);
+                    smsMongo.insertMany(jsonData);
             }
         });
     });
