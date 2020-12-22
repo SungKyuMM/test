@@ -10,7 +10,8 @@ module.exports = {
     infectionGraph: async (req, res, next) => {
         let data = {create_dt: {$gte: new Date("2020-11-01")}};
         let infectionData = await infectionMongo.find(data); 
-        
+
+        //몽고디비 국가별 데이터, 날짜기준으로 group 후, 일 누적 확진자, 사망자 조회 쿼리 
         let data2 = [
             {
                 '$project' : 
@@ -45,6 +46,7 @@ module.exports = {
         ]
         let overSeaData = await overSeaMongo.finday(data2);
 
+        //국내 지역 확진자 데이터 조회 쿼리
         let data3 = [
             {
                 $match : { gubun : '합계'}
@@ -94,7 +96,8 @@ module.exports = {
         var dateList = new Array();
         for(var i =30; i>=0; i--)
         {
-
+            //api 데이터중 이상한 데이터들이 있는 경우가 있어, 걸러냄.
+            // 그래프에 쓰일 json array 생성
             var t1 = new Date(infectionData[i].create_dt).toISOString().split("T")[0];
             var t2 = new Date(infectionData[i+1].create_dt).toISOString().split("T")[0];
             var t3 = infectionData[i].decide_cnt - infectionData[i+1].decide_cnt;
