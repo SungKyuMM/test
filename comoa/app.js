@@ -30,8 +30,50 @@ var covidRouter = require('./routes/covid');
 var fileRouter = require('./routes/file');
 var mailRouter = require('./routes/mail');
 
+//
+var chatSo = require('./routes/testChat');
+//
+
 var app = express();
 app.use(layouts);
+
+//socket
+const chatDb = require('./mongoDB/chatMongo');
+const testMO = require('./mongoDB/infectionStatusMongo');
+
+let a = 0;
+app.io = require('socket.io')();
+app.io.on('connection', function(socket){
+     socket.on('login', async (tempdata)=>{
+        let userName = tempdata
+        console.log('???'); 
+        chatDb.chatList().then(function(result){
+            result.forEach(item =>{
+                if(userName == item.name)   {
+                    app.io.to(socket.id).emit('Mmessage', item.msg);      }
+                else {
+                    app.io.to(socket.id).emit('Omessage', item.name, item.msg);   }
+              });
+            if(userName=='')
+                userName = "익명" + a++;  
+            socket.name = userName;
+            app.io.to(socket.id).emit('create name', userName);  
+
+        });
+    });    
+    console.log("a user connected");
+      
+    socket.on('disconnect', function(){
+        console.log('user disconnected');
+    });     
+    socket.on('message', (name, msg) =>{
+        tempname = name;
+        socket.emit('Mmessage', msg);
+        socket.broadcast.emit('Omessage', name, msg);
+        chatDb.chatInsert([{'name' : name, 'msg' : msg}]);
+    });
+  });
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -87,6 +129,9 @@ app.use('/covid', covidRouter);
 app.use('/file', fileRouter);
 app.use('/mail', mailRouter);
 
+//
+app.use('/chat', chatSo);
+//
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     next(createError(404));
@@ -102,5 +147,9 @@ app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error');
 });
+
+
+
+
 
 module.exports = app;

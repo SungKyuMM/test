@@ -309,7 +309,7 @@ module.exports = async (key) => {
             jsonBody = JSON.parse(jsonBody);
             //console.log('jsonbody => ' + jsonBody);
             var list = jsonBody.DisasterMsg[1].row;    
-            console.log('list => ' + list[0].location_name);
+            //console.log('list => ' + list[0].location_name);
             if(list) {
                 for ( var i=0; i<list.length; i++){
                     listData.push(list[i]);
@@ -321,6 +321,7 @@ module.exports = async (key) => {
 
                 let msg = 'sms MongoDB Success!';
                 smsMongo.insertMany(jsonData); 
+                console.log(msg);
             }
         });
     }

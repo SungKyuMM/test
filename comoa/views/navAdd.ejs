@@ -69,10 +69,10 @@
                 
                         if(navigator.geolocation) {
                             navigator.geolocation.getCurrentPosition(getLocation, function(error) {
-                                consol.log(error.message);    
+                                console.log(error.message);    
                             });
                         } else {
-                            consol.log("Geolocation을 지원하지 않는 브라우저 입니다.");
+                            console.log("Geolocation을 지원하지 않는 브라우저 입니다.");
                         }
                     });
                 </script>                

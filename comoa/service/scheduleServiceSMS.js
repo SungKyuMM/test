@@ -1,20 +1,20 @@
 const request = require('request');
 const convert = require('xml-js');
 const schedule = require('node-schedule');
-const sms = require('../mongoDB/smsMongo');
+const smsMongo = require('../mongoDB/smsMongo');
 const { json } = require('express');
 
 module.exports = (key, cron) => {      
     
     schedule.scheduleJob(cron, async () => {
         console.log('::::: sms 스케줄 start :::::');
-        let sort = {create_date: -1};
-        let safety = await sms.findNew(sort);
+        let sort = {md101_sn: -1};
+        let safety = await smsMongo.findOne(sort);
         
         var url = 'http://apis.data.go.kr/1741000/DisasterMsg2/getDisasterMsgList';
         var queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + key;
         queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1');
-        queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('3');
+        queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10');
         queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('json'); /* */
         queryParams += '&' + encodeURIComponent('flag') + '=' + encodeURIComponent('Y'); /* */
         
@@ -30,7 +30,7 @@ module.exports = (key, cron) => {
             jsonBody = JSON.parse(jsonBody);
             //console.log('jsonbody => ' + jsonBody);
             var list = jsonBody.DisasterMsg[1].row;    
-            console.log('list => ' + list[0].location_name);
+            //console.log('list => ' + list[0].location_name);
             if(list) {
                 for ( var i=0; i<list.length; i++){
                     let data = new Object();
@@ -49,8 +49,8 @@ module.exports = (key, cron) => {
                 jsonData = JSON.parse(jsonData);    
 
                 // 중복 검사 
-                if(safety[0].md101_sn != jsonData[0].md101_sn)
-                    sms.insertMany(jsonData);
+                if(safety[0].md101_sn < jsonData[0].md101_sn)
+                smsMongo.insertMany(jsonData);
             }
         });
     });

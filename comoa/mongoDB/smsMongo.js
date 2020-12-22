@@ -33,7 +33,7 @@ module.exports = {
 
     findOne: async (data) => {
         return new Promise (resolve => {
-            smsStatus.findOne(data, (err, result) => {
+            smsStatus.findOne({},(err, result) => {
                if(err) console.log(`OverseaOutbreak MongoDB Error: ${err}`);
                else {
                    resolve(result);
