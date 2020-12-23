@@ -1,6 +1,5 @@
 const bcrypt = require('bcrypt');
 const userMongo = require('../mongoDB/userMongo');
-const services = require('./coronaService');
 
 var users = {};
 
