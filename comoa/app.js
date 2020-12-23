@@ -10,7 +10,7 @@ const layouts = require('express-ejs-layouts');
 const coronaKey = 'gS9%2Fg7TGU2ycNJmvCRBkL%2F%2FGW%2BO%2B2qLz64HxeAkRsfDkc7tddS8J7LufAm7qFTrlZl0D3cIPjHv2q7IASZHI3Q%3D%3D';
 const cron = '*/10 * * * *'; // 스케줄러 반복 시간 CRON (현재 10분마다 실행)
 const smsKey = 'TPBNqjiytIA27IhRh7i4vjv6ezbtaOBtKP%2Fbs3VHwL2%2FkgMkmuNDPY50qFbpHr3oSVWlxg3r9BUhXW2Xpyh1Ew%3D%3D';
-const smsCron = '* 3 * * *'; // 스케줄러 반복 시간 CRON (현재 3분마다 실행)
+const smsCron = '*/3 * * * *'; // 스케줄러 반복 시간 CRON (현재 4분마다 실행 API가3분이후)
 var mongodb = require('./mongoDB/mongo');
 var schedule = require('./service/scheduleService');
 var scheduleSMS = require('./service/scheduleServiceSMS');
@@ -30,16 +30,12 @@ var covidRouter = require('./routes/covid');
 var fileRouter = require('./routes/file');
 var mailRouter = require('./routes/mail');
 
-//
-var chatSo = require('./routes/testChat');
-//
-
 var app = express();
 app.use(layouts);
 
 //socket
 const chatDb = require('./mongoDB/chatMongo');
-let a = 0;
+let a = 0; //익명카운트 
 app.io = require('socket.io')();
 //소켓 셋팅
 app.io.on('connection', function(socket){
@@ -47,7 +43,7 @@ app.io.on('connection', function(socket){
         let userName = tempdata    // 로그인 되어있는지 확인
         chatDb.chatList().then(function(result){    // 몽고디비서 상위 100개 대화 호출
             result.forEach(item =>{   //결과 반복문으로 채팅창 삽입
-                if(userName == item.name)   
+                if(userName == item.name)    //나한테만 보이는 메세지 
                     app.io.to(socket.id).emit('Mmessage', item.msg);    // 내 메세지 표시   
                 else 
                     app.io.to(socket.id).emit('Omessage', item.name, item.msg);   //다른사람 메세지 표시
@@ -57,7 +53,7 @@ app.io.on('connection', function(socket){
             socket.name = userName;
             app.io.to(socket.id).emit('create name', userName);     // 이름 설정 emit
         });
-    });    
+    });       //socket.emit 하면 자신한테만 전송,  app.io.to().emit하면 특정인,  socket.broadcast는 자기빼고 전부 전송
     console.log("a user connected");
       
     socket.on('disconnect', function(){
@@ -127,7 +123,6 @@ app.use('/file', fileRouter);
 app.use('/mail', mailRouter);
 
 //
-app.use('/chat', chatSo);
 //
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
