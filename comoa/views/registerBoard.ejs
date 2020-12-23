@@ -23,7 +23,7 @@
 
                 <!-- Form -->
                 <div>
-                    <form action="./<%=type %>" method="POST">
+                    <form action="./<%=type %>" method="POST" onsubmit="return fn_registerCheck()">
                         <input type="hidden" name="type" value="<%=type %>">
                         <div class="form-row">
                             <div class="form-group col-12 col-md-12">
@@ -86,5 +86,21 @@
                     console.log('삭제');	        	
                 }
             });
+        }
+
+        var fn_registerCheck = () => {
+            var title = $('#title').val();
+            var content = $('#summernote').val();
+            var bool = false;
+
+            if(title == '') {
+                alert('제목을 입력해 주세요.');
+            } else if(content == '') {
+                alert('내용을 입력해 주세요.');
+            } else {
+                bool = true;
+            }
+
+            return bool;
         }
     </script>
