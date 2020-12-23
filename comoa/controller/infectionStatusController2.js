@@ -104,7 +104,7 @@ module.exports = {
             var t1 = new Date(infectionData[i].create_dt).toISOString().split("T")[0];  //ISODate 형식 변환 
             var t2 = new Date(infectionData[i+1].create_dt).toISOString().split("T")[0];
             var t3 = infectionData[i].decide_cnt - infectionData[i+1].decide_cnt; 
-            if( t1 != t2 && t3 > 1)  //i와 i+1이 동일한 날짜인지 체크, 금일 확진자 - 전일 확진자 값이 마이너스인경우 체크
+            if( t1 != t2 && t3 > 1)  //i와 i+1이 동일한 날짜인지 체크, 금일 누적 확진자 - 전일 누적 확진자 값이 마이너스인경우 체크
             {
             var tempDate = new Object();
             tempDate.meta =  t1;

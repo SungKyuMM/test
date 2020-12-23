@@ -40,15 +40,15 @@
                         },
                         series: {
                             regions: [{
-                                scale: ['#FFC6C6', '#930000'],
+                                scale: ['#FFC6C6', '#930000'],   // 색상 범위 ~ 
                                 normalizeFunction: 'polynomial',
                                 values: JSON.parse('<%-JSON.stringify(covidData)%>')
-                                // 확진자 색
+                                // 확진자 데이터 
                             }]
                         },  
-                        onRegionTipShow: (e, el, code) => {
+                        onRegionTipShow: (e, el, code) => {  // 마우스 호버 팁 
                             var htmls = '';                
-                            if(data[code] == undefined) {
+                            if(data[code] == undefined) {  //매핑코드가없을때 
                                 el.html('자료없음');
                             } else {
                                 htmls += '지역명: ' + data[code].gubun + '<br>';

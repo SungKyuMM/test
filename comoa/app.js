@@ -88,23 +88,22 @@ app.use('/node_modules', express.static(path.join(__dirname, '/node_modules')));
 mongodb();
 app.use(
     session({
-        secret: 'secret_key',
+        secret: 'secret_key',       // session 비밀키
         resave: false,
         saveUninitialized: true,
-        cookie: {
-            // 하루 유지
-            maxAge: 24000 * 60 * 60
+        cookie: {            
+            maxAge: 24000 * 60 * 60 // 하루 유지
         }
     })
 );
-app.use(flash());
+app.use(flash());                   // 에러 메시지 전달을 위해 사용
 app.use(passport.initialize());
 app.use(passport.session());
-passportConfig();
-schedule(coronaKey, cron);
-scheduleSMS(smsKey, smsCron);
-coronaInit(coronaKey);
-app.use(methodOverride('_method'))
+passportConfig();                   // passoport service 이용
+schedule(coronaKey, cron);          // covid API 스케줄러
+scheduleSMS(smsKey, smsCron);       // 
+coronaInit(coronaKey);              // 서버 첫 구동 DB초기화
+app.use(methodOverride('_method'))  // put, delete등 메소드 형식을 form으로 사용하기 위한 매핑
 
 // 로그인 정보 - 페이지 전환 시 마다 passport로 인증한 값을 locals에 저장하여 같이 데이터 전송
 app.use((req, res, next) => {

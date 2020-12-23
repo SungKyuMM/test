@@ -1,5 +1,4 @@
 var express = require('express');
-// var coronaService = require('../service/coronaService');
 var router = express.Router();
 
 const infectionController = require('../controller/infectionStatusController');
@@ -9,23 +8,6 @@ const cityStatusController = require('../controller/cityStatusController');
 const ageGenderController = require('../controller/ageGenderController');
 const smsController = require('../controller/smsController');
 const { route } = require('.');
-
-// 테이스용 페이지 (나중에 폭발)
-router.get('/', (req, res, next) => {
-    res.render('test');
-});
-
-// router.get('/info', async(req, res, next) => {
-//     let safetyData = await coronaService.safetyNews();    
-//     let infectionData = await coronaService.infectionStatus();
-//     let ageGenderData = await coronaService.ageGenderStatus();
-//     let cityData = await coronaService.cityStatus();
-//     let overseaData = await coronaService.overseaOutbreak();
-
-//     res.render('coronaInfo', {safetyData: safetyData, infectionData: infectionData, ageGenderData: ageGenderData, cityData: cityData, overseaData: overseaData});    
-// });
-
-router.get('/t2', infectionController.infectionGraph);
 
 // 국가·지역별 최신안전소식(코로나관련) 페이지
 router.get('/safePaging', safetyNewsController.safePaging);
