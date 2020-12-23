@@ -9,59 +9,19 @@
                         <li class="breadcrumb-item">
                             <a href="#">국내현황</a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">긴급 재난 문자</li>
+                        <li class="breadcrumb-item active" aria-current="page">크롤링 정보</li>
                     </ol>
                 </nav>
                 <!-- End Breadcrumb -->
 
                 <div class="mb-3 mb-md-4 d-flex justify-content-between">
-                    <div class="h3 mb-0">긴급 재난 문자</div>
+                    <div class="h3 mb-0">크롤링 정보</div>
                 </div>
                 <!--
                 <% sms.forEach(elem => { %>
                  현재 <%=elem._text%> 의 현황 : <%=elem._num%> <br/>
                 <% }) %>
 
-                
-                <div id="map" style="width:800px;height:400px;"></div>
-
-                <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=bab3d8cc60f04070a5fddb1bf106d195"></script>
-                <script type="text/javascript">
-                    document.addEventListener("DOMContentLoaded", function() {
-                        function getLocation(position) {
-                
-                            var latitud = position.coords.latitude;
-                            var longitude = position.coords.longitude;
-                        
-                            var mapContainer = document.getElementById("map")    // 지도를 표시할 DIV
-                            var mapOption = {
-                                  center : new daum.maps.LatLng(latitud, longitude)    // 지도의 중심좌표
-                                , level : 3    // 지도의 확대레벨
-                            };
-                            
-                            // 지도를 생성
-                            var map = new daum.maps.Map(mapContainer, mapOption);
-                
-                            // 마커가 표시될 위치
-                            var markerPosition = new daum.maps.LatLng(latitud, longitude);
-                
-                            // 마커를 생성
-                            var marker = new daum.maps.Marker({ position:markerPosition });
-                
-                            marker.setMap(map);
-                        }
-                
-                        if(navigator.geolocation) {
-                            navigator.geolocation.getCurrentPosition(getLocation, function(error) {
-                                consol.log(error.message);    
-                            });
-                        } else {
-                            consol.log("Geolocation을 지원하지 않는 브라우저 입니다.");
-                        }
-                    });
-                </script>
-
-                -->
             </div>
 
         </div>

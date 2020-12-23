@@ -7,7 +7,7 @@ const { json } = require('express');
 module.exports = (key, cron) => {      
     
     schedule.scheduleJob(cron, async () => {
-        console.log('::::: sms 스케줄 start :::::' + new Date());
+        console.log('::::: 긴급재난문자 스케줄 START :::::' + new Date());
         let sort = {md101_sn: -1};
         let safety = await smsMongo.findOne(sort);
         
@@ -28,32 +28,21 @@ module.exports = (key, cron) => {
 
             var jsonBody = (body);
             jsonBody = JSON.parse(jsonBody);
-            //console.log('jsonbody => ' + jsonBody);
             try {
+                // JSON 리턴 받은 것중 실제 SMS Data는 row안에 있다. 
                 var list = jsonBody.DisasterMsg[1].row;    
-                //console.log('list => ' + list[0].location_name);
                 if(list) {
                     for ( var i=0; i<list.length; i++){
                         let data = new Object();
-                        /*
-                        data.create_date = list[i].create_date;
-                        data.location_id = list[i].location_id;
-                        data.location_name = list[i].location_name;
-                        data.md101_sn = list[i].md101_sn;
-                        data.msg = list[i].msg;
-                        data.send_platform = list[i].send_platform;
-                        */
-                        listData.push(list[i]);
-                        //listData.push(data);
+                        // 데이터베이스에 마지막 데이터 고유넘버와 비교하여 최신 데이터만 배열에 넣는다.
+                        if(safety.md101_sn < list[i].md101_sn){
+                            listData.push(list[i]);
+                            //console.log('list up sms md101_sn : ' + list[i].md101_sn);
+                        }
                     }
                     var jsonData = JSON.stringify(listData);
                     jsonData = JSON.parse(jsonData);    
-                    //console.log('가져온 data : ' +jsonData[0].md101_sn);
-                    //console.log('last record : ' + safety.md101_sn);
-                    // 중복 검사 
-                    if(safety.md101_sn < jsonData[0].md101_sn)
-                        smsMongo.insertMany(jsonData);
-
+                    smsMongo.insertMany(jsonData);
                 }
             } catch(e){
                 console.log(e);

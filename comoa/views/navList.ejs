@@ -1,5 +1,3 @@
-
-
 <div class="content">
     <div class="py-4 px-3 px-md-4">
         <div class="card mb-3 mb-md-4">
@@ -41,9 +39,9 @@
                             <th class="font-weight-semi-bold border-top-0 py-2">경도</th>
                         </tr>
                     </thead>
-<script type="text/javascript">
-    var positions = [];
-</script>
+                    <script type="text/javascript">
+                        var positions = [];
+                    </script>
                     <tbody id="tablelist">
                         <% 
                             let pos = new Array();
@@ -59,13 +57,13 @@
                                 <%
                                 let i = list.length;
                                 list.forEach(nav => { 
-                                    %>
-<script type="text/javascript">
-    var items = new Object();
-    items.title = '<%=nav.title%>';
-    items.latlng = new daum.maps.LatLng('<%=nav.latitude%>', '<%=nav.longitude%>');
-    positions.push(items);
-</script>
+                                %>
+                                <script type="text/javascript">
+                                    var items = new Object();
+                                    items.title = '<%=nav.title%>';
+                                    items.latlng = new daum.maps.LatLng('<%=nav.latitude%>', '<%=nav.longitude%>');
+                                    positions.push(items);
+                                </script>
                                     <tr>
                                         <td class="py-3"><%=i %></td>
                                         <td class="py-3">
@@ -84,13 +82,11 @@
                     </tbody>
                 </table>
                 
-
                 <script type="text/javascript">    
                     var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
                     mapOption = {
                         center : positions[0].latlng, // 지도의 중심좌표
-                        level : 6
-                    // 지도의 확대 레벨
+                        level : 6 // 지도의 확대 레벨
                     };
                  
                     var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
@@ -104,8 +100,7 @@
                     marker();
                     liner();
 
-//  마커에 따라 지도 크기 조절                   
-
+                //  마커에 따라 지도 크기 조절     
                 function mapResizing(){
                     var bounds = new kakao.maps.LatLngBounds();    
                     var marker;
@@ -116,155 +111,139 @@
                     }
                 }
             
-
-
-// 마커추가
-                    //마커 이미지의 이미지 주소입니다
-
+                // 마커추가
                 function marker(){
+                    //마커 이미지의 이미지 주소입니다
                     var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
                     // console.log(parseFloat(positions[0].latitude) + ', ' + parseFloat(positions[0].longitude));
-                    // console.log(positions);
                     marArray = [];
                     for (var i = 0; i < positions.length; i++) {
-                        // console.log(i);
                         // 마커 이미지의 이미지 크기 입니다
                         var imageSize = new daum.maps.Size(24, 35);
                  
                         // 마커 이미지를 생성합니다    
                         var markerImage = new daum.maps.MarkerImage(imageSrc, imageSize);
 
-                        //var lat = parseFloat(positions[i].latitude);
-                        //var long = parseFloat(positions[i].longitude);
-                        
                         // 마커를 생성합니다
                         var marker = new daum.maps.Marker({
                             map : map, // 마커를 표시할 지도
                             position : positions[i].latlng, // 마커를 표시할 위치
                             title : positions[i].title,
-                            image : markerImage
-                        // 마커 이미지 
+                            image : markerImage // 마커 이미지 
                         });
                         marArray.push(marker);
                     }
                 }
-
-// 라인추가
-                    function liner(){
-                        var linePath;
-                        var lineLine = new daum.maps.Polyline();
-                        var distance;
-                        lineArray = [];
-                        titleArray = [];
-                        for (var i = 0; i < positions.length; i++) {
-                            if (i != 0) {
-                                linePath = [ positions[i - 1].latlng, positions[i].latlng ] //라인을 그리려면 두 점이 있어야하니깐 두 점을 지정했습니다
-                            }
-                            ;
-                            lineLine.setPath(linePath); // 선을 그릴 라인을 세팅합니다
-                    
-                            var drawLine = new daum.maps.Polyline({
-                                map : map, // 선을 표시할 지도입니다 
-                                path : linePath,
-                                strokeWeight : 3, // 선의 두께입니다 
-                                strokeColor : '#db4040', // 선의 색깔입니다
-                                strokeOpacity : 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
-                                strokeStyle : 'solid' // 선의 스타일입니다
-                            });
-                    
-                            distance = Math.round(lineLine.getLength());
-                            displayCircleDot(positions[i].latlng, distance);
-                            
-                            lineArray.push(drawLine);
+                // 라인추가
+                function liner(){
+                    var linePath;
+                    var lineLine = new daum.maps.Polyline();
+                    var distance;
+                    lineArray = [];
+                    titleArray = [];
+                    for (var i = 0; i < positions.length; i++) {
+                        if (i != 0) {
+                            linePath = [ positions[i - 1].latlng, positions[i].latlng ] //라인을 그리려면 두 점이 있어야하니깐 두 점을 지정했습니다
                         }
-                    }
-                    function displayCircleDot(position, distance) {
-                        if (distance > 0) {
-                            // 클릭한 지점까지의 그려진 선의 총 거리를 표시할 커스텀 오버레이를 생성합니다
-                            var distanceOverlay = new daum.maps.CustomOverlay(
-                                    {
-                                        content : '<div class="dotOverlay">거리 <span class="number">'
-                                                + distance + '</span>m</div>',
-                                        position : position,
-                                        yAnchor : 1,
-                                        zIndex : 2
-                                    });
-                 
-                            // 지도에 표시합니다
-                            distanceOverlay.setMap(map);
-
-                            titleArray.push(distanceOverlay);
-                        }
-                    }
-        $('#search').on('click', () => {
-            let start = $('#start').val();
-            let end = $('#end').val();
-            if(new Date(start) <= new Date(end)) {
-                var paramData = {
-                    start: start,
-                    end: end,
-                }
-                $.ajax({
-                    type : "POST",
-                    url : "/nav",
-                    dataType : "json",
-                    data : paramData,
-                                            
-                    success : (result) => {
-                        var htmls = '';
-                        positions = [];
-
-                        // 이전 맵 초기화
-                        for (var i = 0; i < marArray.length; i++) {
-                            marArray[i].setMap(null);
-                            lineArray[i].setPath(null);
-                            //titleArray[i].setMap(null);
-                        }
-
-                        if(result.list.length > 0) {
-                            // 검색 결과
-                            var i = result.list.length;
-                            result.list.forEach(e => {
-    var items = new Object();
-    items.title = e.title;
-    items.latlng = new daum.maps.LatLng(e.latitude, e.longitude);
-    positions.push(items);
-                                htmls += '<tr>';
-                                htmls += '<td>' + i + '</td>';
-                                htmls += '<td>' + e.title + '</td>';
-                                htmls += '<td>' + e.reg_date.substring(0, 19) + '</td>';
-                                htmls += '<td>' + e.latitude + '</td>';
-                                htmls += '<td>' + e.longitude + '</td>';                              
-                                htmls += '</tr>';
-                                i--;
-                            });
-                            
-                        } else {
-                            htmls += '<div style="text-align: center;"><h3>데이터가 없습니다.</h3></div>';
-                        }
-                        $('#tablelist').html(htmls);
+                        ;
+                        lineLine.setPath(linePath); // 선을 그릴 라인을 세팅합니다
+                
+                        var drawLine = new daum.maps.Polyline({
+                            map : map, // 선을 표시할 지도입니다 
+                            path : linePath,
+                            strokeWeight : 3, // 선의 두께입니다 
+                            strokeColor : '#db4040', // 선의 색깔입니다
+                            strokeOpacity : 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
+                            strokeStyle : 'solid' // 선의 스타일입니다
+                        });
+                
+                        distance = Math.round(lineLine.getLength());
+                        displayCircleDot(positions[i].latlng, distance);
                         
-                        // 지도 다시그리기
-                        mapResizing();
-                        marker();
-                        liner();
-                    },
-                    
-                    error : () => {
-                        console.log("실패")
+                        lineArray.push(drawLine);
+                    }
+                }
+                function displayCircleDot(position, distance) {
+                    if (distance > 0) {
+                        // 클릭한 지점까지의 그려진 선의 총 거리를 표시할 커스텀 오버레이를 생성합니다
+                        var distanceOverlay = new daum.maps.CustomOverlay(
+                                {
+                                    content : '<div class="dotOverlay">거리 <span class="number">'
+                                            + distance + '</span>m</div>',
+                                    position : position,
+                                    yAnchor : 1,
+                                    zIndex : 2
+                                });
+                
+                        // 지도에 표시합니다
+                        distanceOverlay.setMap(map);
+
+                        titleArray.push(distanceOverlay);
+                    }
+                }
+                $('#search').on('click', () => {
+                    let start = $('#start').val();
+                    let end = $('#end').val();
+                    if(new Date(start) <= new Date(end)) {
+                        var paramData = {
+                            start: start,
+                            end: end,
+                        }
+                        $.ajax({
+                            type : "POST",
+                            url : "/nav",
+                            dataType : "json",
+                            data : paramData,
+                                                    
+                            success : (result) => {
+                                var htmls = '';
+                                positions = [];
+
+                                // 이전 맵 초기화
+                                for (var i = 0; i < marArray.length; i++) {
+                                    marArray[i].setMap(null);
+                                    lineArray[i].setPath(null);
+                                    //titleArray[i].setMap(null);
+                                }
+
+                                if(result.list.length > 0) {
+                                    // 검색 결과
+                                    var i = result.list.length;
+                                    result.list.forEach(e => {
+                                        var items = new Object();
+                                        items.title = e.title;
+                                        items.latlng = new daum.maps.LatLng(e.latitude, e.longitude);
+                                        positions.push(items);
+                                        htmls += '<tr>';
+                                        htmls += '<td>' + i + '</td>';
+                                        htmls += '<td>' + e.title + '</td>';
+                                        htmls += '<td>' + e.reg_date.substring(0, 19) + '</td>';
+                                        htmls += '<td>' + e.latitude + '</td>';
+                                        htmls += '<td>' + e.longitude + '</td>';                              
+                                        htmls += '</tr>';
+                                        i--;
+                                    });
+                                } else {
+                                    htmls += '<div style="text-align: center;"><h3>데이터가 없습니다.</h3></div>';
+                                }
+                                $('#tablelist').html(htmls);
+                                
+                                // 지도 다시그리기
+                                mapResizing();
+                                marker();
+                                liner();
+                            },
+                            
+                            error : () => {
+                                console.log("실패")
+                            }
+                        });
+                    } else {
+                        alert('시작 날짜가 마지막 날짜보다 미래입니다.');
                     }
                 });
-            } else {
-                alert('시작 날짜가 마지막 날짜보다 미래입니다.');
-            }
-        });
 
                 </script>
-
-
-
-                
             </div>
-
         </div>
     </div>

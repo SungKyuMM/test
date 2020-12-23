@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const { searchnav } = require("../mongoDB/navMongo");
 
 module.exports = {
+
+    // 오늘 날짜 리스트업
     showList: async (req, res, next) => {
         
         // 오늘 날짜 구하기
@@ -28,6 +30,7 @@ module.exports = {
         let navList = await navMongo.navList(data);
         res.render('navList', {list: navList});
     }, 
+    // 특정 날짜로 네비리스트 조회
     showSearchList: async (req, res, next) => {
         let data = {
             email: req.user.email,
@@ -42,7 +45,7 @@ module.exports = {
 
         res.json({list: navList});
     }, 
-    
+    // 네비 위치 등록
     registernav: (req, res, next) => {
         if(req.method === 'GET') {
             res.render('navAdd');

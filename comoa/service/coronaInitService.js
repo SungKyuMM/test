@@ -296,13 +296,13 @@ module.exports = async (key) => {
 
     // 긴급재난문자 초기화
     if(sms == null) {
-        console.log('::::: 긴급재난문자 초기화!! :::::');
+        console.log('::::: 긴급재난문자 초기화 :::::');
         var url = 'http://apis.data.go.kr/1741000/DisasterMsg2/getDisasterMsgList';
         var queryParams = '?' + encodeURIComponent('ServiceKey') + '=TPBNqjiytIA27IhRh7i4vjv6ezbtaOBtKP%2Fbs3VHwL2%2FkgMkmuNDPY50qFbpHr3oSVWlxg3r9BUhXW2Xpyh1Ew%3D%3D';
-        queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1');
-        queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('100');
-        queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('json'); /* */
-        queryParams += '&' + encodeURIComponent('flag') + '=' + encodeURIComponent('Y'); /* */
+        queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /* 1번 page */
+        queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('1000'); /* page당 row count)
+        queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('json'); /* xml, json 제공*/
+        queryParams += '&' + encodeURIComponent('flag') + '=' + encodeURIComponent('Y'); /* 신규api 여부*/
         
         request({
             url: url + queryParams,
@@ -313,22 +313,15 @@ module.exports = async (key) => {
             var listData = new Array();
     
             var jsonBody = (body);
-            jsonBody = JSON.parse(jsonBody);
-            //console.log('jsonbody => ' + jsonBody);
-            var list = jsonBody.DisasterMsg[1].row;    
-            //console.log('list => ' + list[0].location_name);
+            jsonBody = JSON.parse(jsonBody); //console.log('jsonbody => ' + jsonBody);
+            var list = jsonBody.DisasterMsg[1].row; //console.log('list => ' + list[0].location_name);
             if(list) {
                 for ( var i=0; i<list.length; i++){
                     listData.push(list[i]);
                 }
-                var jsonData = JSON.stringify(listData);
-                //console.log('::: str result =>' + jsonData);
-                jsonData = JSON.parse(jsonData);
-                //console.log('::: data result =>' + jsonData);
-
-                let msg = 'sms MongoDB Success!';
+                var jsonData = JSON.stringify(listData); //console.log('::: str result =>' + jsonData);
+                jsonData = JSON.parse(jsonData); //console.log('::: data result =>' + jsonData);
                 smsMongo.insertMany(jsonData); 
-                console.log(msg);
             }
         });
     }

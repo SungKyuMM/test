@@ -4,10 +4,6 @@ const convert = require('xml-js');
 const axios = require("axios");
 const cheerio = require("cheerio");
 const url = "http://ncov.mohw.go.kr/";
-// 재 확진환자 의 현황 : (누적)48,570(누적)전일대비 (+ 1053)
-// 현재 격리해제 의 현황 : 34,334(+ 352)
-// 현재 치료 중(격리 중) 의 현황 : (격리 중)13,577(+ 687)
-// 현재 사망 의 현황 : 659(+ 14)
 const log = console.log;
 
 module.exports = {
@@ -56,9 +52,7 @@ module.exports = {
         //console.log('검색지역 ====> ' + data.location_name); 
         let count = await smsMongo.count(data);
         //let count = await smsMongo.count({location_name:/경기/});
-        
         //console.log('검색 레코드 수 ==> ' + count);
-
         let lastPageNum = parseInt(count / 30);
 
         if(count % 30 != 0) lastPageNum += 1;
@@ -76,6 +70,7 @@ module.exports = {
         res.json({list: result, lastPageNum: lastPageNum, location_name: lnm});
     },
 
+    // 현재 ncov 사이트의 현황판 가져오기 
     todaySmsInfo : async (req, res, next) => {
         let resultArr = [];
         /* 코로나 상황판 크롤링*/
@@ -86,7 +81,6 @@ module.exports = {
                 log(err)
             }
         }
-        
         
         await getData().then(html => {
             const $ = cheerio.load(html.data);
@@ -101,6 +95,10 @@ module.exports = {
             })
             resultArr.forEach(elem => {
                 log(`현재 ${elem._text}의 현황 : ${elem._num}`);
+                // 재 확진환자 의 현황 : (누적)48,570(누적)전일대비 (+ 1053)
+                // 현재 격리해제 의 현황 : 34,334(+ 352)
+                // 현재 치료 중(격리 중) 의 현황 : (격리 중)13,577(+ 687)
+                // 현재 사망 의 현황 : 659(+ 14)
             })
         })
         

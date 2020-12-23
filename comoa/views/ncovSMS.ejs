@@ -17,26 +17,26 @@
                 <div class="mb-3 mb-md-4 d-flex justify-content-between">
                     <div class="h3 mb-0">긴급 재난 문자</div>
                 </div>
-                    <div class="form-group">
-                        <select id="location_name"class="custom-select custom-select-lg">
-                            <option value="null">지역검색</option>
-                            <option value="서울특별시" <% if(location_name=='서울특별시'){ %>selected<% } %> >서울</option>
-                            <option value="인천광역시" <% if(location_name=='인천광역시'){ %>selected<% } %> >인천</option>
-                            <option value="경기도" <% if(location_name=='경기도'){ %>selected<% } %> >경기</option>
-                            <option value="광주광역시" <% if(location_name=='광주광역시'){ %>selected<% } %> >광주</option>
-                            <option value="대전광역시" <% if(location_name=='대전광역시'){ %>selected<% } %> >대전</option>
-                            <option value="부산광역시" <% if(location_name=='부산광역시'){ %>selected<% } %> >부산</option>
-                            <option value="강원도" <% if(location_name=='강원도'){ %>selected<% } %> >강원</option>
-                            <option value="울산광역시" <% if(location_name=='울산광역시'){ %>selected<% } %> >울산</option>
-                            <option value="전라북도" <% if(location_name=='전라북도'){ %>selected<% } %> >전북</option>
-                            <option value="전라남도" <% if(location_name=='전라남도'){ %>selected<% } %> >전남</option>
-                            <option value="충청북도" <% if(location_name=='충청북도'){ %>selected<% } %> >충북</option>
-                            <option value="충청남도" <% if(location_name=='충청남도'){ %>selected<% } %> >충남</option>
-                            <option value="경상북도" <% if(location_name=='경상북도'){ %>selected<% } %> >경북</option>
-                            <option value="경상남도" <% if(location_name=='경상남도'){ %>selected<% } %> >경남</option>
-                        </select>
-                        <button id="search" class="btn btn-primary btn-block" >검색</button>
-                    </div>
+                <div class="form-group">
+                    <select id="location_name"class="custom-select custom-select-lg">
+                        <option value="null">지역검색</option>
+                        <option value="서울특별시" <% if(location_name=='서울특별시'){ %>selected<% } %> >서울</option>
+                        <option value="인천광역시" <% if(location_name=='인천광역시'){ %>selected<% } %> >인천</option>
+                        <option value="경기도" <% if(location_name=='경기도'){ %>selected<% } %> >경기</option>
+                        <option value="광주광역시" <% if(location_name=='광주광역시'){ %>selected<% } %> >광주</option>
+                        <option value="대전광역시" <% if(location_name=='대전광역시'){ %>selected<% } %> >대전</option>
+                        <option value="부산광역시" <% if(location_name=='부산광역시'){ %>selected<% } %> >부산</option>
+                        <option value="강원도" <% if(location_name=='강원도'){ %>selected<% } %> >강원</option>
+                        <option value="울산광역시" <% if(location_name=='울산광역시'){ %>selected<% } %> >울산</option>
+                        <option value="전라북도" <% if(location_name=='전라북도'){ %>selected<% } %> >전북</option>
+                        <option value="전라남도" <% if(location_name=='전라남도'){ %>selected<% } %> >전남</option>
+                        <option value="충청북도" <% if(location_name=='충청북도'){ %>selected<% } %> >충북</option>
+                        <option value="충청남도" <% if(location_name=='충청남도'){ %>selected<% } %> >충남</option>
+                        <option value="경상북도" <% if(location_name=='경상북도'){ %>selected<% } %> >경북</option>
+                        <option value="경상남도" <% if(location_name=='경상남도'){ %>selected<% } %> >경남</option>
+                    </select>
+                    <button id="search" class="btn btn-primary btn-block" >검색</button>
+                </div>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -59,10 +59,8 @@
                     <% }); %>   
                     </tbody>
                     </table>
-    
-       
 
-
+                    <!-- 페이지화 -->
                     <nav class="d-flex justify-content-between align-items-center" aria-label="Page navigation example">
                         <small class="text-muted" id="paging_mute">Showing <%=nowPage%> of <%=lastPageNum%></small>
                         <ul class="pagination font-weight-semi-bold" id="paging">
@@ -82,7 +80,7 @@
                                     </a>
                                 </li>
                             <% } %>
-                            
+
                             <!-- 시작번호, 표시 마지막 번호를 위한 카운트 -->
                             <% var first = 1, last = 5; %>        
                             <!-- 현재 페이지가 4보다 크면 시작 번호 수정과 마자막 두번째 번호일 때 설정   -->
@@ -128,7 +126,6 @@
                             <% } %>                
                         </ul>
                     </nav>
-                
                 
                     <script>        
                         $('#search').on('click', () => {

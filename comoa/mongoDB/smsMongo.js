@@ -1,6 +1,8 @@
 const smsStatus = require('../mongoDB/schema/sms');
 
 module.exports = {
+
+    // 데이터 저장
     insertMany: (data, msg) => {
         smsStatus.insertMany(data, (err) => {
             if(err) console.log(`smsStatus MongoDB Error: ${err}`);
@@ -10,27 +12,7 @@ module.exports = {
         });
     },
     
-    allCount: async (data) => {
-        return new Promise (resolve => {
-            smsStatus.countDocuments(data, (err, result) => {
-                if(err) console.log(`smsStatus MongoDB Error: ${err}`);
-                else {                    
-                    resolve(result);
-                }
-            });
-        });
-    },
-    find: async (data) => {
-        return new Promise (resolve => {
-            smsStatus.find(data, (err, result) => {
-               if(err) console.log(`smsStatus MongoDB Error: ${err}`);
-               else {
-                   resolve(result);
-               }
-            });
-        });
-    }, 
-
+    // 특정 컬럼으로 정렬한뒤 1개 컬럼찾기
     findOne: async (data) => {
         return new Promise (resolve => {
             smsStatus.findOne({},(err, result) => {
@@ -42,35 +24,7 @@ module.exports = {
         });
     },
 
-    findMany: async (data) => {
-        return new Promise (resolve => {
-            smsStatus.find(data, (err, result) => {
-               if(err) console.log(`smsStatus MongoDB Error: ${err}`);
-               else {
-                   resolve(result);
-               }
-            });
-        });
-    },    
-    indexfindMany: async (data) => {
-        return new Promise (resolve => {
-            let res = smsStatus.find()
-            .sort({md101_sn: -1})
-            .limit(3);
-            
-            resolve(res);
-        });
-    },
-    paging: async (data, sqldata) => {
-        return new Promise (resolve => {
-            let page = smsStatus.find(sqldata)
-            .sort({md101_sn: -1})
-            .skip(data.startPage)
-            .limit(data.maxPage);
-
-            resolve(page);
-        });
-    },
+    // 데이터 카운트 조회
     count: async (data) => {
         return new Promise (resolve => {
             smsStatus.countDocuments(data, (err, result) => {
@@ -82,6 +36,7 @@ module.exports = {
         });
     },
 
+    // 페이지화 리스트 구현
     smsPaging: async (data) => {
         return new Promise (resolve => {
             let result = smsStatus.find(data.search)

@@ -1,6 +1,8 @@
 const nav = require('./schema/nav');
 
 module.exports = {
+
+    // 위치추적 조회 페이지
     navList: async (data) => {
         return new Promise (resolve => {
             let navList = nav.find({
@@ -13,6 +15,8 @@ module.exports = {
             resolve(navList);
         });
     },
+
+    // 위치추적 조회 검색 시 사용
     navSearchList: async (data) => {
         return new Promise (resolve => {
             let navList = nav.find({
@@ -27,7 +31,14 @@ module.exports = {
             resolve(navList);
         });
     },
-
+    
+    // 네비정보 등록
+    registernav: (data) => {
+        nav.insertMany(data, (err) => {
+            if(err) console.log(`nav MongoDB Error: ${err}`);
+        });
+    }
+    /*
     countnav: async (type) => {
         return new Promise (resolve => {
             nav.countDocuments({type: type}, (err, result) => {
@@ -39,6 +50,7 @@ module.exports = {
         });
     },
 
+    //
     findnav: async (data) => {
         return new Promise (resolve => {
             nav.find(data, (err, result) => {
@@ -47,13 +59,9 @@ module.exports = {
             });
         });
     },
+*/
 
-    registernav: (data) => {
-        nav.insertMany(data, (err) => {
-            if(err) console.log(`nav MongoDB Error: ${err}`);
-        });
-    },
-
+/*
     updatenav: (query, data) => {
         nav.updateOne(query, data, (err) => {
             if(err) console.log(`nav MongoDB Error: ${err}`);
@@ -65,6 +73,6 @@ module.exports = {
             if(err) console.log(`nav MongoDB Error: ${err}`);
         });
     }
-
+*/
     
 };
