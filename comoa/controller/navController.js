@@ -7,6 +7,7 @@ const { searchnav } = require("../mongoDB/navMongo");
 module.exports = {
     showList: async (req, res, next) => {
         
+        // 오늘 날짜 구하기
         let date = new Date();
         let year = date.getFullYear() + '';
         let month = (date.getMonth() + 1) + '';
@@ -63,7 +64,7 @@ module.exports = {
         }
     },
 
-    modifynav: async (req, res, next) => {
+/*    modifynav: async (req, res, next) => {
         let _id = req.params._id
 
         if(req.method === 'GET') {
@@ -91,5 +92,5 @@ module.exports = {
         navMongo.deletenav(data);
         res.redirect(`/nav`);
     },
-    
+    */
 };

@@ -57,13 +57,16 @@ router.post('/overseaAreaGroup', overSeaOutController.areaGroup);
 // 세계지역 검색 기능
 router.post('/overseaoutSearch', overSeaOutController.searchOverSeaOut);
 
-router.get('/crawling', smsController.todaySmsInfo);
-
+// 긴급재난문자
 router.get('/sms', smsController.smsInfo);
+
+// 긴급재난문자 검색
 router.post('/smsSearch', smsController.searchSMS);
 
+// 코로나사이트 크롤링 테스트
+router.get('/crawling', smsController.todaySmsInfo);
 
-// 세계지역검색 - 공사중..
+// 샘플페이지
 router.get('/sample', (req, res, next)=>{
     res.render('sample');
 });
