@@ -38,41 +38,4 @@ module.exports = {
             if(err) console.log(`nav MongoDB Error: ${err}`);
         });
     }
-    /*
-    countnav: async (type) => {
-        return new Promise (resolve => {
-            nav.countDocuments({type: type}, (err, result) => {
-                if(err) console.log(`nav MongoDB Error: ${err}`);
-                else {                    
-                    resolve(result);
-                }
-            });
-        });
-    },
-
-    //
-    findnav: async (data) => {
-        return new Promise (resolve => {
-            nav.find(data, (err, result) => {
-                if(err) console.log(`nav MongoDB Error: ${err}`);
-                else resolve(result);
-            });
-        });
-    },
-*/
-
-/*
-    updatenav: (query, data) => {
-        nav.updateOne(query, data, (err) => {
-            if(err) console.log(`nav MongoDB Error: ${err}`);
-        });
-    }, 
-
-    deletenav: (data) => {
-        nav.deleteOne(data, (err) => {
-            if(err) console.log(`nav MongoDB Error: ${err}`);
-        });
-    }
-*/
-    
 };

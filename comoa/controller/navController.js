@@ -33,14 +33,14 @@ module.exports = {
     // 특정 날짜로 네비리스트 조회
     showSearchList: async (req, res, next) => {
         let data = {
-            email: req.user.email,
-            name: req.user.name,
-            start: new Date(req.body.start),
-            end: new Date(req.body.end+ "T23:59:59"),
-            sort: -1
+            email: req.user.email,                      // 로그인 사용자 email
+            name: req.user.name,                        // 로그인 사용자 name
+            start: new Date(req.body.start),            // 검색할 시작 날짜
+            end: new Date(req.body.end+ "T23:59:59"),   // 검색할 마지막 날짜
+            sort: -1                                    // 정렬
         };
-        console.log('startday : ' + req.body.start);
-        console.log('endday : ' + req.body.end);
+        //console.log('startday : ' + req.body.start);
+        //console.log('endday : ' + req.body.end);
         let navList = await navMongo.navSearchList(data);
 
         res.json({list: navList});
@@ -63,7 +63,7 @@ module.exports = {
             };
 
             navMongo.registernav(data);
-            res.redirect(`/nav`);
+            res.redirect(`/nav`);       // 등록 후 조회페이지 이동
         }
     },
 

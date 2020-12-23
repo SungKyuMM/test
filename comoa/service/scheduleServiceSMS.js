@@ -9,7 +9,7 @@ module.exports = (key, cron) => {
     schedule.scheduleJob(cron, async () => {
         console.log('::::: 긴급재난문자 스케줄 START :::::' + new Date());
         let sort = {md101_sn: -1};
-        let safety = await smsMongo.findOne(sort);
+        let safety = await smsMongo.findOne(sort); // 데이터베이스에 있는 라스트 데이터 1건 정보
         
         var url = 'http://apis.data.go.kr/1741000/DisasterMsg2/getDisasterMsgList';
         var queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + key;

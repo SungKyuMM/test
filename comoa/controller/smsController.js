@@ -7,6 +7,8 @@ const url = "http://ncov.mohw.go.kr/";
 const log = console.log;
 
 module.exports = {
+
+    // 긴급재난문자 초기페이지
     smsInfo : async (req, res, next) => {
         let sql = {};
         let count = 0;
@@ -41,6 +43,7 @@ module.exports = {
         
     },
 
+    // 긴급재난문자 검색 및 페이징
     searchSMS: async (req, res, next) => {
         //console.log('긴급재난문자 검색 loop');
         let lnm = req.body.location_name;
