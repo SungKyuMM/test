@@ -9,8 +9,6 @@ const ageGenderController = require('../controller/ageGenderController');
 const smsController = require('../controller/smsController');
 const { route } = require('.');
 
-router.get('/t2', infectionController.infectionGraph);
-
 // 국가·지역별 최신안전소식(코로나관련) 페이지
 router.get('/safePaging', safetyNewsController.safePaging);
 

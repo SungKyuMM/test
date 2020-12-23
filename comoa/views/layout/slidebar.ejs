@@ -238,7 +238,7 @@
             objDiv.scrollTop = objDiv.scrollHeight;       //스크롤 최하단 포커스
         });
 
-        socket.on('create name', function(name){ 
+        socket.on('create name', function(name){  // 서버에서 닉네임 부여
         $('#nickName').val(name);
         });
 
